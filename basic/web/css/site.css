@@ -95,6 +95,12 @@ a.desc:after {
     color: black;
 }
 
+.btn-naranja
+{
+    background-color:#ffc107;
+    color: black;
+    border-radius: 15px;
+}
 
 .table {
     --bs-table-bg: #c9e0c1;
@@ -122,6 +128,16 @@ a.desc:after {
     background: white
 }
 
+/* SENTENCIA PARA AJUSTAR FORMULARIOS A MOVILES Y ORDENADORES */
+
+@media(min-width:1025px) {
+
+    .Receta-create,.Receta-view, .Receta-update
+    {
+        width: 50%;
+        margin: auto;
+    }
+}
 
 
 

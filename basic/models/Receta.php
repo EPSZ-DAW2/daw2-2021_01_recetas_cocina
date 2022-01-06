@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use phpDocumentor\Reflection\Types\True_;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "recetas".
@@ -18,8 +20,9 @@ use Yii;
  * @property int|null $usuario_id Usuario que ha creado la receta o CERO si no existe (como si fuera NULL).
  * @property int|null $aceptada Indicador de receta aceptada o no.
  */
-class Receta extends \yii\db\ActiveRecord
+class Receta extends ActiveRecord
 {
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -36,8 +39,22 @@ class Receta extends \yii\db\ActiveRecord
         return [
             [['nombre', 'tipo_plato'], 'required'],
             [['nombre', 'descripcion','imagen'], 'string'],
+
             [['dificultad', 'comensales', 'tiempo_elaboracion', 'valoracion', 'usuario_id', 'aceptada'], 'integer'],
             [['tipo_plato'], 'string', 'max' => 1],
+            [['tipo_plato'], 'string', 'max' => 1],
+            ['imageFile', 'file',
+
+                'skipOnEmpty' => True,
+                'uploadRequired' => 'No has seleccionado ningún archivo', //Error
+                'maxSize' => 1024*1024*1, //1 MB
+                'tooBig' => 'El tamaño máximo permitido es 1MB', //Error
+                'minSize' => 10, //10 Bytes
+                'tooSmall' => 'El tamaño mínimo permitido son 10 BYTES', //Error
+                'extensions' => 'png, jpg',
+                'wrongExtension' => 'El archivo {file} no contiene una extensión permitida {extensions}', //Error
+                'tooMany' => 'El máximo de archivos permitidos son {limit}', //Error
+                 ],
         ];
     }
 
@@ -58,6 +75,7 @@ class Receta extends \yii\db\ActiveRecord
             'usuario_id' => Yii::t('app', 'Usuario ID'),
             'aceptada' => Yii::t('app', 'Aceptada'),
             'imagen' => Yii::t('app', 'Imagen'),
+            'imageFile' => Yii::t('app', 'Subida de imagen de receta'),
         ];
     }
 
@@ -69,4 +87,6 @@ class Receta extends \yii\db\ActiveRecord
     {
         return new recetaQuery(get_called_class());
     }
+
+
 }

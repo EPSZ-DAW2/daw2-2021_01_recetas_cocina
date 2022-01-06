@@ -7,7 +7,8 @@ use app\models\Tienda;
 use yii\bootstrap5\LinkPager;
 
 $this->title = 'Aplicación Web de recetas';
-$rutaimg="/daw2-2021_01_recetas_cocina/basic/web/images/";
+
+$rutaimg="uploads/";
 
 ?>
 
@@ -58,7 +59,7 @@ $rutaimg="/daw2-2021_01_recetas_cocina/basic/web/images/";
                         <?php
 
                         foreach ($dataProvider->getModels() as $card){ ?>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 my-2">
                             <div class="card" style="width: auto; min-height: 650px">
                                 <img src='<?php echo $rutaimg;echo $card->imagen;?>' class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -125,9 +126,10 @@ $rutaimg="/daw2-2021_01_recetas_cocina/basic/web/images/";
     </div>
 
 
-    <div class="text-center w-100">
+    <div class="text-center w-25 mx-auto">
         <?= LinkPager::widget([
             'pagination' => $dataProvider->pagination,
+
         ])?>
 
     </div>
