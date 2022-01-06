@@ -25,6 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'email')->textInput() ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
         <?= $form->field($model, 'nombre')->textInput() ?>
+        <?= $form->field($model, 'rol')->dropDownList([
+        "C" => 'Colaborador',
+        "T" => 'Tienda',
+
+    ])->label("Rol") ?>
 
     
         <div class="form-group">
