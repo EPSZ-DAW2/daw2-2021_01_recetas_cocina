@@ -51,7 +51,7 @@ class IngredienteSearch extends Ingrediente
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination'=> [
-                'pageSize'=>6
+                'pageSize'=>10
             ]
         ]);
 

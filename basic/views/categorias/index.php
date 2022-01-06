@@ -12,10 +12,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="categorias-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Crear Categorias', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Categorias', ['create'], ['class' => 'btn mt-3 botonCrud']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
