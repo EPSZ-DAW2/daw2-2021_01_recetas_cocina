@@ -37,7 +37,6 @@ $rutaimg="uploads/";
                         </ul>
                     </details>
 
-
                 </div>
             </div>
 
