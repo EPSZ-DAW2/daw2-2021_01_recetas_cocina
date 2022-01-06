@@ -191,7 +191,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
 
         $modeloOfertas=Tiendaoferta::find()->orderBy([
             'id' => SORT_DESC,
-        ])->limit(6)->all();
+        ])->limit(5)->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -13,6 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="Receta-view">
 
+    <p class="text-center rounded bg-success text-white"><?php if(isset($msg)) echo $msg; ?></p>
+
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>

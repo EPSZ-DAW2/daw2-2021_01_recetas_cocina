@@ -13,10 +13,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="Receta-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <p class="text-center rounded bg-success"><?php if(isset($msg)) echo $msg; ?></p>
+
+    <h1 class="btn-naranja text-center mb-5"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Receta'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Crear Receta'), ['create'], ['class' => 'btn btn-success w-100']) ?>
     </p>
 
     <?php echo $this->render('_searchGlob', ['model' => $searchModel]); ?>
