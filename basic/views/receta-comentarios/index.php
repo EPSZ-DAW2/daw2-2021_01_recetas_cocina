@@ -12,19 +12,19 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="receta-comentarios-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Crear Receta Comentarios', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Receta Comentarios', ['create'], ['class' => 'btn btn-success w-100']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'receta_id',

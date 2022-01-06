@@ -13,10 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="planificacionmenu-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="tituloCrud" ><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Añadir menú a planificación'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Añadir menú a planificación'), ['create'], ['class' => 'btn btn-success w-100 ']) ?>
     </p>
 
     <?php echo $this->render('_searchGlob', ['model' => $searchModel]); ?>

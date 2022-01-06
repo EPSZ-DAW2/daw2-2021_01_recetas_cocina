@@ -15,16 +15,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Crear Categorias', ['create'], ['class' => 'btn mt-3 botonCrud']) ?>
+        <?= Html::a('Crear Categorias', ['create'], ['class' => 'btn btn-success w-100']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?php echo "<details class='my-3'><summary>Búsqueda Avanzada</summary>";
+    echo $this->render('_search', ['model' => $searchModel]);
+    echo "</details>";
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'nombre',

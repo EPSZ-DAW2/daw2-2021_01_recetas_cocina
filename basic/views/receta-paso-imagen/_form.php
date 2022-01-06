@@ -12,14 +12,19 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'receta_paso_id')->textInput() ?>
+    <?= $form->field($model, 'receta_paso_id')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
 
-    <?= $form->field($model, 'orden')->textInput() ?>
+    <?= $form->field($model, 'orden')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
 
-    <?= $form->field($model, 'imagen')->textarea(['rows' => 6]) ?>
+    <?php // $form->field($model, 'imagen')->textarea(['rows' => 6,'class'=> 'w-100 btn btn-verde  my-3']) ?>
+
+    <?=  $form->field($model, 'imageFile')->fileInput(['class'=> 'w-100 btn btn-warning  my-3'])?>
+
+    <?= $form->field($model, 'imagen')->hiddenInput(['class'=> 'w-100 btn btn-verde  my-3'])->label("") ?>
+
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Subir', ['class' => 'btn btn-success w-100 my-3']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

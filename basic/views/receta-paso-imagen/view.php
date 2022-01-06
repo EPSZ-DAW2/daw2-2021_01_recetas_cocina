@@ -13,7 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="Receta-paso-imagen-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <p class="text-center rounded bg-success text-white"><?php if(isset($msg)) echo $msg; ?></p>
+
+    <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

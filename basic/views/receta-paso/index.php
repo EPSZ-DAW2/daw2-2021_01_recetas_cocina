@@ -13,13 +13,18 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="Receta-paso-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Receta Paso'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Receta Paso'), ['create'], ['class' => 'btn btn-success w-100']) ?>
     </p>
 
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?php echo "<details class='my-3'><summary>Búsqueda Avanzada</summary>";
+    echo $this->render('_search', ['model' => $searchModel]);
+    echo "</details>";
+    ?>
+    <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?=
         GridView::widget([
