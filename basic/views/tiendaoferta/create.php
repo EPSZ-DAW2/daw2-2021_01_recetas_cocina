@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tiendaoferta-create">
 
-    <h1 class="text-center w-100 rounded btn-verde"><?= Html::encode($this->title) ?></h1>
+    <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

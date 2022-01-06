@@ -13,12 +13,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-index">
 
-<h1 class="text-center w-100 rounded btn-verde"><?= Html::encode($this->title) ?></h1>
+<h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Usuario'), ['create'], ['class' => 'btn btn-verde mt-3']) ?>
-        <?= Html::a(Yii::t('app', 'Aceptar Usuarios'), ['usuariosaceptar'], ['class' => 'btn btn-danger mt-3']) ?>
-    </p>
+    <div class="mx-auto text-center">
+        <?= Html::a(Yii::t('app', 'Create Usuario'), ['create'], ['class' => 'btn btn-success mt-3 ']) ?>
+        <?= Html::a(Yii::t('app', 'Aceptar Usuarios'), ['usuariosaceptar'], ['class' => 'btn btn-primary mt-3 ']) ?>
+    </div>
 
     <?php echo $this->render('_searchGlob', ['model' => $searchModel]); ?>
     <?php echo "<details class='my-3'><summary>Búsqueda Avanzada</summary>";

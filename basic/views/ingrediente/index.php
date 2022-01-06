@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 class="tituloCrud" ><?= Html::encode($this->title) ?></h1>
 
     <p >
-        <?= Html::a(Yii::t('app', 'Crear Ingrediente'), ['create'], ['class' => ' btn mt-3 botonCrud ']) ?>
+        <?= Html::a(Yii::t('app', 'Crear Ingrediente'), ['create'], ['class' => ' btn btn-success w-100 ']) ?>
     </p>
 
     <?php echo $this->render('_searchGlob', ['model' => $searchModel]); ?>

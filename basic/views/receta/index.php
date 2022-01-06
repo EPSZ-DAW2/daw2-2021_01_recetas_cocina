@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p class="text-center rounded bg-success"><?php if(isset($msg)) echo $msg; ?></p>
 
-    <h1 class="btn-naranja text-center mb-5"><?= Html::encode($this->title) ?></h1>
+    <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Crear Receta'), ['create'], ['class' => 'btn btn-success w-100']) ?>

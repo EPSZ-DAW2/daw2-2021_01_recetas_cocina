@@ -13,10 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tiendaoferta-index">
 
-    <h1 class="text-center w-100 rounded btn-verde"><?= Html::encode($this->title) ?> <?php if (isset($_GET['nametienda'])) {echo ': '.$_GET['nametienda'];}?></h1>
+    <h1 class="tituloCrud"><?= Html::encode($this->title) ?> <?php if (isset($_GET['nametienda'])) {echo ': '.$_GET['nametienda'];}?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Crear Oferta de Tienda'), ['create'], ['class' => 'btn btn-verde  mt-3']) ?>
+        <?= Html::a(Yii::t('app', 'Crear Oferta de Tienda'), ['create'], ['class' => 'btn btn-success w-100']) ?>
     </p>
 
     <?php echo $this->render('_searchGlob', ['model' => $searchModel]); ?>
