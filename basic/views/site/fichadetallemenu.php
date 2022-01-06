@@ -48,7 +48,9 @@
                     if(($mr->menu_id==$id) && ($card->id==$mr->receta_id)){
                     ?>
                         <div class="card col-lg-4 my-3 text-center">
-                    
+
+                            <img src='<?php echo 'uploads/';echo $card->imagen;?>' class="card-img-top" alt="...">
+
                             <h2 class="text-center"><b><?php echo strtoupper($card->nombre) ?></b></h2>
 
                             <p><?php echo substr($card->descripcion, 0, 200).'...';?></p>
