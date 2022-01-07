@@ -7,6 +7,7 @@ use app\models\RecetaPasoImagenSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * RecetaPasoImagenController implements the CRUD actions for RecetaPasoImagen model.
@@ -67,17 +68,44 @@ class RecetaPasoImagenController extends Controller
     public function actionCreate()
     {
         $model = new RecetaPasoImagen();
+        $msg="";
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) )
+            {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+                if ($model->imageFile && $model->validate())
+                {
+
+                    $nameAux=$model->imageFile->baseName.time().'.'.$model->imageFile->extension;
+                    $model->imagen=$nameAux;
+                    $msg = "<strong class='label label-info'>Enhorabuena, creacion realizada con éxito</strong>";
+                    $msg.=" --> ".$nameAux;
+                    $model->save();
+                    $model->imageFile->saveAs('uploads/' .$nameAux);
+                }
+                else
+                {
+                    $model->save();
+                    $msg = "<strong class='label label-info'>Enhorabuena, creacion realizada con éxito</strong>";
+                }
+
+                //return $this->redirect(['view', ['id' => $model->id, 'msg' => $msg]]);
+                return $this->render('view', [
+                    'model' => $model,
+                    'msg'=>$msg
+                ]);
             }
-        } else {
+        }
+        else
+        {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'msg'=>$msg
         ]);
     }
 
@@ -92,8 +120,35 @@ class RecetaPasoImagenController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost )
+        {
+
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            if ($model->imageFile && $model->validate()) {
+
+                $rutaimg="uploads/".$model->imagen;
+                if (!empty($model->imagen) && file_exists($rutaimg)) unlink($rutaimg);
+
+                $nameAux=$model->imageFile->baseName.time().'.'.$model->imageFile->extension;
+                $model->imagen=$nameAux;
+                $msg = "<strong class='label label-info'>Enhorabuena, actualización realizada con éxito</strong>";
+                $msg.=" --> ".$nameAux;
+                $model->save();
+                $model->imageFile->saveAs('uploads/' .$nameAux);
+
+                //return $this->redirect(['view', ['id' => $model->id, 'msg' => $msg]]);
+
+            }
+            else{
+                $model->save();
+                $msg = "<strong class='label label-info'>Enhorabuena, actualización realizada con éxito</strong>";
+            }
+
+            return $this->render('view', [
+                'model' => $model,
+                'msg'=>$msg
+            ]);
         }
 
         return $this->render('update', [
@@ -110,7 +165,12 @@ class RecetaPasoImagenController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        $rutaimg="uploads/".$model->imagen;
+        if (!empty($model->imagen) && file_exists($rutaimg)) unlink($rutaimg);
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

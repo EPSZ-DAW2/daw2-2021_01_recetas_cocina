@@ -41,16 +41,16 @@ use yii\widgets\ActiveForm;
         ['prompt'=>'Seleccione un ingrediente...']
     )?>
 
-    <?php // $form->field($model, 'ingrediente_id')->textInput() ?>
+    <?php // $form->field($model, 'ingrediente_id')->textInput(['class' => 'btn btn-success w-100 my-3']) ?>
 
-    <?= $form->field($model, 'cantidad')->textInput() ?>
+    <?= $form->field($model, 'cantidad')->textInput(['class' => 'btn btn-verde w-100 my-3']) ?>
 
-    <?= $form->field($model, 'medida')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'medida')->textInput(['maxlength' => true,'class' => 'btn btn-verde w-100 my-3']) ?>
 
-    <?= $form->field($model, 'notas')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'notas')->textarea(['rows' => 6,'class' => 'btn btn-verde w-100 my-3']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success w-100 my-3']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

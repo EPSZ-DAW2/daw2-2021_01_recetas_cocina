@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p class="text-center rounded bg-success text-white"><?php if(isset($msg)) echo $msg; ?></p>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

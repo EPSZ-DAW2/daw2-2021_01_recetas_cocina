@@ -35,7 +35,7 @@ use app\models\TiendaSearch;
                 <p><?php echo $card->envase;?></p>
                 <h3 class="text-center btn-verde">Cantidad: </h3>
                 <p><?php echo $card->cantidad;echo " "; echo $card->medida ?></p>
-                <h3 class="text-center btn-verde">Precio: </h3>
+                <h3 class="text-center btn-verde">Detalles: </h3>
                 <p><?php echo $card->notas;?></p>
 
 

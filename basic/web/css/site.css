@@ -131,12 +131,44 @@ a.desc:after {
 /* SENTENCIA PARA AJUSTAR FORMULARIOS A MOVILES Y ORDENADORES */
 
 @media(min-width:1025px) {
-
-    .Receta-create,.Receta-view, .Receta-update
+    .Receta-create,.Receta-view, .Receta-update,
+    .ingrediente-create,.ingrediente-view, .ingrediente-update,
+    .recetaingrediente-create,.recetaingrediente-update,.recetaingrediente-view,
+    .categorias-create,.categorias-view,.categorias-update,
+    .tienda-create,.tienda-view,.tienda-update,
+    .tiendaoferta-create,.tiendaoferta-view,.tiendaoferta-update,
+    .usuario-create,.usuario-view,.usuario-update,
+    .Receta-paso-create,.Receta-paso-view,.Receta-paso-update,
+    .Receta-paso-imagen-create,.Receta-paso-imagen-view,.Receta-paso-imagen-update,
+    .receta-categorias-create,.receta-categorias-view,.receta-categorias-update,
+    .receta-comentarios-create,.receta-comentarios-view,.receta-comentarios-update,
+    .menu-create,.menu-update,.menu-view,
+    .menureceta-create,.menureceta-update,.menureceta-view,
+    .menureceta-create,.menureceta-update,.menureceta-view,
+    .planificacion-create,.planificacion-update,.planificacion-view,
+    .planificacionmenu-create,.planificacionmenu-update,.planificacionmenu-view,
+    .tienda-create,.tienda-update.tienda-view,
+    .tiendaoferta-create, .tiendaoferta-update, .tiendaoferta-view
     {
         width: 50%;
         margin: auto;
     }
+}
+
+.tituloCrud{
+    background-color: #ffc107 ;
+    text-align: center;
+    color: black;
+    border-radius: 15px;
+    width: 100%;
+}
+
+.botonCrud{
+    background-color: #198754;
+    text-align: center;
+    color: black;
+    border-radius: 15px;
+    width: 100%;
 }
 
 

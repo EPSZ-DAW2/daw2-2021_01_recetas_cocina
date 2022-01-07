@@ -14,7 +14,7 @@ Manu y Pablo    -> 2
 
 
 ----------------------------------------------------------------------------------------------------------------------------
-Pack 1
+Pack 1 - Victor y Fernando
 ----------------------------------------------------------------------------------------------------------------------------
 F1 → Mantenimiento de Usuarios, Perfiles y Relaciones entre ellos, Mantenimiento de la Configuración, y Copias de Seguridad.
 T5 → Parte pública de visualización de Planificaciones de Menús, Menús y Platos.
@@ -41,7 +41,7 @@ FTI10 - Registro y acceso de usuarios:
 
 
 ----------------------------------------------------------------------------------------------------------------------------
-Pack 2
+Pack 2 -- Pablo y Manu
 ----------------------------------------------------------------------------------------------------------------------------
 F2 → Mantenimiento de Recetas, Pasos, Imágenes en los pasos.
 T1 → Parte pública de visualización de Lista de Recetas con "ficha resumida".
@@ -58,7 +58,7 @@ FTI2 - Filtrado avanzado de recetas y clasificacion recetas recomendadas (del me
 
 
 ----------------------------------------------------------------------------------------------------------------------------
-Pack 3
+Pack 3 --Sara y Elsa
 ----------------------------------------------------------------------------------------------------------------------------
 F3 → Mantenimiento de Categorias, Mantenimiento de Categorías en Recetas, Mantenimiento de Comentarios en Recetas.
 T3 → Parte pública de visualización de Arbol de Categorias (Clasificaciones) y Filtrado de Recetas por categorías.
@@ -70,7 +70,7 @@ FTI6 - Menu de categorias de recetas que permita avanzar por clics:
 
 
 ----------------------------------------------------------------------------------------------------------------------------
-Pack 4
+Pack 4 -- Nerea y Marcos
 ----------------------------------------------------------------------------------------------------------------------------
 F4 → Mantenimiento de Ingredientes, Mantenimiento de Ingredientes en Recetas. -- hecho
 T7 -> Parte pública de visualización de Ingredientes. -- hecho
@@ -101,6 +101,11 @@ FXX - Diseño aplicación y estilos parte publica y privada
     -Diseño de colores.
     -Diseño página error.
     -Diseño menus navegación.
+
+FXX - Implementacion de la subida de archivos al directorio upload -- hecho
+    -Subida de imagenes de recetas con comprobacion de errores.
+    -Subida de imagenes de pasos de receatas con comprobacion de errores.
+
 ----------------------------------------------------------------------------------------------------------------------------
 
 
