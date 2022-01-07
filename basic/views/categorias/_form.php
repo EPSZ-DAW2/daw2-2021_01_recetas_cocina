@@ -25,8 +25,11 @@ use yii\helpers\ArrayHelper;
     //use yii\helpers\ArrayHelper;
     $listCategorias=ArrayHelper::map($categorias,'id','nombre');
 
+    $categorias= array_merge(['0'=>'Ninguna'], $listCategorias);
+
     echo $form->field($model, 'categoria_padre_id')->dropDownList(
-        $listCategorias,
+        $categorias, 
+        ['value' => !empty($model->status) ? $model->status : '0'],
         ['prompt'=>'Seleccione una categoría padre...']
     );
 
