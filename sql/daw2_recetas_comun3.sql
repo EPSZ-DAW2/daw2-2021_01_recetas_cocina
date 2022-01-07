@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-01-2022 a las 19:57:39
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 8.0.11
+-- Tiempo de generación: 07-01-2022 a las 14:03:54
+-- Versión del servidor: 10.4.22-MariaDB
+-- Versión de PHP: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,7 +22,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `daw2_recetas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `daw2_recetas`;
-
 -- --------------------------------------------------------
 
 --
@@ -35,6 +34,18 @@ CREATE TABLE `categorias` (
   `descripcion` text DEFAULT NULL,
   `categoria_padre_id` int(12) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Identificador de la categoria padre en caso de estar ordenados por jerarquías.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `nombre`, `descripcion`, `categoria_padre_id`) VALUES
+(1, 'Vegano', 'Nada procede de origen animal', 0),
+(2, 'Carnivoro', 'La carne es lo principal', 0),
+(3, 'Mediterráneo', 'La dieta mediterránea es el modo de alimentarse basado en la cocina tradicional de la cuenca mediterránea.', 0),
+(4, 'Ibérico', 'Tanto en España como en Portugal predominan los productos del mar, los pescados y los mariscos, y también damos la máxima importancia al mundo vegetal, las frutas y las verduras. Y, por supuesto, al aceite de oliva virgen extra. Destaca también la oferta enoturística.', 3),
+(5, 'Light', 'Se denomina alimento light o ligero aquel cuyo valor energético supone una reducción de al menos un 30% del producto originario de referencia. Habitualmente, los alimentos light tienen bajos niveles de calorías porque son desgrasados o se les reduce o anula la cantidad de azúcares.', 0),
+(6, 'Fitness', 'Lo mejor para ponerte a tono de cara al verano.', 0);
 
 -- --------------------------------------------------------
 
@@ -54,74 +65,100 @@ CREATE TABLE `ingredientes` (
 --
 
 INSERT INTO `ingredientes` (`id`, `nombre`, `descripcion`, `datos_nutricion`) VALUES
-(1, '  Aceite de girasol', 'Ingrediente Condimento', '144kcal'),
-(10, '              Huevo', 'Ingrediente Proteico', '144kcal'),
-(11, '     Yogur de limón', 'Ingrediente Postre', '144kcal'),
-(12, '    Aceite de oliva', 'Ingrediente Condimento', '144kcal'),
-(13, '             Azúcar', 'Ingrediente Condimento', '144kcal'),
-(14, '             Harina', 'Ingrediente Condimento', '144kcal'),
-(15, '           Levadura', 'Ingrediente Condimento', '144kcal'),
-(16, '              Limón', 'Ingrediente Fruta', '144kcal'),
-(17, '        Azúcar glas', 'Ingrediente Condimento', '144kcal'),
-(18, '        Mantequilla', 'Ingrediente Condimento', '144kcal'),
-(19, '           Lentejas', 'Ingrediente Legumbre', '144kcal'),
-(20, '         Zanahorias', 'Ingrediente Verdura', '144kcal'),
-(21, '                Ajo', 'Ingrediente Condimento', '144kcal'),
-(22, '            Cebolla', 'Ingrediente Condimento', '144kcal'),
-(23, '             Laurel', 'Ingrediente Condimento', '144kcal'),
-(24, '     Pimentón dulce', 'Ingrediente Condimento', '144kcal'),
-(25, '                Sal', 'Ingrediente Condimento', '144kcal'),
-(26, '     Pimienta negra', 'Ingrediente Condimento', '144kcal'),
-(27, '     Pimiento verde', 'Ingrediente Verdura', '144kcal'),
-(28, '             Tomate', 'Ingrediente Verdura', '144kcal'),
-(29, '      Hueso de caña', 'Ingrediente Carne', '144kcal'),
-(30, '            Chorizo', 'Ingrediente Carne', '144kcal'),
-(31, '           Morcilla', 'Ingrediente Carne', '144kcal'),
-(32, '     Hueso de jamón', 'Ingrediente carne', '144kcal'),
-(33, '               Agua', 'Ingrediente Bebida', '144kcal'),
-(34, '        Arroz bomba', 'Ingrediente Pasta', '144kcal'),
-(35, '            Plátano', 'Ingrediente Fruta', '144kcal'),
-(36, '        Tomate pera', 'Ingrediente Verdura', '144kcal'),
-(37, '     Pimiento verde', 'Ingrediente Verdura', '144kcal'),
-(38, '     Alubias negras', 'Ingrediente Legumbre', '144kcal'),
-(39, '       Chile molido', 'Ingrediente Carne', '144kcal'),
-(41, '      Pimiento rojo', 'Ingrediente Verdura', '144kcal'),
-(42, ' Tortillas de trigo', 'Ingrediente Vegetariano', '144kcal'),
-(43, '            Patatas', 'Ingrediente Verdura', '144kcal'),
-(44, '          Calabacín', 'Ingrediente Verdura', '144kcal'),
-(45, '          Berenjena', 'Ingrediente Verdura', '144kcal'),
-(46, '        Champiñones', 'Ingrediente Vegano', '144kcal'),
-(47, '              Jamón', 'Ingrediente Conserva', '144kcal'),
-(48, '    Fideos de arroz', 'Ingrediente Pasta', '144kcal'),
-(49, '         Tofu firme', 'Ingrediente Vegetariano', '144kcal'),
-(50, '    Jengibre fresco', 'Ingrediente Condimento', '144kcal'),
-(51, '         Salsa soja', 'Ingrediente Salsa', '144kcal'),
-(52, '       Curry molido', 'Ingrediente Condimento', '144kcal'),
-(53, '      Ajo granulado', 'Ingrediente Condimento', '144kcal'),
-(54, '     Cúrcuma molida', 'Ingrediente Condimento', '144kcal'),
-(55, '               Lima', 'Ingrediente Fruta', '144kcal'),
-(56, '     Perejil fresco', 'Ingrediente Condimento', '144kcal'),
-(57, '           Cilantro', 'Ingrediente Condimento', '144kcal'),
-(58, '   Pechuga de pollo', 'Ingrediente Carne', '144kcal'),
-(59, '        Vino blanco', 'Ingrediente Bebida', '144kcal'),
-(111, '            Maicena', 'Ingrediente Condimento', '144kcal'),
-(112, '            Kétchup', 'Ingrediente Salsa', '144kcal'),
-(113, '   Vinagre de arroz', 'Ingrediente Condimento', '144kcal'),
-(114, '      Azúcar moreno', 'Ingrediente Condimento', '144kcal'),
-(115, '          Solomillo', 'Ingrediente Carne', '144kcal'),
-(116, '               Lomo', 'Ingrediente Carne', '144kcal'),
-(117, '           Shiratak', 'Ingrediente Pasta', '144kcal'),
-(118, '           Shungiku', 'Ingrediente Condimento', '144kcal'),
-(119, '    Brotes de bambú', 'Ingrediente Vegetariano', '144kcal'),
-(120, '               Café', 'Ingrediente Bebida', '144kcal'),
-(121, 'Caldo Japonés dashi', 'Ingrediente Bebida', '144kcal'),
-(122, '      Miel de arroz', 'Ingrediente Condimento', '144kcal'),
-(123, '       Arroz blanco', 'Ingrediente Pasta', '144kcal'),
-(124, '            Caballa', 'Ingrediente Pescado', '144kcal'),
-(125, '          Mugi miso', 'Ingrediente Vegano', '144kcal'),
-(126, '     Miso de cebada', 'Ingrediente Vegano', '144kcal'),
-(127, '         Shiro miso', 'Ingrediente Vegetariano', '144kcal'),
-(128, '        Miso blanco', 'Ingrediente Vegetariano', '144kcal');
+(1, 'Chorizo', 'El chorizo es un embutido cárnico originario de la península ibérica, ​ tradicional también en la cocina latinoamericana y de otras regiones con influencia cultural española y portuguesa, en donde puede formar parte de la cocina fusión. Tags: Ingrediente Carne.', 'pesado'),
+(2, 'Morcilla', 'La morcilla es un embutido a base de sangre cocida, generalmente de cerdo, de color caoba oscuro. Suele mezclarse con grasa de cerdo, y además, contiene algún otro ingrediente no cárnico para aumentar su volumen, como arroz u otros cereales, miga de pan o cebolla. Tags: Ingrediente Carne.', 'pesado'),
+(3, 'Alubia de la granja', 'Se denomina judiones de la Granja a una variedad de judía de gran tamaño que se cultiva en Real Sitio de San Ildefonso, la Phaseolus coccineus, también denominada Phaseolus multiflorus Willd., que se cree que fue traída de América y plantada en La Granja a comienzos del siglo XVIII. Tags: Ingrediente vegano, vegetariano, legumbre.', 'normal'),
+(4, 'Panceta', 'La panceta o tocineta es un producto cárnico que comprende la piel y las capas que se encuentran bajo la piel del cerdo o puerco, específicamente de los músculos ventrales. Está compuesta de la piel y tocino entreverado de carne magra. Tags: Ingrediente Carne.', 'pesado'),
+(5, 'Pimentón', 'El pimentón o ají de color es un condimento en polvo de color rojo-anaranjado y sabor característico obtenido a partir del secado y molido de determinadas variedades de pimientos rojos especialmente la ñora y la páprika. Tags: Ingrediente condimento.', 'normal'),
+(6, 'Agua', 'Agua potable o agua apta para el consumo humano se denomina al agua que puede ser consumida sin restricción para beber o preparar alimentos.​​ Tags: Ingrediente bebida.', 'ligero'),
+(7, 'Sal', 'La sal común o sal de mesa, conocida popularmente como sal, es un tipo de sal denominada cloruro sódico, cuya fórmula química es NaCl. Tags: Ingrediente condimento.', 'normal'),
+(8, 'Filete de ternera', 'Se llama carne de ternera a la carne de los bovinos que se han criado por lo menos seis meses de edad hasta el momento del sacrificio. Estas reses pesan 135 kg de promedio. La industria cárnica es la encargada de procesar los subproductos de la carne de ternera. Tags: Ingrediente Carne.', 'normal'),
+(9, 'Jamón serrano', 'El jamón serrano es un alimento obtenido a partir de la salazón y secado al aire de las patas traseras del cerdo. Este mismo producto recibe también el nombre de paleta o paletilla cuando se obtiene de las patas delanteras. El jamón serrano se contrapone al jamón cocido, también llamado jamón de York o \"jamón dulce\".\r\nTags: Ingrediente Carne.', 'normal'),
+(10, 'Aceite de oliva', 'El aceite de oliva es un aceite vegetal de uso principalmente culinario. Se obtiene del fruto del olivo, denominado oliva o aceituna.​ Casi la tercera parte de la pulpa de la aceituna es aceite. Por esta razón, desde la Antigüedad se ha extraído fácilmente con una simple presión ejercida por un molino. Tags: Ingrediente condimento.', 'normal'),
+(11, 'Queso de cabra', 'El queso de cabra, también llamado chèvre es cualquier queso hecho con leche de cabra. Tags: Ingrediente vegetariano.', 'pesado'),
+(12, 'Pan rallado', 'El pan rallado o pan molido es pan duro, generalmente seco de varios días, que ha sido finamente picado mediante un rallador. Su textura harinosa se emplea en la elaboración de diferentes platos y alimentos en forma de rebozado, empanado o gratinado con la intención de proporcionar una costra dura al freírlos. Tags: Ingrediente vegetariano.', 'normal'),
+(13, 'Huevo', 'Los huevos de las aves constituyen un alimento habitual en la alimentación de los humanos. Se presentan protegidos por una cáscara y son ricos en proteínas y lípidos.​​\r\nTags: Ingrediente vegetariano.', 'normal'),
+(14, 'Ajo', 'Allium sativum, el ajo, es una especie tradicionalmente clasificada dentro de la familia de las liliáceas pero que actualmente se ubica en la de las amarilidáceas, ​ aunque este extremo es muy discutido. Tags: Ingrediente condimento, vegetariano, vegano.', 'ligero'),
+(15, 'Pimiento del piquillo', 'El pimiento del piquillo o pimiento de piquillo​ es una variedad de pimiento producido en Lodosa en la Comunidad Foral de Navarra. Tags: Ingrediente verdura.', 'ligero'),
+(16, 'Patatas', 'Solanum tuberosum, de nombre común papa​ o patata, ​ es una especie herbácea perteneciente al género Solanum de la familia de las solanáceas, originaria de la región que comprende el altiplano sur del Perú.​ Tags: Ingrediente Verdura.', 'ligero'),
+(17, 'Harina', 'La harina es el polvo fino que se obtiene del cereal molido y de otros alimentos ricos en almidón.​ Se puede obtener harina de distintos cereales. Aunque la más habitual es harina de trigo, también se hace harina de centeno, de cebada, de avena, de maíz o de arroz. Tags: Ingrediente vegano, vegetariano.', 'normal'),
+(18, 'Leche entera', 'La leche es una secreción nutritiva de color blanquecino opaco producida por las células secretoras de las glándulas mamarias de los mamíferos, incluidos los monotremas.​​​​ Tags: Ingrediente vegetariano, bebida.', 'normal'),
+(19, 'Azúcar', 'La sacarosa o sucrosa es un disacárido formado por glucosa y fructosa. Su nombre químico es alfa-D-Glucopiranosil - - beta-D-Fructofuranósido, ​ y su fórmula es C₁₂H₂₂O₁₁. Es un disacárido que no tiene poder reductor sobre el reactivo de Fehling y el reactivo de Tollens. Tags: Ingrediente condimento.', 'normal'),
+(20, 'Canela', 'El árbol de la canela, conocido como canelo, ​ es un árbol de hoja perenne, de 10 a 15 metros de altura, procedente de Sri Lanka. Se aprovecha como especia su corteza interna, que se obtiene pelando y frotando las ramas. Tags: Ingrediente condimento.', 'normal'),
+(21, 'Arroz', 'El arroz es la semilla de la planta Oryza sativa o de Oryza glaberrima. Se trata de un cereal considerado alimento básico en muchas gastronomías del mundo.​ El arroz es el segundo cereal más producido en el mundo, detrás del maíz y por delante del trigo.​​ Tags: Ingrediente conserva, vegano, vegetariano.', 'ligero'),
+(22, 'Tomate', 'El tomate​ o jitomate​ es el fruto de la planta Solanum lycopersicum, el cual tiene importancia culinaria y es utilizado como verdura. Está considerado una hortaliza.​Tags: Ingrediente verdura, vegetariano,vegano.', 'ligero'),
+(23, 'Cebolla', 'Allium cepa, comúnmente conocida como cebolla, es una planta herbácea bienal perteneciente a la familia de las amarilidáceas. Es la especie más cultivada del género Allium, el cual contiene varias especies que se denominan «cebollas» y que se cultivan como alimento. Tags: Ingrediente verdura, vegetariano, vegano.', 'ligero'),
+(24, 'Caldo de verduras', 'El caldo de verduras, por ejemplo, se pueden preparar caldos muy ligeros y claros, donde uno se limita a hervir las hortalizas en abundante agua, u otros más oscuros y de sabor más intenso, como este que tenemos aquí, donde las verduras se doran previamente. Puedes añadir otros vegetales además de los incluidos en la lista e incluso hierbas o vino para aromatizar. Tags: Ingrediente verdura, vegetariano, vegano, bebida.', 'ligero'),
+(25, 'Zanahoria', 'Daucus carota subespecie sativus, llamada popularmente zanahoria, es la forma domesticada de la zanahoria silvestre, especie de la familia de las umbelíferas, también denominadas apiáceas, y considerada la más importante y de mayor consumo dentro de esta familia. Es oriunda de Europa y Asia sudoccidental.\r\nTags: Ingrediente verdura, vegetariano,vegano.', 'ligero'),
+(26, 'Pimiento', 'El pimiento es una hortaliza de forma, tamaño y color variable. Puede ser verde, rojo, amarillo, naranja e incluso ¡negro!. Su sabor puede ser dulce o picante y se consume en fresco, en conserva, etc. El pimiento se consume crudo, cocido y asado; como guarnición en gran variedad de platos. Tags: Ingrediente verdura, vegetariano,vegano.', 'ligero'),
+(27, 'Levadura', 'Se denomina levadura o fermento a cualquiera de los hongos microscópicos clasificados como ascomicetos o basidiomicetos, predominantemente unicelulares en su ciclo de vida. Tags: Ingrediente condimento.', 'normal'),
+(28, 'Aceite de girasol', 'Ingrediente Condimento', '144kcal'),
+(29, 'Huevo', 'Ingrediente Proteico', '144kcal'),
+(30, 'Yogur de limón', 'Ingrediente Postre', '144kcal'),
+(31, 'Aceite de oliva', 'Ingrediente Condimento', '144kcal'),
+(32, 'Azúcar', 'Ingrediente Condimento', '144kcal'),
+(33, 'Harina', 'Ingrediente Condimento', '144kcal'),
+(34, 'Levadura', 'Ingrediente Condimento', '144kcal'),
+(35, 'Limón', 'Ingrediente Fruta', '144kcal'),
+(36, 'Azúcar glas', 'Ingrediente Condimento', '144kcal'),
+(37, 'Mantequilla', 'Ingrediente Condimento', '144kcal'),
+(38, 'Lentejas', 'Ingrediente Legumbre', '144kcal'),
+(39, 'Zanahorias', 'Ingrediente Verdura', '144kcal'),
+(40, 'Ajo', 'Ingrediente Condimento', '144kcal'),
+(41, 'Cebolla', 'Ingrediente Condimento', '144kcal'),
+(42, 'Laurel', 'Ingrediente Condimento', '144kcal'),
+(43, 'Pimentón dulce', 'Ingrediente Condimento', '144kcal'),
+(44, 'Sal', 'Ingrediente Condimento', '144kcal'),
+(45, 'Pimienta negra', 'Ingrediente Condimento', '144kcal'),
+(46, 'Pimiento verde', 'Ingrediente Verdura', '144kcal'),
+(47, 'Tomate', 'Ingrediente Verdura', '144kcal'),
+(48, 'Hueso de caña', 'Ingrediente Carne', '144kcal'),
+(49, 'Chorizo', 'Ingrediente Carne', '144kcal'),
+(50, 'Morcilla', 'Ingrediente Carne', '144kcal'),
+(51, 'Hueso de jamón', 'Ingrediente carne', '144kcal'),
+(52, 'Agua', 'Ingrediente Bebida', '144kcal'),
+(53, 'Arroz bomba', 'Ingrediente Pasta', '144kcal'),
+(54, 'Plátano', 'Ingrediente Fruta', '144kcal'),
+(55, 'Tomate pera', 'Ingrediente Verdura', '144kcal'),
+(56, 'Alubias negras', 'Ingrediente Legumbre', '144kcal'),
+(57, 'Chile molido', 'Ingrediente Carne', '144kcal'),
+(58, 'Pimiento rojo', 'Ingrediente Verdura', '144kcal'),
+(59, 'Tortillas de trigo', 'Ingrediente Vegetariano', '144kcal'),
+(60, 'Patatas', 'Ingrediente Verdura', '144kcal'),
+(61, 'Calabacín', 'Ingrediente Verdura', '144kcal'),
+(62, 'Berenjena', 'Ingrediente Verdura', '144kcal'),
+(63, 'Champiñones', 'Ingrediente Vegano', '144kcal'),
+(64, 'Jamón', 'Ingrediente Conserva', '144kcal'),
+(65, 'Fideos de arroz', 'Ingrediente Pasta', '144kcal'),
+(66, 'Tofu firme', 'Ingrediente Vegetariano', '144kcal'),
+(67, 'Jengibre fresco', 'Ingrediente Condimento', '144kcal'),
+(68, 'Salsa soja', 'Ingrediente Salsa', '144kcal'),
+(69, 'Curry molido', 'Ingrediente Condimento', '144kcal'),
+(70, 'Ajo granulado', 'Ingrediente Condimento', '144kcal'),
+(71, 'Cúrcuma molida', 'Ingrediente Condimento', '144kcal'),
+(72, 'Lima', 'Ingrediente Fruta', '144kcal'),
+(73, 'Perejil fresco', 'Ingrediente Condimento', '144kcal'),
+(74, 'Cilantro', 'Ingrediente Condimento', '144kcal'),
+(75, 'Pechuga de pollo', 'Ingrediente Carne', '144kcal'),
+(76, 'Vino blanco', 'Ingrediente Bebida', '144kcal'),
+(77, 'Maicena', 'Ingrediente Condimento', '144kcal'),
+(78, 'Kétchup', 'Ingrediente Salsa', '144kcal'),
+(79, 'Vinagre de arroz', 'Ingrediente Condimento', '144kcal'),
+(80, 'Azúcar moreno', 'Ingrediente Condimento', '144kcal'),
+(81, 'Solomillo', 'Ingrediente Carne', '144kcal'),
+(82, 'Lomo', 'Ingrediente Carne', '144kcal'),
+(83, 'Shiratak', 'Ingrediente Pasta', '144kcal'),
+(84, 'Shungiku', 'Ingrediente Condimento', '144kcal'),
+(85, 'Brotes de bambú', 'Ingrediente Vegetariano', '144kcal'),
+(86, 'Café', 'Ingrediente Bebida', '144kcal'),
+(87, 'Caldo Japonés dashi', 'Ingrediente Bebida', '144kcal'),
+(88, 'Miel de arroz', 'Ingrediente Condimento', '144kcal'),
+(89, 'Arroz blanco', 'Ingrediente Pasta', '144kcal'),
+(90, 'Caballa', 'Ingrediente Pescado', '144kcal'),
+(91, 'Mugi miso', 'Ingrediente Vegano', '144kcal'),
+(92, 'Miso de cebada', 'Ingrediente Vegano', '144kcal'),
+(93, 'Shiro miso', 'Ingrediente Vegetariano', '144kcal'),
+(94, 'Miso blanco', 'Ingrediente Vegetariano', '144kcal');
 
 -- --------------------------------------------------------
 
@@ -136,6 +173,19 @@ CREATE TABLE `menus` (
   `usuario_id` int(12) UNSIGNED DEFAULT NULL COMMENT 'Usuario que ha creado el menu o CERO si no existe (como si fuera NULL).'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `menus`
+--
+
+INSERT INTO `menus` (`id`, `titulo`, `descripcion`, `usuario_id`) VALUES
+(9, 'Menu Asturiano', 'La gastronomía de Asturias es el conjunto de tradiciones culinarias, ingredientes y recetas propio del Principado de Asturias (España). Si bien es cierto que la cocina asturiana ha sabido transmitirse generación tras generación, también lo es que carece de tradición escrita hasta época muy reciente, ya que no existen apenas escritos que muestren qué comían los asturianos, y los pocos relatos que se conservan se encuentran en textos de naturaleza muy distinta a la gastronómica. ', 1),
+(10, 'Menu vegano', 'El veganismo, del inglés veganism,​ es la abstención del uso de productos de origen animal.', 3),
+(11, 'Menu iberico', 'La gastronomía o cocina española son los platos, ingredientes, técnicas y toda la tradición culinaria que se practica en España. Cocina de origen que oscila entre el estilo rural y el costero, representa una diversidad fruto de muchas culturas, así como de paisajes y climas.', 2),
+(12, 'Menu andaluz', 'La comunidad autónoma de Andalucía posee una rica gastronomía propia, muy variada y con diferencias entre la costa y el interior. Forma parte de la dieta mediterránea. Consiste en una gastronomía muy vinculada al uso del aceite de oliva, los frutos secos, los pescados y las carnes.', 5),
+(13, 'Menu carnivoro', 'La dieta carnívora significa obtener nutrición de alimentos de origen animal y limitar o eliminar severamente todas las plantas de la dieta. El propósito de esta forma de comer es mejorar la salud, perder grasa, curar el cuerpo y la mente y aliviar muchas enfermedades crónicas.', 7),
+(14, 'Menu Capitan', 'Permite comer de todo, no hay restricciones. Además de todo lo que considera una dieta vegana, también incluye los alimentos que no se permite consumir en la anteriormente mencionada: todos los tipos de carne, pescado, marisco, lácteos y huevos.', 6),
+(15, 'Menu de autor', 'La cocina de autor es una perfecta representación de tendencia gastronómica. Esta tipología  de cocina, tan celebrada y curiosa, se basa en la creación de platos en base a la creatividad y experiencia del chef. Es decir, el chef como autor de una obra, que en este caso es un plato. Es una cocina que manifiesta grandes rasgos de personalidad e innovación, y donde el sello de identidad juega un papel crucial.', 8);
+
 -- --------------------------------------------------------
 
 --
@@ -147,6 +197,32 @@ CREATE TABLE `menu_recetas` (
   `menu_id` int(12) UNSIGNED NOT NULL,
   `receta_id` int(12) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `menu_recetas`
+--
+
+INSERT INTO `menu_recetas` (`id`, `menu_id`, `receta_id`) VALUES
+(20, 9, 12),
+(21, 9, 13),
+(22, 9, 16),
+(23, 10, 11),
+(24, 10, 16),
+(26, 11, 12),
+(27, 11, 11),
+(28, 11, 13),
+(29, 11, 15),
+(30, 11, 16),
+(31, 11, 17),
+(32, 9, 14),
+(33, 12, 11),
+(34, 13, 13),
+(35, 14, 15),
+(36, 14, 16),
+(37, 15, 12),
+(38, 12, 16),
+(39, 13, 16),
+(40, 15, 16);
 
 -- --------------------------------------------------------
 
@@ -162,6 +238,19 @@ CREATE TABLE `planificaciones` (
   `notas` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `planificaciones`
+--
+
+INSERT INTO `planificaciones` (`id`, `nombre`, `periodo`, `usuario_id`, `notas`) VALUES
+(8, 'Dieta hipocalorica', '15', 1, 'La dieta hipocalórica permite comer de forma equilibrada y saludable mediante el control de la ingesta de calorías, que varían dependiendo de nuestras características físicas y nuestro grado de actividad. En este tipo de dieta, se realizan cinco comidas al día y no se evita ningún grupo de alimentos, excepto aquellos como el azúcar y las grasas saturadas. Estos parámetros son aptos en una dieta para diabéticos, puesto que, además de repartir las comidas a lo largo del día,  limitan la cantidad de grasa, azúcares y sal que ingerimos, y permite consumir una gran variedad de frutas y verduras.'),
+(9, 'Dieta por puntos', '15', 2, 'La dieta por puntos es una buena opción para aquellos que están aburridos de todas las dietas y quieren probar algo nuevo. En este tipo de dieta, también se consumen todos los grupos de alimentos de forma equilibrada y, para ello,  cuenta con una tabla de puntos que los clasifica según sus características. El objetivo de este plan de alimentación es no sobrepasar los puntos indicados al cabo del día. En esta dieta no hay alimentos prohibidos, pero siempre hay que evitar aquellos como bollería o embutidos grasos, porque su alta puntuación puede hacer que alcancemos la totalidad de los puntos, o los sobrepasemos, con sólo probarlos.'),
+(10, 'Dieta paleo', '30', 3, 'La dieta paleo, también llamada dieta paleolítica, prácticamente se ha convertido en un estilo de vida. Consiste en volver a aquellos orígenes en los que la alimentación se basaba únicamente en lo que se cazaba y recolectaba. Por ello,  este tipo de dieta elimina los alimentos procesados y evita algunos grupos como cereales o lácteos, y basa la alimentación en carnes, pescados, frutas y verduras, que proporcionan un alto grado de energía. Aunque puede ser una buena opción, hay que encontrar el equilibrio en el consumo de estos productos, ya que un consumo excesivo de carne también puede ser perjudicial'),
+(11, 'Dieta proteica', '21', 4, 'En la dieta proteica, se limita la alimentación a aquellos alimentos que son altos en proteínas, como la carne, el pescado y los derivados lácteos. Este tipo de dieta, que llega a excluir grupos de alimentos tan fundamentales como las frutas y las verduras, puede llegar a ocasionar graves problemas de salud. Algunas de las carencias más graves de esta dieta son la falta de hidratos de carbono y de fibra, imprescindibles para el buen funcionamiento de nuestro cuerpo. Esta restrictiva dieta posibilita perder kilos fácilmente a costa de nuestra salud y puede llegar a perjudicar gravemente nuestro metabolismo.'),
+(12, 'Dieta detox', '28', 5, 'El término “detox” se ha convertido en una palabra que está en boca de todo el mundo, pero lo cierto es que este tipo de alimentación no puede sostenerse en el tiempo. Este tipo de dieta surge en los últimos años como una forma de depurar nuestro organismo, y se basa en el consumo exclusivo de líquidos durante, al menos, un día completo a la semana. Un consumo exclusivo de líquido no sólo no aporta la cantidad de energía necesaria para el funcionamiento del organismo, sino que puede provocar desequilibrios en componentes tan necesarios como el calcio, el potasio o el sodio.'),
+(13, 'Dieta alcalina', '60', 6, 'También conocida como la dieta del pH y promocionada como la dieta “anticáncer”, este tipo de dieta es la última revolución entre los famosos.  La dieta alcalina promete depurar el organismo y, además, ser un fuerte protector contra posibles tumores, basándose en el consumo de alimentos que tienen supuestos efectos sobre la acidez de los fluidos de nuestro organismo. El punto a favor de esta dieta es que aboga por alimentos como cereales, frutas, verduras y legumbres, pero con una restricción tan amplia en el resto de alimentos que no es una opción saludable.'),
+(14, 'Dieta de la sopa de tomate', '15', 7, 'Es la que siguen los enfermos del corazón del Secret Memorial Hospital de EEUU antes de una operación. Se trata de un plan de una semana que limpia impurezas y quema grasas muy rápido. La base de esta dieta de adelgazamiento es una sopa quemagrasas que se debe de comer todos los días y en la cantidad que se desee, porque apenas tiene calorías.');
+
 -- --------------------------------------------------------
 
 --
@@ -174,6 +263,30 @@ CREATE TABLE `planificacion_menus` (
   `menu_id` int(12) UNSIGNED NOT NULL COMMENT 'Menu relacionado con el dia planificado',
   `numero_dia` smallint(3) NOT NULL COMMENT 'Numero de dia del menu dentro de la planificacion.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `planificacion_menus`
+--
+
+INSERT INTO `planificacion_menus` (`id`, `planificacion_id`, `menu_id`, `numero_dia`) VALUES
+(12, 8, 9, 1),
+(13, 8, 10, 2),
+(14, 8, 11, 3),
+(15, 8, 12, 4),
+(16, 8, 13, 5),
+(17, 8, 14, 6),
+(18, 8, 15, 7),
+(19, 9, 10, 1),
+(20, 9, 13, 2),
+(21, 10, 10, 1),
+(22, 14, 10, 1),
+(23, 11, 11, 1),
+(24, 10, 10, 2),
+(25, 10, 10, 3),
+(26, 12, 10, 1),
+(27, 12, 10, 2),
+(28, 12, 10, 3),
+(29, 14, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -204,12 +317,19 @@ INSERT INTO `recetas` (`id`, `nombre`, `descripcion`, `tipo_plato`, `dificultad`
 (2, 'Tortilla de patata', 'Quizás la receta de la tortilla de patata sea una de las primeras que todo aspirante a cocinillas debería aprender a hacer y nos hemos propuesto que los que estén empezando en la cocina con nosotros, puedan preparar esta receta de tortilla de patatas con cebolla, con un sabor excepcional.\r\n\r\nPara ello, vamos a hacer esta tortilla de patatas con dos toques especiales ya que las patatas las vamos a cocinar partiendo de aceite en frío para conseguir un confitado que las haga más cremosas y la cebolla la vamos a caramelizar y añadir después a las patatas. Si preparáis la receta tal como la contamos a continuación, el éxito estará garantizado.', 'E', 2, 4, 30, 3, 1, 1, 'tortilla.jpg'),
 (3, 'Lentejas con Chorizo', 'No a todo el mundo le gustan, como dice el refrán «El que quiera las coma y el que no las deja» pero creo que es importante educar a todos los niños/as desde pequeños para que les guste este guiso introduciéndolo en la dieta diaria. Aunque lleven su tiempo otro punto a favor es que puedes hacer una cazuela de ellas y congelarlas. Siempre y cuando no les añadas patata. Os presento esta receta que casi se hace sola, espero que os guste.', '1', 2, 6, 90, 3, 0, 1, 'lentejas.jpg'),
 (4, 'Revuelto de verduras ', 'Una receta ligera que podemos preparar con verduras frescas de temporada o verduras congeladas. También puede ser una receta de aprovechamiento, cuando van quedando trozos de verduras antes de que se pongan malas, es mejor congelar y meter los trozos en una bolsa de congelado, así cuando nos apetezca una tortilla o un revuelto de verduras de diesta, las podemos utilizar. Queda un revuelto rico, jugoso y rápido de preparar.', 'E', 2, 4, 15, 3, 1, 1, 'revuelto-verduras.jpg'),
-(5, 'Sukiyaki - Carne con verduras rehogadas', 'Plato tradicional japonés que se hace a partir de carne de vaca y verduras rehogadas. Verás que el sukiyaki es una preparación muy rica que suele considerarse como un plato tradicional en días de fiesta en Japón. A continuación te explicamos de forma detallada y muy completa cómo hacer esta receta.', '2', 5, 6, 150, 4, 1, 1, 'sukiyaki.jpg'),
 (6, 'Huevos rotos con jamón y patatas', '¿Alguien ha dicho huevos rotos con jamón y chorizo? También conocidos como huevos estrellados, este típico plato de la gastronomía española es sabrosísimo y puede prepararse con diferentes ingredientes. En este caso, veremos una receta de huevos rotos con jamón y patatas y chorizo gallego ahumado así que ¡no te los puedes perder!', '2', 2, 3, 30, 4, 1, 1, 'huevos-rotos.jpg'),
 (7, 'Arroz a la cubana', 'Según el diccionario de gastronomía, el arroz a la cubana es \"una preparación sencilla de arroz blanco cocido y huevos fritos. Los huevos se sirven colocados sobre montículos de arroz. Es habitual acompañarlo de salsa de tomate y, tradicionalmente, de plátano maduro frito en rebanadas y aguacate\".\r\n\r\nLa denominación del plato \"procede de la práctica cubana de mojar el arroz blanco con la salsa de los guisos, generalmente elaborados con salsa de tomate especiada\". Parece ser que, a pesar de su apellido, su origen no está en Cuba sino en Canarias, donde el uso del plátano autóctono se puso de moda.\r\n\r\nPara nosotros, este plato de toda la vida, siempre ha estado compuesto arroz, huevo frito, plátano canario y salsa de tomate. Desconocíamos lo del aguacate, pero nos parece maravilloso y lo sumaremos a partir de ahora. Hay quienes completan el conjunto con algo de carne: salchichas, cinta de lomo o picadillo de carne. Al gusto.', '2', 2, 1, 160, 3, 1, 1, 'arroz-cubana.jpg'),
-(8, 'Fideos de arroz con salteado de tofu y pimiento', 'Los fideos de arroz dan un aire oriental a cualquier plato y creo que por eso combinan tan bien con el tofu. Su textura ligera es muy agradable en sopas, pero también se puede saltear con otros ingredientes. Recordad escurrir bien el tofu antes de usarlo en recetas como esta, y no os cortéis con las especias.\r\n\r\nMe atrevería a decir que todo el mundo tiene algún paquete de pasta siempre en la despensa. Si no la habéis probado, os recomiendo variar de vez en cuando con variedades de arroz, y seguro que los celíacos la conocen bien. Estos fideos de arroz con salteado de tofu y pimiento se preparan en un suspiro y es un plato vegano y sin gluten.', '1', 4, 2, 35, 3, 1, 1, 'fideos-arroz.jpeg'),
+(8, 'Fideos de arroz con salteado de tofu y pimiento', 'Los fideos de arroz dan un aire oriental a cualquier plato y creo que por eso combinan tan bien con el tofu. Su textura ligera es muy agradable en sopas, pero también se puede saltear con otros ingredientes. Recordad escurrir bien el tofu antes de usarlo en recetas como esta, y no os cortéis con las especias.\r\n\r\nMe atrevería a decir que todo el mundo tiene algún paquete de pasta siempre en la despensa. Si no la habéis probado, os recomiendo variar de vez en cuando con variedades de arroz, y seguro que los celíacos la conocen bien. Estos fideos de arroz con salteado de tofu y pimiento se preparan en un suspiro y es un plato vegano y sin gluten.', '1', 4, 2, 35, 3, 1, 1, 'fideos-arroz.jpg'),
 (9, 'Burritos Vegetarianos', 'La cocina mexicana se ha hecho un hueco en nuestro país y no es de extrañar. La gastronomía del país del otro lado del charco está repleta de sabores extraordinarios, de ingredientes frescos y de mucha sencillez en sus elaboraciones. Al menos en las más populares, que no las únicas, como es el caso de la receta de burritos vegetarianos.\r\n\r\nOs puedo garantizar que los burritos vegetarianos están tan repletos de sabor que, vegetarianos o no, los probaréis y querréis más. Son jugosos, de textura suave y ligeramente picantes, con un relleno de frijoles refritos y cebolla y pimientos salteados al chile que quita el sentido. No obstante, podéis adaptarlos a vuestros gustos porque son de lo más versátil.', '1', 2, 3, 60, 4, 5, 1, 'burritos-veg.jpg'),
-(10, 'Pollo Agridulce', 'En esta ocasión, vamos a preparar un pollo agridulce chino. Pero no uno cualquiera. La receta original. En realidad es muy fácil de hacer. ¿Quién necesita ir a los restaurantes de comida china, pudiendo prepararlo en casa? Vamos a ver cómo hacer en casa este pollo agridulce chino siguiendo unos sencillos pasos que te muestro a continuación.', '2', 3, 2, 30, 2, 1, 1, 'pollo-agridulce-chino.jpg');
+(10, 'Pollo Agridulce', 'En esta ocasión, vamos a preparar un pollo agridulce chino. Pero no uno cualquiera. La receta original. En realidad es muy fácil de hacer. ¿Quién necesita ir a los restaurantes de comida china, pudiendo prepararlo en casa? Vamos a ver cómo hacer en casa este pollo agridulce chino siguiendo unos sencillos pasos que te muestro a continuación.', '2', 3, 2, 30, 2, 1, 1, 'pollo-agridulce-chino.jpg'),
+(11, 'Sopa de tomate', 'una sopa quemagrasas que se debe de comer todos los días y en la cantidad que se desee, porque apenas tiene calorías.', '1', 2, 1, 30, 3, 1, 1, 'sopatomate1641502211.jpg'),
+(12, 'Fabada Asturiana', 'Fabada asturiana, o simplemente fabada, es el plato tradicional de la cocina asturiana elaborado con faba asturiana (en asturiano, fabes), embutidos como chorizo y la morcilla asturiana, y con cerdo. Es el plato típico de Asturias (el plato regional más conocido de la región asturiana), pero su difusión es tan grande en la península ibérica que forma parte de la gastronomía de España más reconocida. Se considera según ciertos autores una de las diez recetas típicas de la cocina española.', '1', 2, 5, 180, 5, 1, 1, 'fabada1641502549.jpg'),
+(13, 'Cachopo', 'Un cachopo qué es, pues son dos filetes de ternera uno encima del otro y en medio está relleno de jamón y queso. Luego va enharinado, pasado por huevo empanado y frito. Suena fácil, y la verdad es que es fácil hacerlo.', '2', 3, 2, 60, 5, 1, 1, 'cachopo21641502878.jpg'),
+(14, 'Arroz con leche', 'El arroz con leche es un postre típico de la gastronomía de múltiples países hecho cociendo lentamente arroz con leche y azúcar. Se sirve frío o caliente. Se le suele espolvorear canela, vainilla o cáscara de limón para aromatizarlo.', 'P', 4, 8, 140, 5, 1, 1, 'arrozconleche1641503050.png'),
+(15, 'Tortilla de patata', 'La tortilla de patatas o tortilla de papas​ o tortilla española es una tortilla u omelet ​ a la que se le agrega patatas troceadas.​ Se trata de uno de los platos más conocidos y emblemáticos de la cocina española, siendo un producto muy popular que se puede encontrar en casi cualquier bar o restaurante del país.', '1', 1, 5, 60, 5, 1, 1, 'tortilla1641503652.jpg'),
+(16, 'Pan', 'El pan, del latín panis, es un alimento básico que forma parte de la dieta tradicional en Europa, Medio Oriente, India, América y Oceanía. Se suele preparar mediante el horneado de una masa, elaborada fundamentalmente con harina de cereal, agua y sal.', 'E', 4, 5, 240, 5, 2, 1, 'pan1641503828.jpg'),
+(17, 'Huevos con patatas y jamón', 'Estos huevos revueltos o huevos estrellados con patatas, jamón y pimientos de padrón son una receta esencial y que suele gustar a todo el mundo. Creo que todos tenemos en mente la imagen de esa yema de huevo que, al romperse, comienza a escurrirse entre el resto de ingredientes, un auténtico… ¡escándalo! ', '2', 1, 1, 45, 5, 5, 1, 'huevosjamon1641504031.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -221,6 +341,27 @@ CREATE TABLE `receta_categorias` (
   `receta_id` int(12) UNSIGNED NOT NULL,
   `categoria_id` int(12) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `receta_categorias`
+--
+
+INSERT INTO `receta_categorias` (`id`, `receta_id`, `categoria_id`) VALUES
+(1, 11, 1),
+(2, 11, 3),
+(3, 11, 4),
+(4, 12, 4),
+(5, 13, 2),
+(6, 13, 4),
+(7, 14, 3),
+(8, 14, 4),
+(9, 15, 4),
+(10, 15, 3),
+(11, 16, 1),
+(12, 16, 3),
+(13, 16, 4),
+(14, 17, 3),
+(15, 17, 4);
 
 -- --------------------------------------------------------
 
@@ -235,6 +376,21 @@ CREATE TABLE `receta_comentarios` (
   `fechahora` datetime NOT NULL,
   `texto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `receta_comentarios`
+--
+
+INSERT INTO `receta_comentarios` (`id`, `receta_id`, `usuario_id`, `fechahora`, `texto`) VALUES
+(1, 11, 2, '2022-01-07 00:10:09', 'excelente receta, a mis hijos les encanta'),
+(2, 12, 1, '2022-01-07 00:10:42', 'Una, buena fabada asturiana 100%, como tiene que ser'),
+(3, 13, 6, '2022-01-07 00:11:51', 'Lo hice para mi sólo pero da para comer una legión. Lo tuve que dejar para desayunarlo al día siguiente :)'),
+(4, 14, 5, '2022-01-07 00:12:30', 'Me encanta pero el médico me ha dicho que me cuide con el azúcar'),
+(5, 15, 8, '2022-01-07 00:13:53', 'Una tortilla con cebolla y una cerveza para pasarla mejor. Como Dios manda!!'),
+(6, 16, 3, '2022-01-07 00:14:30', 'Es pan, a quién no le gusta?'),
+(7, 17, 4, '2022-01-07 00:15:11', 'Iguales que los de mi abuela me han salido'),
+(8, 12, 7, '2022-01-07 00:15:34', 'Con fabes y sidrina...'),
+(9, 11, 8, '2022-01-07 00:16:26', 'receta superfácil');
 
 -- --------------------------------------------------------
 
@@ -256,8 +412,136 @@ CREATE TABLE `receta_ingredientes` (
 --
 
 INSERT INTO `receta_ingredientes` (`id`, `receta_id`, `ingrediente_id`, `cantidad`, `medida`, `notas`) VALUES
-(1, 6, 10, 2, 'unidades', ''),
-(2, 1, 10, 3, 'Unidades', '');
+(2, 11, 22, 2, 'uds.', ''),
+(3, 11, 23, 1, 'ud.', ''),
+(4, 11, 24, 1, 'L', ''),
+(5, 11, 25, 100, 'g', ''),
+(6, 11, 15, 150, 'g', ''),
+(7, 12, 1, 2, 'uds.', ''),
+(8, 12, 2, 2, 'uds.', ''),
+(9, 12, 4, 200, 'g', ''),
+(10, 12, 3, 500, 'g', ''),
+(11, 12, 6, 3, 'L', ''),
+(12, 12, 7, 50, 'g', ''),
+(13, 12, 5, 1, 'cucharada', ''),
+(14, 13, 8, 2, 'uds. ', ''),
+(15, 13, 9, 200, 'g', ''),
+(16, 13, 11, 200, 'g', ''),
+(17, 13, 12, 300, 'g', ''),
+(18, 13, 13, 1, 'ud.', ''),
+(19, 13, 14, 1, 'diente', ''),
+(20, 13, 7, 1, 'pizca', ''),
+(21, 14, 21, 200, 'g', ''),
+(22, 14, 18, 3, 'L', ''),
+(23, 14, 19, 200, 'g', ''),
+(24, 14, 20, 50, 'g', ''),
+(25, 15, 13, 7, 'uds.', ''),
+(26, 15, 16, 500, 'g', ''),
+(27, 15, 23, 1, 'ud.', ''),
+(28, 15, 7, 1, 'pizca', ''),
+(29, 15, 10, 2, 'L', ''),
+(30, 16, 17, 1, 'kg', ''),
+(31, 16, 6, 200, 'ml', ''),
+(32, 16, 27, 20, 'g', ''),
+(33, 16, 7, 1, 'pizca', ''),
+(34, 17, 13, 4, 'uds.', ''),
+(35, 17, 16, 500, 'g', ''),
+(36, 17, 9, 200, 'g', ''),
+(37, 17, 7, 1, 'pizca', ''),
+(38, 17, 10, 2, 'L', ''),
+(101, 1, 29, 3, 'unidad', ''),
+(102, 1, 31, 1, 'envase de yogur', ''),
+(103, 1, 33, 3, 'envase de yogur', ''),
+(104, 1, 35, 1, 'unidad', ''),
+(105, 1, 30, 1, 'unidad', ''),
+(106, 1, 32, 2, 'envase de yogur', ''),
+(107, 1, 34, 1, 'sobre', ''),
+(108, 1, 36, 1, 'cucharada', ''),
+(109, 2, 16, 700, 'gramos', ''),
+(1010, 2, 41, 300, 'gramos', ''),
+(1011, 2, 29, 6, 'unidad', ''),
+(1012, 2, 44, 1, '', ''),
+(1013, 2, 31, 0, '', 'cantidad indeterminada'),
+(1014, 3, 38, 500, 'gramos', ''),
+(1015, 3, 40, 2, 'diente', ''),
+(1016, 3, 41, 2, 'unidad', ''),
+(1017, 3, 42, 1, 'hoja', ''),
+(1018, 3, 43, 1, 'cucharada', ''),
+(1019, 3, 44, 1, 'pizca', 'al gusto'),
+(1020, 3, 45, 1, 'pizca', 'al gusto'),
+(1021, 3, 31, 4, 'cuchrarada', ''),
+(1022, 3, 46, 1, 'unidad', ''),
+(1023, 3, 47, 2, 'unidad', ''),
+(1024, 3, 48, 1, 'unidad', ''),
+(1025, 3, 49, 2, 'unidad', ''),
+(1026, 3, 50, 1, 'unidad', ''),
+(1027, 3, 51, 0.25, 'unidad', 'un cuarto'),
+(1028, 3, 52, 0, '', 'Cantidad indetermindada'),
+(1029, 4, 41, 300, 'gramos', '300 gramos en total las verduras'),
+(1030, 4, 60, 300, 'gramos', '300 gramos en total las verduras'),
+(1031, 4, 63, 300, 'gramos', '300 gramos en total las verduras'),
+(1032, 4, 64, 300, 'gramos', '300 gramos en total las verduras'),
+(1034, 4, 29, 4, 'unidades', ''),
+(1035, 4, 31, 2, 'cucharadas soperas', ''),
+(1036, 4, 44, 1, 'pizca', ''),
+(1037, 5, 81, 500, 'gramos', ''),
+(1038, 5, 41, 10, 'unidad', 'Cebolleta'),
+(1040, 5, 68, 0.5, 'taza', ''),
+(1041, 5, 83, 250, 'gramos', ''),
+(1042, 5, 84, 100, 'gramos', ''),
+(1043, 5, 85, 225, 'gramos', 'en rodajas'),
+(1044, 5, 63, 12, 'unidades', ''),
+(1045, 5, 87, 0.5, 'taza', ''),
+(1046, 5, 86, 1, 'taza', ''),
+(1047, 5, 141, 4, 'cucharadas soperas', ''),
+(1048, 5, 31, 1, 'cucharadas soperas', ''),
+(1050, 6, 62, 2, 'unidad', ''),
+(1051, 6, 66, 250, 'gramos', ''),
+(1052, 6, 49, 2, 'unidad', ''),
+(1053, 6, 20, 0, '', 'para freir'),
+(1054, 7, 53, 100, 'gramos', ''),
+(1055, 7, 54, 1, 'unidad', ''),
+(1056, 7, 29, 2, 'unidad', ''),
+(1057, 7, 31, 0, '', 'cantidad indetermindada'),
+(1058, 7, 42, 1, 'hoja', ''),
+(1059, 7, 44, 1, 'pizca', ''),
+(1060, 7, 47, 2, 'kg', ''),
+(1061, 7, 39, 3, 'unidad', ''),
+(1062, 7, 56, 2, 'unidad', ''),
+(1063, 7, 41, 1, 'unidad', ''),
+(1064, 8, 67, 120, 'gramos', ''),
+(1065, 8, 68, 200, 'gramos', ''),
+(1066, 8, 60, 1, 'unidad', ''),
+(1067, 8, 69, 1, 'trocito', ''),
+(1068, 8, 70, 15, 'ml', ''),
+(1069, 8, 71, 0.5, 'cuchraradita', ''),
+(1070, 8, 72, 0.25, 'cuchraradita', ''),
+(1071, 8, 73, 1, 'cuchraradita', ''),
+(1072, 8, 74, 1, 'unidad', ''),
+(1073, 8, 45, 0, '', 'cantidad indetermindada'),
+(1074, 8, 44, 1, 'pizca', ''),
+(1075, 8, 31, 0, '', 'cantidad indetermindada'),
+(1077, 9, 57, 250, 'gramos', ''),
+(1078, 9, 42, 1, 'hoja', ''),
+(1079, 9, 58, 5, 'gramos', ''),
+(1080, 9, 20, 0, '', 'cantidad indetermindada'),
+(1081, 9, 44, 1, 'pizca', 'cantidad indetermindada'),
+(1082, 9, 41, 1, 'unidad', ''),
+(1083, 9, 60, 1, 'unidad', ''),
+(1084, 9, 46, 1, 'unidad', ''),
+(1085, 9, 31, 0, '', 'cantidad indetermindada'),
+(1086, 9, 44, 3, 'gramos', 'sal de ajo'),
+(1087, 9, 61, 4, 'unidad', ''),
+(1088, 10, 77, 300, 'gramos', ''),
+(1089, 10, 29, 1, 'unidad', ''),
+(1090, 10, 70, 1, 'cucharada', ''),
+(1091, 10, 78, 1, 'cucharada', ''),
+(1092, 10, 60, 1, 'unidad', ''),
+(1093, 10, 46, 1, 'unidad', ''),
+(1094, 10, 40, 1, 'diente', ''),
+(1095, 10, 41, 0.5, 'unidad', ''),
+(1097, 10, 44, 0, '', 'cantidad indetermindada'),
+(1098, 10, 20, 0, '', 'cantidad indetermindada');
 
 -- --------------------------------------------------------
 
@@ -376,14 +660,13 @@ CREATE TABLE `tiendas` (
 --
 
 INSERT INTO `tiendas` (`id`, `nombre`, `domicilio`, `poblacion`, `provincia`, `usuario_id`, `activa`, `visible`) VALUES
-(1, 'Alimerka', 'Dr. Fleming, 1', 'Zamora', 'Zamora', 11, 1, 1),
-(2, 'Carrefour Express', 'Ctra. Pueblica, 3', 'Tábara', 'Zamora', 7, 1, 0),
-(5, 'Froiz', 'C. Argentina, 13', 'Zamora', 'Zamora', 4, 1, 1),
-(6, 'Gadis', 'Av. de Portugal, 12', 'Zamora', 'Zamora', 5, 1, 1),
-(7, 'Lupa', 'P.º de Canalejas, 138', 'Salamanca', 'Salamanca', 6, 1, 1),
-(8, 'Carrefour Express', 'C. María Auxiliadora, 23', 'Salamanca', 'Salamanca', 7, 1, 1),
-(9, 'Mercadona', 'Calle Ctra. de Salamanca, 7', 'Bejar', 'Salamanca', 8, 1, 1),
-(10, 'Dia', 'C. Padre Vicente Salgado, 1', 'Puebla de Sanabria', 'Zamora', 9, 1, 1);
+(2, 'Mercadona', 'Calle Monsalve, 2', 'Zamora', 'Zamora', 10, 1, 1),
+(3, 'Alimerka', 'Calle Ramón del Valle, 11', 'Arriondas', 'Asturias', 10, 1, 1),
+(4, 'Lidl', 'Av. Padre Ignacio Ellacuría, 1', 'Salamanca', 'Salamanca', 10, 1, 1),
+(5, 'Carrefour Express', 'Calle Arzobispo Guisasola, 42', 'Oviedo', 'Asturias', 10, 1, 1),
+(6, 'Eroski', 'C. Epifanía, 6', 'Valladolid', 'Valladolid', 10, 1, 1),
+(7, 'Dia', 'C. de la Virgen de los Peligros, 9', 'Madrid', 'Madrid', 10, 1, 1),
+(8, 'Coviran', 'Av. Portugal, 1', 'Cádiz', 'Cádiz', 10, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -407,12 +690,20 @@ CREATE TABLE `tienda_ofertas` (
 --
 
 INSERT INTO `tienda_ofertas` (`id`, `tienda_id`, `ingrediente_id`, `descripcion`, `envase`, `cantidad`, `medida`, `notas`) VALUES
-(1, 1, 1, 'Oferta 3x2', 'Botella', 3, 'Lt', '2€'),
-(2, 2, 10, 'Oferta 2x1', 'Docena', 1, 'Docena', '1.25€'),
-(3, 2, 22, 'Oferta 3+1', 'Malla', 4, 'Kg', '3€'),
-(4, 1, 16, 'Oferta 2+1', 'Malla', 3, 'Kg', '2€'),
-(5, 2, 21, 'Oferta 2x1', 'Malla', 1, 'unidad', '0.50€'),
-(6, 2, 18, '50% descuento', 'Envase Plástico', 200, 'g', '1.25€');
+(1, 2, 1, '10% dto.', 'pack de 3 chorizos', 300, 'g', 'solo aplicable una vez'),
+(2, 6, 1, '2x1', 'chorizos sueltos', 200, 'g', 'llevas 2 y pagas 1'),
+(3, 3, 11, '15 % en la segunda unidad', 'queso entero', 450, 'g', 'solo hasta el 12/01/2021'),
+(4, 5, 23, 'sólo 3,99 €', 'malla de cebollas', 1, 'kg', 'sólo hasta el 01/02/2021'),
+(5, 4, 19, 'sólo 0,59 €', 'paquete', 1, 'kg', 'sólo hasta el 21/01/2022'),
+(6, 7, 10, '3x2', 'botella', 1, 'L', 'sólo el 13/01/2022'),
+(7, 8, 22, 'gratis la 2ª unidad', 'bolsa', 500, 'g', 'sólo los martes'),
+(8, 8, 22, '40% en la segunda unidad', 'bandeja 4 tomates', 300, 'g', '---'),
+(9, 2, 13, '3x2', 'huevera', 1, 'docena', '---'),
+(10, 2, 18, 'sólo 0,78 €', 'tetrabrick', 1, 'L', '---'),
+(11, 2, 3, 'OFERTA ESPECIAL - 9,90 €', 'a granel', 1, 'kg', 'Oferta sólo válida para socios Mercadona'),
+(12, 2, 16, 'OFERTA ESPECIAL - 3,50 €', 'bolsa', 5, 'kg', '---'),
+(13, 2, 7, 'OFERTA DEL DÍA - 0,32 €', 'paquete', 1, 'kg', 'Sólo válida el 11/01/2022'),
+(14, 2, 17, '2x1', 'paquete', 1, 'kg', '---');
 
 -- --------------------------------------------------------
 
@@ -435,14 +726,17 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `password`, `nombre`, `rol`, `aceptado`, `creado`) VALUES
-(1, 'prueba@mail.com', '711383a59fda05336fd2ccf70c8059d1523eb41a', 'prueba', 'C', 1, '2022-01-02 16:05:26'),
-(4, 'froiz@mail.com', '03c18fee4ea554de4077575d363a4f84ad20c90f', 'Froiz', 'T', 1, '2022-01-05 19:42:11'),
-(5, 'gadis@mail.com', '673d1de760f5b66914b38ebb2c79a4b181b01209', 'Gadis', 'T', 1, '2022-01-05 19:42:35'),
-(6, 'lupa@mail.com', '900bac9f13ceef619b0b3779b0ac185caaf9bdb3', 'Lupa', 'T', 1, '2022-01-05 19:42:58'),
-(7, 'carrefour@mail.com', '743a8f254cbfe5fd29dfb3468d7e516b27af468e', 'Carrefour', 'T', 1, '2022-01-05 19:43:27'),
-(8, 'mercadona@hola.com', '50f0f0b11f06f81d6a2294aa82cf70a8bd5590f5', 'Mercadona', 'T', 1, '2022-01-05 19:43:46'),
-(9, 'dia@hola.com', '4967e07bc327c714541206122152ddfcfdb5b27c', 'Dia', 'T', 1, '2022-01-05 19:44:02'),
-(11, 'alimerka@hola.com', '0084d73878ed316b0973510036ef5b4c17bf161a', 'Alimerka', 'T', 1, '2022-01-05 19:49:06');
+(1, 'fer@gmail.com', 'cef48cb4569d34364e0e86067efa14fbe9b4591e', 'fer', 'A', 1, '2022-01-03 15:57:24'),
+(2, 'marcos@gmail.com', 'dfadc855249b015fd2bb015c0b099b2189c58748', 'marcos', 'A', 1, '2022-01-06 21:20:26'),
+(3, 'victor@gmail.com', '88fa846e5f8aa198848be76e1abdcb7d7a42d292', 'victor', 'A', 1, '2022-01-06 21:21:25'),
+(4, 'nerea@gmail.com', 'ecd38c3624dcb1ab55b8a926a44d3dbeeed84fc6', 'nerea', 'A', 1, '2022-01-06 21:21:54'),
+(5, 'pablo@gmail.com', '707d14912bb250caf67dfe0ea4035681fbfc4f56', 'pablo', 'A', 1, '2022-01-06 21:22:38'),
+(6, 'manu@gmail.com', '158873d90a7ef40f3637a222b7329c09d0222554', 'manu', 'A', 1, '2022-01-06 21:23:51'),
+(7, 'sara@gmail.com', 'dea04453c249149b5fc772d9528fe61afaf7441c', 'sara', 'A', 1, '2022-01-06 21:24:27'),
+(8, 'elsa@gmail.com', '431651dd2bf464e7ef8821b265af8119e4e25b63', 'elsa', 'A', 1, '2022-01-06 21:24:48'),
+(9, 'colaborador@gmail.com', 'cd6a0dd2dfac024a049e7430ab284075befe8e91', 'colaborador', 'C', 1, '2022-01-06 21:25:18'),
+(10, 'tienda@gmail.com', '58637696377734903ceb69effb9b48e3d058bf4e', 'tienda', 'T', 1, '2022-01-06 21:25:42'),
+(11, 'sistema@gmail.com', '2bd603bdfc39c0015d0d9f3194bb84fb18ed708c', 'sistema', 'S', 1, '2022-01-06 21:26:38');
 
 --
 -- Índices para tablas volcadas
@@ -548,61 +842,61 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `ingredientes`
 --
 ALTER TABLE `ingredientes`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT de la tabla `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `menu_recetas`
 --
 ALTER TABLE `menu_recetas`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `planificaciones`
 --
 ALTER TABLE `planificaciones`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `planificacion_menus`
 --
 ALTER TABLE `planificacion_menus`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `recetas`
 --
 ALTER TABLE `recetas`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `receta_categorias`
 --
 ALTER TABLE `receta_categorias`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `receta_comentarios`
 --
 ALTER TABLE `receta_comentarios`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `receta_ingredientes`
 --
 ALTER TABLE `receta_ingredientes`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1099;
 
 --
 -- AUTO_INCREMENT de la tabla `receta_pasos`
@@ -620,13 +914,13 @@ ALTER TABLE `receta_paso_imagenes`
 -- AUTO_INCREMENT de la tabla `tiendas`
 --
 ALTER TABLE `tiendas`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tienda_ofertas`
 --
 ALTER TABLE `tienda_ofertas`
-  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

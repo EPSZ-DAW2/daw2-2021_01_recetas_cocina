@@ -64,10 +64,10 @@ $rutaimg="uploads/";
                         case 3:
                             echo "Intermedio";
                             break;
-                        case 2:
+                        case 4:
                             echo "Dificil";
                             break;
-                        case 2:
+                        case 5:
                             echo "Muy Dificil";
                             break;
                     }
