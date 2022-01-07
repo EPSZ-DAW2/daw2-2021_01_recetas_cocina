@@ -24,16 +24,15 @@ use app\models\Menu;
 use app\models\MenuSearch;
 use app\models\Planificacion;
 use app\models\PlanificacionSearch;
-
-
-
+use app\models\Copiadeseguridad;
+use app\models\Tienda;
 
 class SiteController extends Controller
 {
     /**
      * {@inheritdoc}
      */
-     public function behaviors()
+/*      public function behaviors()
     {
         return [
             'access' => [
@@ -54,7 +53,7 @@ class SiteController extends Controller
                 ],
             ],
         ];
-    } 
+    }  */
 /////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 /* PARTE DE PERMISOS QUEDARA COMENTADA HASTA DETEMINAR LAS ACCIONES A LAS QUE PODRÁ ACCEDER
@@ -62,7 +61,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 
-/*     public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
@@ -71,7 +70,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                 'rules' => [
                     [
                         //El administrador tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout', 'administrador'],
+                        'actions' => ['logout'],
                         //Esta propiedad establece que tiene permisos
                         'allow' => true,
                         //Usuarios autenticados, el signo ? es para invitados
@@ -85,7 +84,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                     ],
                     [
                        //Los usuarios simples tienen permisos sobre las siguientes acciones
-                       'actions' => ['logout', 'colaborador'],
+                       'actions' => ['logout'],
                        //Esta propiedad establece que tiene permisos
                        'allow' => true,
                        //Usuarios autenticados, el signo ? es para invitados
@@ -97,6 +96,35 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                           return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
                       },
                    ],
+                    [
+                        //El administrador tiene permisos sobre las siguientes acciones
+                        'actions' => ['logout'],
+                        //Esta propiedad establece que tiene permisos
+                        'allow' => true,
+                        //Usuarios autenticados, el signo ? es para invitados
+                        'roles' => ['@'],
+                        //Este método nos permite crear un filtro sobre la identidad del usuario
+                        //y así establecer si tiene permisos o no
+                        'matchCallback' => function ($rule, $action) {
+                            //Llamada al método que comprueba si es un administrador
+                            return Usuario::esUsuarioTienda(Yii::$app->user->identity->id);
+                        },
+                    ],
+                    [
+                    //Los usuarios simples tienen permisos sobre las siguientes acciones
+                    'actions' => ['logout'],
+                    //Esta propiedad establece que tiene permisos
+                    'allow' => true,
+                    //Usuarios autenticados, el signo ? es para invitados
+                    'roles' => ['@'],
+                    //Este método nos permite crear un filtro sobre la identidad del usuario
+                    //y así establecer si tiene permisos o no
+                    'matchCallback' => function ($rule, $action) {
+                        //Llamada al método que comprueba si es un usuario simple
+                        return Usuario::esUsuarioSistema(Yii::$app->user->identity->id);
+                    },
+                    ],
+
                 ],
             ],
      //Controla el modo en que se accede a las acciones, en este ejemplo a la acción logout
@@ -110,58 +138,9 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
         ];
     }
 
-    public function actionColaborador(){
 
-        $searchModel = new RecetaSearch();
 
-        $dataProvider = $searchModel->searchNmejores($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,]);
-    }
-
-    public function actionAdministrador(){
-
-        $searchModel = new IngredienteSearch();
-        if (isset($_GET["IngredienteSearch"]["q"])) {
-            $dataProvider = $searchModel->searchQ($this->request->queryParams);
-        }
-        elseif (isset($_GET["IngredienteSearch"]["tipo"]))
-        {
-            $dataProvider = $searchModel->searchTipo($this->request->queryParams);
-        }
-        else
-        {
-            $dataProvider = $searchModel->search($this->request->queryParams);
-        }
-
-        return $this->render('ingredientes', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,]);
-    }
-
-    public function actionTienda(){
-
-        $searchModel = new RecetaSearch();
-
-        $dataProvider = $searchModel->searchNmejores($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,]);
-    }
-
-    public function actionSistema(){
-
-        $searchModel = new RecetaSearch();
-
-        $dataProvider = $searchModel->searchNmejores($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,]);
-    } */
     /**
      * {@inheritdoc}
      */
@@ -608,9 +587,54 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
     //funcion que llama a la vista de copias de seguridad
     public function actionCopiadeseguridad()
     {
-        
-        return $this->render('copiadeseguridad');
+        /*  //get all of the tables
+         $db = new mysqli('localhost', 'root', '', 'daw2_recetas');
+         $tables = '*';
+    if($tables == '*'){
+        $tables = array();
+        $result = $db->query("SHOW TABLES");
+        while($row = $result->fetch_row()){
+            $tables[] = $row[0];
+        }
+    }else{
+        $tables = is_array($tables)?$tables:explode(',',$tables);
     }
+
+    //loop through the tables
+    foreach($tables as $table){
+        $result = $db->query("SELECT * FROM $table");
+        $numColumns = $result->field_count;
+
+        $return .= "DROP TABLE $table;";
+
+        $result2 = $db->query("SHOW CREATE TABLE $table");
+        $row2 = $result2->fetch_row();
+
+        $return .= "nn".$row2[1].";nn";
+
+        for($i = 0; $i < $numColumns; $i++){
+            while($row = $result->fetch_row()){
+                $return .= "INSERT INTO $table VALUES(";
+                for($j=0; $j < $numColumns; $j++){
+                    $row[$j] = addslashes($row[$j]);
+                    $row[$j] = ereg_replace("n","n",$row[$j]);
+                    if (isset($row[$j])) { $return .= '"'.$row[$j].'"' ; } else { $return .= '""'; }
+                    if ($j < ($numColumns-1)) { $return.= ','; }
+                }
+                $return .= ");n";
+            }
+        }
+
+        $return .= "nnn";
+    }
+
+    //save file
+    $handle = fopen('db-backup-'.time().'.sql','w+');
+    fwrite($handle,$return);
+    fclose($handle);*/
+   
+        return $this->render('copiadeseguridad');
+    } 
 
     public function actionRegister()
 {

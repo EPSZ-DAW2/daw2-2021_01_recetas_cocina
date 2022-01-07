@@ -2,6 +2,10 @@
 
 namespace app\controllers;
 
+use Yii;
+use yii\filters\AccessControl;
+use app\models\Tienda;
+use app\models\Usuario;
 use app\models\Tiendaoferta;
 use app\models\TiendaofertaSearch;
 use yii\web\Controller;
@@ -21,6 +25,68 @@ class TiendaofertaController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'only' => ['update','create','index','view','delete'],
+                    'rules' => [
+                        [
+                            //El administrador tiene permisos sobre las siguientes acciones
+                            //'actions' => ['index','create'],
+                            //Esta propiedad establece que tiene permisos
+                            'allow' => true,
+                            //Usuarios autenticados, el signo ? es para invitados
+                            'roles' => ['@'],
+                            //Este método nos permite crear un filtro sobre la identidad del usuario
+                            //y así establecer si tiene permisos o no
+                            'matchCallback' => function ($rule, $action) {
+                                //Llamada al método que comprueba si es un administrador
+                                return Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id);
+                            },
+                        ],
+                        [
+                            //El administrador tiene permisos sobre las siguientes acciones
+                            'actions' => ['update','create','index', 'view','delete'],
+                            //Esta propiedad establece que tiene permisos
+                            'allow' => true,
+                            //Usuarios autenticados, el signo ? es para invitados
+                            'roles' => ['@'],
+                            //Este método nos permite crear un filtro sobre la identidad del usuario
+                            //y así establecer si tiene permisos o no
+                            'matchCallback' => function ($rule, $action) {
+                                //Llamada al método que comprueba si es un administrador
+                                //$model=Tienda::find()->where(['id' => $_GET['id']])->one();
+                                var_dump(Yii::$app->user->identity->id);
+                                if ( $action->id == 'index')
+                                {
+                                    return Usuario::esUsuarioTienda(Yii::$app->user->identity->id);
+                                }
+                                else
+                                {
+                                    return  Tienda::esPropiedadOferta(Yii::$app->user->identity->id);
+    
+                                }
+                            },
+                        ],
+                        [
+                        //Los usuarios simples tienen permisos sobre las siguientes acciones
+                        //'actions' => ['index'],
+                        //Esta propiedad establece que tiene permisos
+                        'allow' => true,
+                        //Usuarios autenticados, el signo ? es para invitados
+                        'roles' => ['@'],
+                        //Este método nos permite crear un filtro sobre la identidad del usuario
+                        //y así establecer si tiene permisos o no
+                        'matchCallback' => function ($rule, $action) {
+                            //Llamada al método que comprueba si es un usuario simple
+                            return Usuario::esUsuarioSistema(Yii::$app->user->identity->id);
+                        },
+                        ],
+    
+                    ],
+                ],
+    
+                 
+            
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -81,8 +147,22 @@ class TiendaofertaController extends Controller
         $model = new Tiendaoferta();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) ) {
+
+                $idusuario=Tienda::encontrarUsuarioOferta($model->id);
+                var_dump($idusuario);
+
+                if ($idusuario == Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"fallo"]);
+                }
             }
         } else {
             $model->loadDefaultValues();

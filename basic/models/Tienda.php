@@ -64,4 +64,67 @@ class Tienda extends \yii\db\ActiveRecord
     {
         return new TiendaQuery(get_called_class());
     }
+
+    public static function esPropiedad($idu)
+    {
+        
+        if(isset($_GET["id"]))
+        {
+            $idt=$_GET["id"];
+
+/*             $model=Tienda::find()->select(['id'])->where(['usuario_id'=>$idu])->one();
+            var_dump($model);
+            if ($model)
+            { */
+            if (Tienda::findOne(['id' => $idt,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+
+    public static function esPropiedadOferta($idu)
+    {
+        if(isset($_GET["id"]))
+        {
+            $idOferta=$_GET["id"];
+
+            $idt=Tiendaoferta::find()->select(['tienda_id'])->where(['id'=>$idOferta])->one();
+            
+
+            if (Tienda::findOne(['id' => $idt,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+
+    public static function encontrarUsuarioOferta($idOferta)
+    {
+            //=Tiendaoferta::findOne(['id' => $idOferta]);
+            //$modeloTienda=Tienda::findOne(['id' => $modeloOferta->tienda_id]);
+
+            $modeloOferta=Tiendaoferta::find()->select(['tienda_id'])->where(['id'=>$idOferta])->one();
+            $modeloTienda=Tienda::find()->select(['usuario_id'])->where(['id'=>$modeloOferta])->one();
+            return $modeloTienda;
+    } 
+
 }

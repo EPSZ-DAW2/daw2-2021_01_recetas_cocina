@@ -174,6 +174,8 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     }
 
+    
+
     public static function esUsuarioSistema($id)
     {
        if (Usuario::findOne(['id' => $id, 'aceptado' => '1', 'rol' => "S"])){
@@ -184,6 +186,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
        }
 
     }
+
 
 
 
