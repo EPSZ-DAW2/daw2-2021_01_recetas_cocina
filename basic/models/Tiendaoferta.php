@@ -65,4 +65,6 @@ class Tiendaoferta extends \yii\db\ActiveRecord
     {
         return new TiendaofertaQuery(get_called_class());
     }
+
+    
 }

@@ -1,7 +1,8 @@
 <?php
 
 namespace app\controllers;
-
+use Yii;
+use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use app\models\Usuario;
 use app\models\UsuarioSearch;
@@ -22,6 +23,42 @@ class UsuarioController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    //'only' => ['index'],
+                    'rules' => [
+                        [
+                            //El administrador tiene permisos sobre las siguientes acciones
+                            //'actions' => ['index','create'],
+                            //Esta propiedad establece que tiene permisos
+                            'allow' => True,
+                            //Usuarios autenticados, el signo ? es para invitados
+                            'roles' => ['@'],
+                            //Este método nos permite crear un filtro sobre la identidad del usuario
+                            //y así establecer si tiene permisos o no
+                            'matchCallback' => function ($rule, $action) {
+                                //Llamada al método que comprueba si es un administrador
+                                return Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id);
+                            },
+                        ],
+
+                        [
+                        //Los usuarios simples tienen permisos sobre las siguientes acciones
+                        //'actions' => ['index'],
+                        //Esta propiedad establece que tiene permisos
+                        'allow' => true,
+                        //Usuarios autenticados, el signo ? es para invitados
+                        'roles' => ['@'],
+                        //Este método nos permite crear un filtro sobre la identidad del usuario
+                        //y así establecer si tiene permisos o no
+                        'matchCallback' => function ($rule, $action) {
+                            //Llamada al método que comprueba si es un usuario simple
+                            return Usuario::esUsuarioSistema(Yii::$app->user->identity->id);
+                        },
+                        ],
+    
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
