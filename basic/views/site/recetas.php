@@ -51,7 +51,7 @@ $rutaimg="uploads/";
                     
                     <img src='<?php echo $rutaimg.$card->imagen;?>' class="card-img-top" alt="...">
 
-                    <h2 class="text-center"><?php echo $card->id; echo ". "; echo $card->nombre ?></h2>
+                    <h2 class="text-center"><?php echo $card->nombre?></h2>
                     <p><?php echo "<img src=/daw2-2021_01_recetas_cocina/basic/web/images/comensales.png></img>".$card->comensales." | ";?>
                     <?php //Nivel de dificultad
                     switch ($card->dificultad) {

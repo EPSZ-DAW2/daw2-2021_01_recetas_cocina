@@ -4,6 +4,8 @@ use app\models\Ingrediente;
 use app\models\Tienda;
 use app\models\Tiendaoferta;
 
+$rutaimg="uploads/";
+
 ?>
 
 <body>
@@ -19,7 +21,9 @@ use app\models\Tiendaoferta;
             {
                 if ($_GET["id"]==$card->id)
                 { ?>
-                <h1 class="text-center mb-4 bg-warning"><?php echo $card->nombre ?></h1>
+                    <h1 class="text-center mb-4 bg-warning"><?php echo $card->nombre ?></h1>
+                    <img src='<?php echo $rutaimg.$card->imagen;?>' alt="..." width="50%">
+                    <br></br>
                     <h3 class="text-center btn-verde">Descripción receta: </h3>
                     <p><?php echo $card->descripcion;?></p>
                 <?php }
@@ -51,7 +55,7 @@ use app\models\Tiendaoferta;
                 if ($_GET["id"]==$card2->receta_id)
                 {
                     $model = Ingrediente::find()->select('nombre')->where(['id' =>  $card2->ingrediente_id])->one();
-                    $modeloOfertas=Tiendaoferta::find()->orderBy(['id' => SORT_DESC,])->where(['ingrediente_id' =>  $card2->ingrediente_id])->limit(1)->all();
+                    $modeloOfertas=Tiendaoferta::find()->orderBy(['id' => SORT_DESC,])->where(['ingrediente_id' =>  $card2->ingrediente_id])->all();
                     ?>
 
                     <?php foreach ($modeloOfertas as $card3)
@@ -62,7 +66,6 @@ use app\models\Tiendaoferta;
                     $producto=$modelProducto->nombre;
 
                     ?>
-
                     <div class="col-lg-4 my-3 border-2 border-danger">
                         <a href="?r=site/vertiendaoferta&id=<?php echo $card3->id ?>" class="w-100">
                             <span class="w-100 btn bg-danger rounded"><?php echo "¡";echo $card3->descripcion;echo "!";?></span>
