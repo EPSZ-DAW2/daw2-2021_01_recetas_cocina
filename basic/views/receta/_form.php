@@ -17,25 +17,49 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'descripcion')->textarea(['rows' => 6,'class'=> 'w-100 btn btn-verde  my-3']) ?>
 
-    <?= $form->field($model, 'tipo_plato')->textInput(['maxlength' => true,'class'=> 'w-100 btn btn-verde  my-3']) ?>
+    <?php // $form->field($model, 'tipo_plato')->textInput(['maxlength' => true,'class'=> 'w-100 btn btn-verde  my-3']) ?>
+    <?= $form->field($model, 'tipo_plato')->dropDownList([
+        'E' => 'Entrante',
+         1 => 'Primero',
+         2 => 'Segundo',
+        'P' => 'Postre',
+    ])->label("Tipo de plato:") ?>
 
-    <?= $form->field($model, 'dificultad')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
+    <?php //$form->field($model, 'dificultad')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
+    <?= $form->field($model, 'dificultad')->dropDownList([
+        1 => 'Muy Facil',
+        2 => 'Facil',
+        3 => 'Normal',
+        4 => 'Dificil',
+        5 => 'Muy Dificil',
+    ])->label("Dificultad del plato:") ?>
 
     <?= $form->field($model, 'comensales')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
 
     <?= $form->field($model, 'tiempo_elaboracion')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
 
-    <?= $form->field($model, 'valoracion')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
+    <?php // $form->field($model, 'valoracion')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
+    <?= $form->field($model, 'valoracion')->dropDownList([
+        1 => 'Muy Malo',
+        2 => 'Malo',
+        3 => 'Normal',
+        4 => 'Bueno',
+        5 => 'Muy Bueno',
+    ])->label("Valoracion de plato:") ?>
 
     <?= $form->field($model, 'usuario_id')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
 
-    <?= $form->field($model, 'aceptada')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
+    <?php // $form->field($model, 'aceptada')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
+
+    <?= $form->field($model, 'aceptada')->dropDownList([
+        0 => 'Pendiente',
+        1 => 'Aceptado',
+        2 => 'No aceptado',
+    ])->label("Estado de aceptacion:") ?>
 
     <?= $form->field($model, 'imagen')->hiddenInput(['class'=> 'w-100 btn btn-verde  my-3'])->label("") ?>
 
     <?=  $form->field($model, 'imageFile')->fileInput(['class'=> 'w-100 btn btn-warning  my-3'])?>
-
-
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Subir'), ['class' => 'btn btn-success w-100 my-3']) ?>

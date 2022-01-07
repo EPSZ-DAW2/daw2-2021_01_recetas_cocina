@@ -17,9 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Crear Receta'), ['create'], ['class' => 'btn btn-success w-100']) ?>
-    </p>
+
+    <div class="mx-auto text-center">
+        <?= Html::a(Yii::t('app', 'Create Receta'), ['create'], ['class' => 'btn btn-success mt-3 ']) ?>
+        <?= Html::a(Yii::t('app', 'Aceptar Receta'), ['recetasaceptar'], ['class' => 'btn btn-primary mt-3 ']) ?>
+    </div>
 
     <?php echo $this->render('_searchGlob', ['model' => $searchModel]); ?>
     <?php echo "<details class='my-3'><summary>Búsqueda Avanzada</summary>";
