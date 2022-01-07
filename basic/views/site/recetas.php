@@ -72,7 +72,7 @@ $rutaimg="uploads/";
                             break;
                     }
                     echo " | <img src=/daw2-2021_01_recetas_cocina/basic/web/images/tiempo.png></img>".$card->tiempo_elaboracion."</p>"?>
-                    <p><?php echo mb_strimwidth($card->descripcion, 0, 400, "...");  // devuelve solo los 400 primeros caracteres?></p>
+                    <p><?php echo mb_strimwidth($card->descripcion, 0, 175, "...");  // devuelve solo los 400 primeros caracteres?></p>
 
                     <p><a class="btn btn-outline-secondary" href="?r=site/verreceta&id=<?php echo $card->id?>">Ficha detallada &raquo;</a></p>
                 </div>

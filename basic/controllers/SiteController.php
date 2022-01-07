@@ -426,6 +426,10 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             {
                 $dataProvider = $searchModel->searchTipo($this->request->queryParams);
             }
+            else{
+                $dataProvider = $searchModel->search($this->request->queryParams);
+
+            }
 
             return $this->render('tiendaofertas', [
                 'searchModel' => $searchModel,

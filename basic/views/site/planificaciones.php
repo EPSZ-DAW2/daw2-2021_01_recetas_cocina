@@ -46,7 +46,9 @@ $this->title = 'Aplicación Web de recetas';
             <div class="card col-lg-4 my-3 text-center">
                 <h2 class="text-center"><b><?php echo strtoupper($card->nombre) ?></b></h2>
                 <h4><?php echo $card->periodo;?> días</h4>
-                <p><?php echo $card->notas;?></p>
+
+                <p><?php echo mb_strimwidth($card->notas, 0, 175, "...");?></p>
+
 
                 <p><a class="btn btn-outline-secondary" href="?r=site/verplanificacion&id=<?php echo $card->id?>">Ficha detallada &raquo;</a></p>
             </div>

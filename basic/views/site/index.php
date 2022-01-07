@@ -94,7 +94,7 @@ $rutaimg="uploads/";
             </div>
 
             <div class="col-sm-12 col-lg-1" style="display: inline; background-color: #ffe07d; border-radius: 20px;margin-bottom: 20px" >
-                <button class="w-100 btn bg-primary mx-0 mt-3" style="border-radius: 15px;  color: white">% OFERTAS %</button>
+                <a href="?r=site/vertiendaofertas" class="w-100 btn bg-primary mx-0 mt-3" style="border-radius: 15px;  color: white">OFERTAS</a>
                 <div class="d-flex flex-column h-100 mb-sm-4 mt-sm-4" style="width: auto; margin: auto;">
 
                     <ul class="nav nav-pills nav-flush flex-column mb-auto text- mt-3 ">
