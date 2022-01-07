@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Receta;
 use app\models\RecetaSearch;
+use app\models\UsuarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -129,13 +130,11 @@ class RecetaController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost )
+        if ($this->request->isPost && $model->load($this->request->post()))
         {
-
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
-            if ($model->imageFile && $model->validate()) {
-
+            if ($model->imageFile && $model->validate())
+            {
                 $rutaimg="uploads/".$model->imagen;
                 if (!empty($model->imagen) && file_exists($rutaimg)) unlink($rutaimg);
 
@@ -143,14 +142,17 @@ class RecetaController extends Controller
                 $model->imagen=$nameAux;
                 $msg = "<strong class='label label-info'>Enhorabuena, actualización realizada con éxito</strong>";
                 $msg.=" --> ".$nameAux;
+
                 $model->save();
+
                 $model->imageFile->saveAs('uploads/' .$nameAux);
 
                 //return $this->redirect(['view', ['id' => $model->id, 'msg' => $msg]]);
 
             }
-            else{
-                $model->save();
+            else
+            {
+                if($model->save())
                 $msg = "<strong class='label label-info'>Enhorabuena, actualización realizada con éxito</strong>";
             }
 
@@ -182,6 +184,49 @@ class RecetaController extends Controller
         $model->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionRecetasaceptar()
+    {
+        $searchModel = new RecetaSearch(['aceptada'=>0]);
+        //$dataProvider = Usuario::find();
+        $dataProvider = $searchModel->searchNoaceptadas($this->request->queryParams);
+        //$query = Usuario::find()->where(['id' => 1])->one();
+
+        // add conditions that should always apply here
+
+        /*             $dataProvider = new ActiveDataProvider([
+                        'query' => $query,
+
+                    ]); */
+
+        return $this->render('recetasaceptar', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAceptar($id)
+    {
+        $model = $this->findModel($id);
+
+        /*         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } */
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if ($model->validate()) {
+
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+
+                return;
+            }
+        }
+
+        return $this->render('aceptar', [
+            'model' => $model,
+        ]);
     }
 
     /**

@@ -120,7 +120,7 @@ class RecetaPasoImagenController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost )
+        if ($this->request->isPost && $model->load($this->request->post()))
         {
 
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
