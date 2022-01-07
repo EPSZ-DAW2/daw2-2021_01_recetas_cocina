@@ -107,6 +107,8 @@ FXX - Implementacion de la subida de archivos al directorio upload -- hecho
     -Subida de imagenes de recetas con comprobacion de errores.
     -Subida de imagenes de pasos de receatas con comprobacion de errores.
 
+FXX - Implementacion de aceptacion de recetas con menus derivados.
+
 ----------------------------------------------------------------------------------------------------------------------------
 
 

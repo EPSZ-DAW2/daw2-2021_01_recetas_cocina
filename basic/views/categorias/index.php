@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -39,6 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'layout' => "\n{items}\n",
     ]); ?>
+
+    <div class="text-center w-100">
+        <?= LinkPager::widget([
+            'pagination' => $dataProvider->pagination,
+        ])?>
+
+    </div>
 
 
 </div>

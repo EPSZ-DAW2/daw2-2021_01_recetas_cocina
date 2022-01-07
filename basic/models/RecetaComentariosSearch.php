@@ -46,6 +46,9 @@ class RecetaComentariosSearch extends RecetaComentarios
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination'=> [
+                'pageSize'=>6
+            ]
         ]);
 
         $this->load($params);

@@ -15,11 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Usuario'), ['create'], ['class' => 'btn btn-success w-100']) ?>
-    </p>
-
-
+    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'options' => [
@@ -54,5 +50,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'layout' => "\n{items}\n",
     ]); ?>
+
+
+    <div class="text-center w-100">
+        <?= LinkPager::widget([
+            'pagination' => $dataProvider->pagination,
+        ])?>
+
+    </div>
 
 </div>
