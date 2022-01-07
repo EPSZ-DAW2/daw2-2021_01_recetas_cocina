@@ -14,10 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="usuario-index">
 
 <h1 class="text-center w-100 rounded btn-verde"><?= Html::encode($this->title) ?></h1>
-
+    <h1><?php var_dump($msg);?></h1>
     <p>
-        <?= Html::a(Yii::t('app', 'Hacer Copia de Seguridad'), ['/site/copiadeseguridad'], ['class' => 'btn btn-verde mt-3']) ?>
-        <?= Html::a(Yii::t('app', 'Restaurar Copia de Seguridad'), ['usuariosaceptar'], ['class' => 'btn btn-danger mt-3']) ?>
+        <?= Html::a(Yii::t('app', 'Hacer Copia de Seguridad'), ['copia'], ['class' => 'btn btn-verde mt-3']) ?>
+        <?= Html::a(Yii::t('app', 'Restaurar Copia de Seguridad'), ['restaurarcopia'], ['class' => 'btn btn-danger mt-3']) ?>
     </p>
 
 </div>
