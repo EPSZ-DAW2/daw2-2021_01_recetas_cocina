@@ -101,6 +101,7 @@ FXX - Diseño aplicación y estilos parte publica y privada
     -Diseño de colores.
     -Diseño página error.
     -Diseño menus navegación.
+    -Página de acerca de.
 
 FXX - Implementacion de la subida de archivos al directorio upload -- hecho
     -Subida de imagenes de recetas con comprobacion de errores.

@@ -46,7 +46,8 @@ $this->title = 'Aplicación Web de recetas';
             <div class="card col-lg-4 my-3 text-center">
                 <h2 class="text-center"><b><?php echo strtoupper($card->titulo) ?></b></h2>
 
-                <p><?php echo $card->descripcion;?></p>
+                <p><?php echo mb_strimwidth($card->descripcion, 0, 175, "...");?></p>
+
 
                 <p><a class="btn btn-outline-secondary" href="?r=site/vermenu&id=<?php echo $card->id?>">Ficha detallada &raquo;</a></p>
             </div>
