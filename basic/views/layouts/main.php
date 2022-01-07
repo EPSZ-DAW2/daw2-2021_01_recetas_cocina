@@ -84,6 +84,7 @@ AppAsset::register($this);
                     ['label' => 'Tiendas', 'url' => ['/tienda/index']],
                     ['label' => 'Tiendas-Ofertas', 'url' => ['/tiendaoferta/index']],
                     ['label' => 'Usuarios', 'url' => ['/usuario/index']],
+                    ['label' => 'Copia de seguridad', 'url' => ['/site/copiadeseguridad']],
                 ],]
 
             ];
