@@ -67,7 +67,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'colaborador', 'administrador'],
+                'only' => ['logout'],
                 'rules' => [
                     [
                         //El administrador tiene permisos sobre las siguientes acciones
@@ -600,6 +600,12 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
     public function actionAbout()
     {
         return $this->render('about');
+    }
+    //funcion que llama a la vista de copias de seguridad
+    public function actionCopiadeseguridad()
+    {
+        
+        return $this->render('copiadeseguridad');
     }
 
     public function actionRegister()
