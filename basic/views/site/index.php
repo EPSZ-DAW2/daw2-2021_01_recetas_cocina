@@ -59,7 +59,7 @@ $rutaimg="uploads/";
 
                         foreach ($dataProvider->getModels() as $card){ ?>
                         <div class="col-lg-4 my-2">
-                            <div class="card" style="width: auto; min-height: 650px">
+                            <div class="card" style="width: auto; min-height: 700px">
                                 <img src='<?php echo $rutaimg;echo $card->imagen;?>' class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $card->nombre ?></h5>
@@ -83,7 +83,7 @@ $rutaimg="uploads/";
                                     </div>
 
                                 </div>
-                            </div>
+                            </div><
                         </div>
                         <?php } ?>
 
