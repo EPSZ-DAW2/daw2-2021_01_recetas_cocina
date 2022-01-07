@@ -66,7 +66,6 @@ $rutaimg="uploads/";
                     $producto=$modelProducto->nombre;
 
                     ?>
-
                     <div class="col-lg-4 my-3 border-2 border-danger">
                         <a href="?r=site/vertiendaoferta&id=<?php echo $card3->id ?>" class="w-100">
                             <span class="w-100 btn bg-danger rounded"><?php echo "¡";echo $card3->descripcion;echo "!";?></span>
