@@ -92,7 +92,7 @@ $rutaimg="uploads/";
             <?php //foreach ($model as $card){ ?>
             <?php foreach ($dataProvider->getModels() as $card){ ?>
                     
-                <div class="card col-lg-4 my-3 text-center">
+                <div class="card col-lg-4 my-2 text-center">
                     
                     <img src='<?php echo $rutaimg.$card->imagen;?>' class="card-img-top" alt="...">
 
@@ -117,9 +117,13 @@ $rutaimg="uploads/";
                             break;
                     }
                     echo " | <img src=/daw2-2021_01_recetas_cocina/basic/web/images/tiempo.png></img>".$card->tiempo_elaboracion."</p>"?>
+                    <span class="btn btn-warning"><?php echo "Valoración: "; echo $card->valoracion; ?></span>
                     <p><?php echo mb_strimwidth($card->descripcion, 0, 175, "...");  // devuelve solo los 400 primeros caracteres?></p>
 
-                    <p><a class="btn btn-outline-secondary" href="?r=site/verreceta&id=<?php echo $card->id?>">Ficha detallada &raquo;</a></p>
+                    <div class="card-body text-center">
+                        <a href="?r=site/verreceta&id=<?= $card->id ?>" class="btn btn-primary">Información</a>
+                        <a href="?r=site/verreceta&id=<?= $card->id ?>#pasos" class="btn btn-primary">Pasos de la receta</a>
+                    </div>
                 </div>
             <?php }?>
 
