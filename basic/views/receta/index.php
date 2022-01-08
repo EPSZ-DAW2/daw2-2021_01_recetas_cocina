@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'columns' => [
         
-            'id',
+            //'id',
             'nombre:ntext',
             // 'descripcion:ntext',
             'tipo_plato',
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $url;
                     }
                 },
-                ],
+            ],
         ],
             'layout' => "\n{items}\n",
     ]); ?>

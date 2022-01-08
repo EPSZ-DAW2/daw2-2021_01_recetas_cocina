@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\bootstrap5\LinkPager;
+use app\models\Receta;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RecetaPasoSearch */
@@ -33,12 +34,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'table',
         ],
         'columns' => [
-            'id',
-            'receta_id',
+            //'id',
+            ['label'=>'Receta', 'value' => function ($data) {
+                return Receta::findOne(['id'=>$data->receta_id])->nombre;
+           }],
             'orden',
             'descripcion:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+            'header' => 'Acciones'],
+        ['class' => 'yii\grid\ActionColumn',
+                'header' => 'Fotos',
+                'template' => '{view}',
+
+                'urlCreator' => function ($action, $model, $key, $index)
+                {
+                    if ($action === 'view')
+                    {
+                        $url ='index.php?r=receta-paso-imagen%2Findex&RecetaPasoSearch%5Breceta_id%5D='.$model->id;
+                        return $url;
+                    }
+                },
+            ],
         ],
             'layout' => "\n{items}\n",
 
