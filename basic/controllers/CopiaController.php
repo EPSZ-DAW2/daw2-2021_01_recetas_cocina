@@ -1,13 +1,17 @@
 <?php
 
 namespace app\controllers;
+
+
 use Yii;
+use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use app\models\Categorias;
 use app\models\CategoriasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\dumBD;
 
 /**
  * CategoriasController implements the CRUD actions for Categorias model.
@@ -38,7 +42,48 @@ class CopiaController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index', ["msg"=>""]);
+        $dumper = new dumpDB();
+        $dataProvider=$dumper->listarArchivos('../backups/sql/');
+
+        $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $dataProvider,
+            'sort' => [
+                'attributes' => ['nombre'],
+
+            ],
+            'pagination' => ['pageSize' => 10]
+        ]);
+
+
+
+        return $this->render('index', [
+            'dataProvider' => $gridViewDataProvider,
+            "msg"=>""
+        ]);
+    }
+
+    public function actionDescargar()
+    {
+        $dumper = new dumpDB();
+        echo $dumper->getDump();
+
+        $dataProvider=$dumper->listarArchivos('../backups/sql/');
+
+        $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $dataProvider,
+            'sort' => [
+                'attributes' => ['nombre'],
+
+            ],
+            'pagination' => ['pageSize' => 10]
+        ]);
+
+
+
+        return $this->render('index', [
+            'dataProvider' => $gridViewDataProvider,
+            "msg"=>""
+        ]);
     }
 
 
@@ -50,18 +95,36 @@ class CopiaController extends Controller
      */
     public function actionCopia()
     {
-        $mysql_file = "backups/sql/prueba2.sql";
 
-        //$command1= "set path=\"C:\xampp\mysql\bin\"";
-        $command2 = "mysqldump --user=root --result-file='prueba3.sql' daw2_recetas";
-        $command3 = "dir";
+        $dumper = new dumpDB();
+
+        // comprobar que la ruta existe y sino crearla
+
+        $bk_file = '../backups/sql/backup'.'_'.date('Y').'-'.date('m').'-'.date('d').'_'.date('G').'-'.date('i').'-'.date('s').'.sql';
+        $fh = fopen($bk_file, 'w') or die("can't open file");
+        fwrite($fh, $dumper->getDump(FALSE));
+        fclose($fh);
+
+        $dataProvider=$dumper->listarArchivos('../backups/sql/');
+
+        $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $dataProvider,
+            'sort' => [
+                'attributes' => ['nombre'],
+
+            ],
+            'pagination' => ['pageSize' => 10]
+        ]);
 
 
-        //$output1=shell_exec($command1);
-        $output2=shell_exec($command2);
-        $output=shell_exec($command3);
 
-        return $this->render('index',["msg"=>$output]);
+        return $this->render('index', [
+            'dataProvider' => $gridViewDataProvider,
+            "msg"=>"Copia Realizada Correctamente"
+        ]);
+
+
+
 
     }
 
