@@ -94,7 +94,7 @@ $rutaimg="uploads/";
                                     </ul>
                                     <div class="card-body text-center">
                                         <a href="?r=site/verreceta&id=<?= $card->id ?>" class="btn btn-primary">Información</a>
-                                        <a href="#" class="btn btn-primary">Pasos de la receta</a>
+                                        <a href="?r=site/verreceta&id=<?= $card->id ?>#pasos" class="btn btn-primary">Pasos de la receta</a>
                                     </div>
 
                                 </div>

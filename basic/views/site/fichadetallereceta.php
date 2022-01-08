@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Ingrediente;
+use app\models\RecetaPaso;
 use app\models\Tienda;
 use app\models\Tiendaoferta;
 
@@ -40,6 +41,36 @@ $rutaimg="uploads/";
                     $model = Ingrediente::find()->select('nombre')->where(['id' =>  $card2->ingrediente_id])->one();
                     ?>
                     <h5 class="text-center"><?php echo $card2->cantidad;echo " ";echo $card2->medida;echo " de ";echo $model->nombre ?></h5>
+
+                    <?php
+                }
+
+            }
+            ?>
+
+            <h3 class="text-center mb-5 btn-verde" id="pasos">Pasos receta: </h3>
+            <?php
+            foreach ($dataProvider->getModels() as $card4)
+            {
+                //echo "Receta ".$card4->id;
+                if ($_GET["id"]==$card4->id)
+                {
+
+                    $model = RecetaPaso::find()->select('descripcion')->where(['receta_id' =>  $card4->id])->one();
+
+                    $modeloRecetaPaso=RecetaPaso::find()->orderBy(['orden' => SORT_ASC,])->where(['receta_id' =>  $card4->id])->all();
+                    ?>
+                    <?php foreach ($modeloRecetaPaso as $card5)
+                    {
+                        ?>
+                        <h5 class="text-center">Paso <?php echo $card5->orden; ?></h5>
+                        <h5 class="text-center"><?php echo $card5->descripcion;?></h5><?php
+                            //imagenes de cada paso
+
+                        echo "</br></br>";
+
+                    }
+                    ?>
 
                     <?php
                 }
