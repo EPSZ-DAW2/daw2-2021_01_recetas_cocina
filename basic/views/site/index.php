@@ -67,11 +67,26 @@ $rutaimg="uploads/";
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item text-center"></li>
                                         <li class="list-group-item text-center">
-                                            <span class="btn btn-warning"><?php echo "Dificultad: "; echo $card->dificultad; ?></span>
-                                            <span class="btn btn-warning"><?php echo "Tiempo Elaboración: "; echo $card->tiempo_elaboracion;echo " mins "; ?></span>
-                                        </li>
-                                        <li class="list-group-item text-center">
-                                            <span class="btn btn-warning"><?php echo "Número Comensales: "; echo $card->comensales; ?></span>
+                                            <p><?php echo "<img src=/daw2-2021_01_recetas_cocina/basic/web/images/comensales.png></img>".$card->comensales." | ";?>
+                                            <?php //Nivel de dificultad
+                                            switch ($card->dificultad) {
+                                                case 1:
+                                                    echo "Muy Fácil";
+                                                    break;
+                                                case 2:
+                                                    echo "Fácil";
+                                                    break;
+                                                case 3:
+                                                    echo "Intermedio";
+                                                    break;
+                                                case 4:
+                                                    echo "Dificil";
+                                                    break;
+                                                case 5:
+                                                    echo "Muy Dificil";
+                                                    break;
+                                            }
+                                            echo " | <img src=/daw2-2021_01_recetas_cocina/basic/web/images/tiempo.png></img>".$card->tiempo_elaboracion."</p>"?>
                                             <span class="btn btn-warning"><?php echo "Valoración: "; echo $card->valoracion; ?></span>
                                         </li>
                                         <li class="list-group-item text-center"></li>
@@ -83,7 +98,7 @@ $rutaimg="uploads/";
                                     </div>
 
                                 </div>
-                            </div><
+                            </div>
                         </div>
                         <?php } ?>
 
