@@ -5,6 +5,7 @@ use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
 use app\models\RecetaComentarios;
+use app\models\Receta;
 use app\models\RecetaComentariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -52,7 +53,15 @@ class RecetaComentariosController extends Controller
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
                               //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              if ( $action->id == 'index')
+                                {
+                                    return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                                }
+                                else
+                                {
+                                    return Receta::esPropiedadComentario(Yii::$app->user->identity->id);
+
+                                }
                           },
                        ],
                         [
@@ -121,15 +130,20 @@ class RecetaComentariosController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    // form inputs are valid, do something here
+
+                if ($model->usuario_id==Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
                     $model->fechahora= date("Y-m-d H:i:s");
-                    
-                    if($model->save()){
-                        return $this->redirect(['view', 'id' => $model->id]);
-                    }
-                    return;
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id, 'msg'=>"Comentario añadido correctamente."]);
                 }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>'Solo puedes crear comentarios de tu usuario.']);
+                }
+        
             }
         } else {//No vengo del post sino con valores por defecto
             $model->loadDefaultValues();
@@ -153,11 +167,17 @@ class RecetaComentariosController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            return $this->redirect(['view', 'id' => $model->id, "msg"=>"hola"]);
         }
+
+
+
+        //$idr=RecetaComentarios::find()->where(['id'=>$_GET['id']])->one();
 
         return $this->render('update', [
             'model' => $model,
+            'msg'=>"prueba"
         ]);
     }
 

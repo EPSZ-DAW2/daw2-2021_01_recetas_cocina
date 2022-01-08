@@ -55,4 +55,51 @@ class Menu extends \yii\db\ActiveRecord
     {
         return new MenuQuery(get_called_class());
     }
+
+    public static function esPropiedad($idu)
+    {
+        
+        if(isset($_GET["id"]))
+        {
+            $idm=$_GET["id"];
+
+
+            if (Menu::findOne(['id' => $idm,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+    public static function esPropiedadMenuReceta($idu)
+    {
+        if(isset($_GET["id"]))
+        {
+            $idMenuReceta=$_GET["id"];
+
+            $idm=Menureceta::find()->select(['menu_id'])->where(['id'=>$idMenuReceta])->one();
+            
+            if (Menu::findOne(['id' => $idm,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
 }

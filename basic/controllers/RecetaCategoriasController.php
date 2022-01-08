@@ -4,6 +4,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
+use app\models\Receta;
 use app\models\RecetaCategorias;
 use app\models\RecetaCategoriasSearch;
 use yii\web\Controller;
@@ -52,7 +53,15 @@ class RecetaCategoriasController extends Controller
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
                               //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              if ( $action->id == 'index')
+                                {
+                                    return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                                }
+                                else
+                                {
+                                    return  Receta::esPropiedadCategoria(Yii::$app->user->identity->id);
+
+                                }
                           },
                        ],
                         [
@@ -120,8 +129,24 @@ class RecetaCategoriasController extends Controller
         $model = new RecetaCategorias();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post()) ) {
+                $modeloReceta=Receta::findOne(['id' => $model->receta_id]);
+
+                $idusuario=$modeloReceta->usuario_id;
+               
+                if ($idusuario == Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id,'msg'=>"Categoria añadida correctamente a receta"]);
+                }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"No puedes añadir la categoria a esta receta"]);
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
+               
             }
         } else {
             $model->loadDefaultValues();

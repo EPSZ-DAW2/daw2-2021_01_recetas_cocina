@@ -52,7 +52,14 @@ class PlanificacionController extends Controller
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
                               //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              if ( $action->id == 'index')
+                                {
+                                    return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                                }
+                                else
+                                {
+                                    return Planificacion::esPropiedad(Yii::$app->user->identity->id);
+                                }
                           },
                        ],
                         [
@@ -125,8 +132,18 @@ class PlanificacionController extends Controller
         $model = new Planificacion();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                if ($model->usuario_id==Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id, 'msg'=>'Planificacion creada correctamente.']);
+                }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>'No puedes crear planificaciones de otro usuario']);
+                }
             }
         } else {
             $model->loadDefaultValues();

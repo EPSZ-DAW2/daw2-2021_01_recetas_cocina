@@ -4,6 +4,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
+use app\models\Planificacion;
 use app\models\Planificacionmenu;
 use app\models\PlanificacionmenuSearch;
 use yii\web\Controller;
@@ -52,7 +53,15 @@ class PlanificacionmenuController extends Controller
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
                               //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              if ( $action->id == 'index')
+                                {
+                                    return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                                }
+                                else
+                                {
+                                    return Planificacion::esPropiedadPlanificacionMenu(Yii::$app->user->identity->id);
+    
+                                }
                           },
                        ],
                         [
@@ -125,8 +134,22 @@ class PlanificacionmenuController extends Controller
         $model = new Planificacionmenu();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) ) {
+                $modeloPlani=Planificacion::findOne(['id' => $model->planificacion_id]);
+
+                $idusuario=$modeloPlani->usuario_id;
+               
+                if ($idusuario == Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id,'msg'=>"Menu añadido correctamente a la planificacion"]);
+                }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"No puedes añadir el menu a la planificacion."]);
+                }
             }
         } else {
             $model->loadDefaultValues();

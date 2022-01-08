@@ -4,6 +4,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
+use app\models\Receta;
 use app\models\Recetaingrediente;
 use app\models\RecetaingredienteSearch;
 use yii\web\Controller;
@@ -51,8 +52,15 @@ class RecetaingredienteController extends Controller
                            //Este método nos permite crear un filtro sobre la identidad del usuario
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
-                              //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                            if ( $action->id == 'index')
+                            {
+                                return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                            }
+                            else
+                            {
+                                return  Receta::esPropiedadIngrediente(Yii::$app->user->identity->id);
+
+                            }
                           },
                        ],
                         [
@@ -120,7 +128,23 @@ class RecetaingredienteController extends Controller
         $model = new Recetaingrediente();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+
+                $modeloReceta=Receta::findOne(['id' => $model->receta_id]);
+
+                $idusuario=$modeloReceta->usuario_id;
+               
+                if ($idusuario == Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id,'msg'=>"Ingrediente añadida correctamente a receta"]);
+                }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"No puedes añadir el ingrediente a esta receta"]);
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

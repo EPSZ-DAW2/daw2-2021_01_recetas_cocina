@@ -1,6 +1,8 @@
 <?php
 
 namespace app\controllers;
+
+use app\models\Menu;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
@@ -52,7 +54,15 @@ class MenurecetaController extends Controller
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
                               //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              if ( $action->id == 'index')
+                                {
+                                    return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                                }
+                                else
+                                {
+                                    return  Menu::esPropiedadMenuReceta(Yii::$app->user->identity->id);
+    
+                                }
                           },
                        ],
                         [
@@ -125,8 +135,23 @@ class MenurecetaController extends Controller
         $model = new Menureceta();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) ) {
+
+                $modeloMenu=Menu::findOne(['id' => $model->menu_id]);
+
+                $idusuario=$modeloMenu->usuario_id;
+               
+                if ($idusuario == Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id,'msg'=>"Receta añadida correctamente a menu"]);
+                }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"No puedes añadir la receta al menu."]);
+                }
             }
         } else {
             $model->loadDefaultValues();
