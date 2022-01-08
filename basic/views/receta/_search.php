@@ -31,11 +31,11 @@ use yii\widgets\ActiveForm;
 
     <?php  echo $form->field($model, 'valoracion') ?>
 
-    <?php  echo $form->field($model, 'usuario_id') ?>
+    <?php  //echo $form->field($model, 'usuario_id') ?>
 
     <?php  echo $form->field($model, 'aceptada') ?>
 
-    <?php  echo $form->field($model, 'imagen') ?>
+    <?php  //echo $form->field($model, 'imagen') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Buscar'), ['class' => 'btn btn-primary']) ?>

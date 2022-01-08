@@ -31,8 +31,53 @@ $rutaimg="uploads/";
                 'method' => 'get',
             ]); ?>
 
+            <?php echo "<details class='my-3 btn btn-verde w-100'><summary>Búsqueda Global</summary>";?>
+
             <?= $form->field($searchModel, 'q')->textInput(['placeholder' => "Busqueda de Recetas", "value"])->label('') ?>
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary my-3']) ?>
+
+            <?php
+            echo "</details>";
+            ?>
+
+            <?php ActiveForm::end(); ?>
+
+        </div>
+
+        <div class="ingrediente-search">
+
+        <?php $form = ActiveForm::begin([
+            'action' => ['verrecetas'],
+            'method' => 'get',
+        ]); ?>
+
+        <?php echo "<details class='my-3 btn btn-verde w-100'><summary>Filtros de busqueda</summary>";?>
+
+        <?= $form->field($searchModel, 'dificultad')->dropDownList([
+            '' => "Dificultad...",
+            '1' => "Muy Fácil",
+            '2' => "Fácil",
+            '3' => "Normal",
+            '4' => "Dificil",
+            '5' => "Muy dificil",
+         ])->label("") ?>
+
+        <?= $form->field($searchModel, 'tipo_plato')->dropDownList([
+            '' => "Tipo de Plato...",
+            'E' => "Entrante",
+            '1' => "Primer Plato",
+            '2' => "Segundo Plato",
+            'P' => "Postre",    
+            ])->label("") ?>
+
+        <?= $form->field($searchModel, 'comensales')->textInput(['placeholder' => "Número de comensales", "value"])->label('') ?>
+
+    <?= Html::submitButton('Filtrar', ['class' => 'btn btn-primary my-3']) ?>
+
+
+    <?php
+    echo "</details>";
+    ?>
 
             <?php ActiveForm::end(); ?>
 
