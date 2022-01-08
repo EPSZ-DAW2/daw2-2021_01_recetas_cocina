@@ -59,4 +59,51 @@ class Planificacion extends \yii\db\ActiveRecord
     {
         return new PlanificacionQuery(get_called_class());
     }
+
+    public static function esPropiedad($idu)
+    {
+        
+        if(isset($_GET["id"]))
+        {
+            $idp=$_GET["id"];
+
+
+            if (Planificacion::findOne(['id' => $idp,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+
+    public static function esPropiedadPlanificacionMenu($idu)
+    {
+        if(isset($_GET["id"]))
+        {
+            $idPlanifiMenu=$_GET["id"];
+
+            $idp=PlanificacionMenu::find()->select(['planificacion_id'])->where(['id'=>$idPlanifiMenu])->one();
+            
+            if (Planificacion::findOne(['id' => $idp,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+}   
 }

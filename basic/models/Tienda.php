@@ -100,7 +100,6 @@ class Tienda extends \yii\db\ActiveRecord
 
             $idt=Tiendaoferta::find()->select(['tienda_id'])->where(['id'=>$idOferta])->one();
             
-
             if (Tienda::findOne(['id' => $idt,'usuario_id' => $idu])){
                 return true;
                } else {

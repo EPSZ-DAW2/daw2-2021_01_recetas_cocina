@@ -112,6 +112,81 @@ class Receta extends ActiveRecord
 
     }
 
+    public static function esPropiedadComentario($idu)
+    {
+        if(isset($_GET["id"]))
+        {
+            $idRecetaComentario=$_GET["id"];
+
+            $idusuario=RecetaComentarios::find()->where(['id'=>$idRecetaComentario])->one();
+            
+            //if (Receta::findOne(['id' => $idr->receta_id,'usuario_id' => $idu]))
+            if ($idusuario->usuario_id == $idu)
+            {
+                return true;
+               } 
+               else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+
+    public static function esPropiedadCategoria($idu)
+    {
+        if(isset($_GET["id"]))
+        {
+            $idRecetaCategoria=$_GET["id"];
+
+            $idr=RecetaCategorias::find()->select(['receta_id'])->where(['id'=>$idRecetaCategoria])->one();
+            
+            if (Receta::findOne(['id' => $idr,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+
+    public static function esPropiedadIngrediente($idu)
+    {
+        if(isset($_GET["id"]))
+        {
+            $idRecetaIngrediente=$_GET["id"];
+
+            $idr=Recetaingrediente::find()->select(['receta_id'])->where(['id'=>$idRecetaIngrediente])->one();
+            
+            if (Receta::findOne(['id' => $idr,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+
     public static function esPropiedadPaso($idu)
     {
         if(isset($_GET["id"]))
@@ -136,6 +211,8 @@ class Receta extends ActiveRecord
         }
 
     }
+
+
 
     public static function esPropiedadPasoImagen($idu)
     {

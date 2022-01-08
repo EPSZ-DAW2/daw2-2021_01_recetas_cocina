@@ -11,6 +11,12 @@ $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' 
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="receta-categorias-update">
+    
+<?php if (isset($_GET['msg'])){
+            echo '<p class="btn btn-success w-100">';
+            echo $_GET['msg'];
+            echo '</p>';
+        }?>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
