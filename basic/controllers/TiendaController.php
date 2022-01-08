@@ -55,7 +55,7 @@ class TiendaController extends Controller
                             'matchCallback' => function ($rule, $action) {
                                 //Llamada al método que comprueba si es un administrador
                                 //$model=Tienda::find()->where(['id' => $_GET['id']])->one();
-                                var_dump(Yii::$app->user->identity->id);
+                                
                                 if ( $action->id == 'index')
                                 {
                                     return Usuario::esUsuarioTienda(Yii::$app->user->identity->id);
@@ -143,7 +143,7 @@ class TiendaController extends Controller
                 Yii::$app->user->identity->rol == 'S' ) 
                 {
                     $model->save();
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['view', 'id' => $model->id, 'msg'=>'Tienda creada correctamente.']);
                 }
                 else
                 {
@@ -171,7 +171,7 @@ class TiendaController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'msg'=>'Tienda actualizada correctamente.']);
         }
 
         return $this->render('update', [
@@ -190,7 +190,7 @@ class TiendaController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'msg'=>'Tienda eliminada correctamente.']);
     }
 
     /**

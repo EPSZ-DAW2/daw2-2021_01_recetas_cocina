@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
+use app\models\Receta;
 use app\models\RecetaPaso;
 use app\models\RecetaPasoSearch;
 use yii\web\Controller;
@@ -53,7 +54,15 @@ class RecetaPasoController extends Controller
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
                               //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              if ( $action->id == 'index')
+                              {
+                                  return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              }
+                              else
+                              {
+                                  return Receta::esPropiedadPaso(Yii::$app->user->identity->id);
+  
+                              }
                           },
                        ],
                         [
@@ -121,8 +130,24 @@ class RecetaPasoController extends Controller
         $model = new RecetaPaso();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+
+                $modeloUsuarioReceta=Receta::findOne(['id' => $model->receta_id]);
+
+                $idusuario=$modeloUsuarioReceta->usuario_id;
+               
+                if ($idusuario == Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
+                    $model->save();
+                    return $this->redirect(['view', 'id' => $model->id,'msg'=>"Paso añadido correctamente"]);
+                }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"No puedes añadir un paso de una oferta no tuya"]);
+                }
+                //return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();

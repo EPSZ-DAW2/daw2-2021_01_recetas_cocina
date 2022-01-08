@@ -66,11 +66,11 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','login'],
                 'rules' => [
                     [
                         //El administrador tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout'],
+                        'actions' => ['logout','login'],
                         //Esta propiedad establece que tiene permisos
                         'allow' => true,
                         //Usuarios autenticados, el signo ? es para invitados
@@ -84,7 +84,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                     ],
                     [
                        //Los usuarios simples tienen permisos sobre las siguientes acciones
-                       'actions' => ['logout'],
+                       'actions' => ['logout','login'],
                        //Esta propiedad establece que tiene permisos
                        'allow' => true,
                        //Usuarios autenticados, el signo ? es para invitados
@@ -96,9 +96,23 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                           return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
                       },
                    ],
+                   [
+                    //Los usuarios simples tienen permisos sobre las siguientes acciones
+                    'actions' => ['logout','login'],
+                    //Esta propiedad establece que tiene permisos
+                    'allow' => true,
+                    //Usuarios autenticados, el signo ? es para invitados
+                    'roles' => ['?'],
+                    //Este método nos permite crear un filtro sobre la identidad del usuario
+                    //y así establecer si tiene permisos o no
+                    'matchCallback' => function ($rule, $action) {
+                       //Llamada al método que comprueba si es un usuario simple
+                       return Yii::$app->user->isGuest;
+                   },
+                ],
                     [
                         //El administrador tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout'],
+                        'actions' => ['logout','login'],
                         //Esta propiedad establece que tiene permisos
                         'allow' => true,
                         //Usuarios autenticados, el signo ? es para invitados
@@ -112,7 +126,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                     ],
                     [
                     //Los usuarios simples tienen permisos sobre las siguientes acciones
-                    'actions' => ['logout'],
+                    'actions' => ['logout','login'],
                     //Esta propiedad establece que tiene permisos
                     'allow' => true,
                     //Usuarios autenticados, el signo ? es para invitados
@@ -513,36 +527,23 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) 
+        {
             return $this->goHome();
-
-/*             if (Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id))
-            {
-             return $this->redirect(["site/administrador"]);
-            }
-            if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id))
-            {
-             return $this->redirect(["site/colaborador"]);
-            } */
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-           return $this->goBack();
-/*            if (Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id))
-           {
-            return $this->redirect(["site/administrador"]);
-           }
-           if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id))
-           {
-            return $this->redirect(["site/colaborador"]);
-           } */
+            
+        if ($model->load(Yii::$app->request->post())){
+            if( $model->login()) {
+                return $this->goBack();
+            }
         }
-
-        $model->password = '';
+        
         return $this->render('login', [
             'model' => $model,
         ]);
+        
     }
 
     /**

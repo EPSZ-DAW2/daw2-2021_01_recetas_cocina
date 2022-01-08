@@ -5,7 +5,8 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
-
+use app\models\Receta;
+use app\models\RecetaPaso;
 use app\models\RecetaPasoImagen;
 use app\models\RecetaPasoImagenSearch;
 use yii\web\Controller;
@@ -55,7 +56,15 @@ class RecetaPasoImagenController extends Controller
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
                               //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              if ( $action->id == 'index')
+                              {
+                                  return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              }
+                              else
+                              {
+                                  return Receta::esPropiedadPasoImagen(Yii::$app->user->identity->id);
+  
+                              }
                           },
                        ],
                         [
@@ -126,23 +135,56 @@ class RecetaPasoImagenController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) )
             {
-                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                //$modeloPasoReceta=RecetaPaso::findOne(['id' => $model->receta_paso_id]);
 
-                if ($model->imageFile && $model->validate())
+                //$modeloReceta=Receta::findOne(['id' => $modeloPasoReceta->receta_id]);
+
+
+                $idReceta=RecetaPaso::find()->select(['receta_id'])->where(['id'=>$model->receta_paso_id])->one();
+
+                if (empty($idReceta)){
+                    $msg="El paso no existe";
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"El paso no existe"]);
+                }
+                else{
+                    $idusuario=Receta::find()->select(['usuario_id'])->where(['id'=>$idReceta->receta_id])->one();
+                }
+
+
+                //$idusuario=$modeloReceta->usuario_id;
+               
+                if ($idusuario->usuario_id == Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
                 {
+                    $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
-                    $nameAux=$model->imageFile->baseName.time().'.'.$model->imageFile->extension;
-                    $model->imagen=$nameAux;
-                    $msg = "<strong class='label label-info'>Enhorabuena, creacion realizada con éxito</strong>";
-                    $msg.=" --> ".$nameAux;
-                    $model->save();
-                    $model->imageFile->saveAs('uploads/' .$nameAux);
+                    if ($model->imageFile && $model->validate())
+                    {
+    
+                        $nameAux=$model->imageFile->baseName.time().'.'.$model->imageFile->extension;
+                        $model->imagen=$nameAux;
+                        $msg = "<strong class='label label-info'>Enhorabuena, creacion realizada con éxito</strong>";
+                        $msg.=" --> ".$nameAux;
+                        $model->save();
+                        $model->imageFile->saveAs('uploads/' .$nameAux);
+                    }
+                    else
+                    {
+                        $model->save();
+                        $msg = "<strong class='label label-info'>Enhorabuena, creacion realizada con éxito</strong>";
+                    }
                 }
                 else
                 {
-                    $model->save();
-                    $msg = "<strong class='label label-info'>Enhorabuena, creacion realizada con éxito</strong>";
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"No puedes añadir un paso imagen de una receta no tuya"]);
+                    //return $this->redirect(['create', 'id' => $model->id,'msg'=>$idReceta->receta_id]);
+                
                 }
+
+
+
+                
 
                 //return $this->redirect(['view', ['id' => $model->id, 'msg' => $msg]]);
                 return $this->render('view', [

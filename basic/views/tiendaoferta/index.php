@@ -13,6 +13,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tiendaoferta-index">
 
+    <?php if (isset($_GET['msg'])){
+            echo '<p class="btn btn-success w-100">';
+            echo $_GET['msg'];
+            echo '</p>';
+        }?>
+
     <h1 class="tituloCrud"><?= Html::encode($this->title) ?> <?php if (isset($_GET['nametienda'])) {echo ': '.$_GET['nametienda'];}?></h1>
 
     <p>

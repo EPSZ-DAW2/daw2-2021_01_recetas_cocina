@@ -117,14 +117,14 @@ class Tienda extends \yii\db\ActiveRecord
 
     }
 
-    public static function encontrarUsuarioOferta($idOferta)
+    /*public static function encontrarUsuarioOferta($idOferta,$idtienda)
     {
             //=Tiendaoferta::findOne(['id' => $idOferta]);
             //$modeloTienda=Tienda::findOne(['id' => $modeloOferta->tienda_id]);
 
-            $modeloOferta=Tiendaoferta::find()->select(['tienda_id'])->where(['id'=>$idOferta])->one();
-            $modeloTienda=Tienda::find()->select(['usuario_id'])->where(['id'=>$modeloOferta])->one();
+            //$modeloOferta=Tiendaoferta::find()->select(['tienda_id'])->where(['id'=>$idOferta])->one();
+            $modeloTienda=Tienda::find()->select(['usuario_id'])->where(['id'=>$idtienda1])->one();
             return $modeloTienda;
-    } 
+    } */
 
 }

@@ -55,7 +55,7 @@ class TiendaofertaController extends Controller
                             'matchCallback' => function ($rule, $action) {
                                 //Llamada al método que comprueba si es un administrador
                                 //$model=Tienda::find()->where(['id' => $_GET['id']])->one();
-                                var_dump(Yii::$app->user->identity->id);
+                                
                                 if ( $action->id == 'index')
                                 {
                                     return Usuario::esUsuarioTienda(Yii::$app->user->identity->id);
@@ -149,20 +149,22 @@ class TiendaofertaController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) ) {
 
-                $idusuario=Tienda::encontrarUsuarioOferta($model->id);
-                var_dump($idusuario);
+                $modeloUsuarioTienda=Tienda::findOne(['id' => $model->tienda_id]);
 
+                $idusuario=$modeloUsuarioTienda->usuario_id;
+               
                 if ($idusuario == Yii::$app->user->identity->id || 
                 Yii::$app->user->identity->rol == 'A' || 
                 Yii::$app->user->identity->rol == 'S' ) 
                 {
                     $model->save();
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['view', 'id' => $model->id,'msg'=>"Oferta añadida correctamente"]);
                 }
                 else
                 {
-                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"fallo"]);
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>"No puedes añadir la oferta"]);
                 }
+              
             }
         } else {
             $model->loadDefaultValues();
@@ -185,7 +187,7 @@ class TiendaofertaController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'msg'=>"Oferta actualizada correctamente"]);
         }
 
         return $this->render('update', [
@@ -204,7 +206,7 @@ class TiendaofertaController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','msg'=>"Oferta eliminada correctamente"]);
     }
 
     /**
