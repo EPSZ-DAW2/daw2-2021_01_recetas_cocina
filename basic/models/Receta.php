@@ -88,5 +88,79 @@ class Receta extends ActiveRecord
         return new recetaQuery(get_called_class());
     }
 
+    public static function esPropiedad($idu)
+    {
+        
+        if(isset($_GET["id"]))
+        {
+            $idr=$_GET["id"];
 
+
+            if (Receta::findOne(['id' => $idr,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+
+    public static function esPropiedadPaso($idu)
+    {
+        if(isset($_GET["id"]))
+        {
+            $idPaso=$_GET["id"];
+
+            $idr=RecetaPaso::find()->select(['receta_id'])->where(['id'=>$idPaso])->one();
+            
+
+            if (Receta::findOne(['id' => $idr,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
+
+    public static function esPropiedadPasoImagen($idu)
+    {
+        if(isset($_GET["id"]))
+        {
+            $idPasoImagen=$_GET["id"];
+
+            $idPaso=RecetaPasoImagen::find()->select(['receta_paso_id'])->where(['id'=>$idPasoImagen])->one();
+
+            $idReceta=RecetaPaso::find()->select(['receta_id'])->where(['id'=>$idPaso])->one();
+
+        
+            if (Receta::findOne(['id' => $idReceta,'usuario_id' => $idu])){
+                return true;
+               } else {
+        
+                return false;
+               }
+        }
+        else
+        {
+
+            return true;
+           
+        }
+
+    }
 }

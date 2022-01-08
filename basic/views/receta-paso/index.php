@@ -12,6 +12,12 @@ $this->title = Yii::t('app', 'Receta Pasos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="Receta-paso-index">
+    
+<?php if (isset($_GET['msg'])){
+            echo '<p class="btn btn-success w-100">';
+            echo $_GET['msg'];
+            echo '</p>';
+        }?>
 
     <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 

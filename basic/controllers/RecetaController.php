@@ -47,7 +47,7 @@ class RecetaController extends Controller
                         ],
                         [
                            //Los usuarios simples tienen permisos sobre las siguientes acciones
-                           //'actions' => ['logout'],
+                           'actions' => ['create', 'update','delete', 'view','index'],
                            //Esta propiedad establece que tiene permisos
                            'allow' => true,
                            //Usuarios autenticados, el signo ? es para invitados
@@ -56,7 +56,15 @@ class RecetaController extends Controller
                            //y así establecer si tiene permisos o no
                            'matchCallback' => function ($rule, $action) {
                               //Llamada al método que comprueba si es un usuario simple
-                              return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              if ( $action->id == 'index')
+                              {
+                                  return Usuario::esUsuarioColaborador(Yii::$app->user->identity->id);
+                              }
+                              else
+                              {
+                                  return  Receta::esPropiedad(Yii::$app->user->identity->id);
+  
+                              }
                           },
                        ],
                         [
@@ -133,6 +141,10 @@ class RecetaController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) )
             {
+                if ($model->usuario_id==Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
                     $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
                     if ($model->imageFile && $model->validate())
@@ -150,7 +162,12 @@ class RecetaController extends Controller
                         $model->save();
                         $msg = "<strong class='label label-info'>Enhorabuena, creacion realizada con éxito</strong>";
                     }
-
+                }
+                else
+                {
+                    return $this->redirect(['create', 'id' => $model->id,'msg'=>'Solo puedes crear recetas de tu tipo.']);
+                }
+                
                 //return $this->redirect(['view', ['id' => $model->id, 'msg' => $msg]]);
                 return $this->render('view', [
                     'model' => $model,
