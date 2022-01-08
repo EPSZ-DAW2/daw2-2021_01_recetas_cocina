@@ -102,6 +102,13 @@ a.desc:after {
     border-radius: 15px;
 }
 
+
+.sin-deco>a{
+    text-decoration: none;
+    color: inherit;
+}
+
+
 .table {
     --bs-table-bg: #c9e0c1;
     --bs-table-accent-bg: #c9e0c1;

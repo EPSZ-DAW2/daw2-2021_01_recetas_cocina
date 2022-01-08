@@ -35,7 +35,7 @@ AppAsset::register($this);
             'class' => 'btn-toolbar navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
-
+    ?><div class="text-left sin-deco text-light"><?php echo \yii\helpers\Html::a( 'Volver', Yii::$app->request->referrer); ?> </div><?php
     $navItem=[];
 
     if (Yii::$app->user->isGuest)
@@ -119,13 +119,14 @@ AppAsset::register($this);
     <?php //<div class="container mt-5 pt-3 "> desactivar para todo menos el index ?>
 
 
-        <?= Breadcrumbs::widget([
+        <div style="mt-2"><?= Breadcrumbs::widget([
             'homeLink' => [
                 'label' => 'Inicio',
                 'url' => '/daw2-2021_01_recetas_cocina/basic/web/',
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        </div>
         <?= Alert::widget() ?>
 
         <?= $content ?>
