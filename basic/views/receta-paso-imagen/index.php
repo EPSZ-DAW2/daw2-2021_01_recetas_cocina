@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Receta;
+use app\models\RecetaPaso;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RecetaPasoImagenSearch */
@@ -30,8 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'receta_paso_id',
+            //'id',
+            ['label'=>'Receta', 'value' => function ($data) {
+                return Receta::findOne(['id'=>Receta::esPropiedadPasoImagen(['id'=>$data->id])])->nombre;
+            }],
+
+            ['label'=>'Número de paso', 'value' => function ($data) {
+                return RecetaPaso::findOne(['id'=>$data->receta_paso_id])->orden;
+            }],
             'orden',
             'imagen:ntext',
 
