@@ -4,7 +4,9 @@ use app\models\Ingrediente;
 use app\models\RecetaPaso;
 use app\models\RecetaPasoImagen;
 use app\models\Tienda;
+use app\models\Usuario;
 use app\models\Tiendaoferta;
+use app\models\RecetaComentarios;
 
 $rutaimg="uploads/";
 
@@ -31,6 +33,17 @@ $rutaimg="uploads/";
                 <?php }
             }?>
 
+            <?php
+            foreach ($dataProvider->getModels() as $card8)
+            {
+                if ($_GET["id"]==$card8->id)
+                { ?>
+                    <p>Receta subida por: <?php
+                     $modeloUsuario=Usuario::find()->select('nombre')->where(['id' =>  $card8->usuario_id])->one();
+                    echo $modeloUsuario->nombre;?></p>
+                <?php }
+            }?>
+
 
             <h3 class="text-center mb-5 btn-verde">Ingredientes receta: </h3>
             <?php
@@ -49,7 +62,7 @@ $rutaimg="uploads/";
             }
             ?>
 
-            <h3 class="text-center mb-5 btn-verde" id="pasos">Pasos receta: </h3>
+            <h3 class="text-center mb-5 btn-verde mt-5" id="pasos">Pasos receta: </h3>
             <?php
             foreach ($dataProvider->getModels() as $card4)
             {
@@ -57,15 +70,12 @@ $rutaimg="uploads/";
                 //echo "Receta ".$card4->id;
                 if ($_GET["id"]==$card4->id)
                 {
-
-                    $model = RecetaPaso::find()->select('descripcion')->where(['receta_id' =>  $card4->id])->one();
-
                     $modeloRecetaPaso=RecetaPaso::find()->orderBy(['orden' => SORT_ASC,])->where(['receta_id' =>  $card4->id])->all();
-                    ?>
-                    <?php foreach ($modeloRecetaPaso as $card5)
+                    
+                    foreach ($modeloRecetaPaso as $card5)
                     {
                         ?>
-                        <h5 class="text-center">Paso <?php echo $card5->orden; ?></h5>
+                        <h5 class="text-center mt-5">Paso <?php echo $card5->orden; ?></h5>
                         <p class="text-center"><?php echo $card5->descripcion;?></p>
 
                         <?php 
@@ -77,7 +87,6 @@ $rutaimg="uploads/";
                             <img style="width: 35%; margin: 2.5%" src='<?php echo $rutaimg.$card6->imagen;?>' class="card-img-top" alt="">
                             <?php
                         }
-                         echo "</br></br>";
                     }
                     ?>
 
@@ -118,6 +127,40 @@ $rutaimg="uploads/";
                 }
             } ?>
             </div>
+
+            <h3 class="text-center mb-5 btn-verde">Comentarios: </h3>
+            <?php
+            foreach ($dataProvider->getModels() as $card9) 
+            {
+                //echo "$card9->receta_id";
+                if ($_GET["id"]==$card9->id)
+                {
+                    $modeloComentario = RecetaComentarios::find()->orderBy(['fechahora' => SORT_DESC,])->where(['receta_id' =>$card9->id])->all();
+                    
+                    foreach ($modeloComentario as $card10)
+                    {
+                        //NOMBRE DE USUARIO DEL COMENTARIO
+                        $modeloUsuario=Usuario::find()->select('nombre')->where(['id' =>  $card10->usuario_id])->all();
+                        foreach ($modeloUsuario as $card11)
+                        {
+                            ?>
+                            <div class="card mt-5">
+                            <h5 class="card-header"><?php echo $card11->nombre?></h5>
+                            <div class="card-body">
+                            <?php
+                        }
+                    ?>
+                    
+                        <h5 class="card-title"><?php echo $card10->texto?></h5>
+                        <p class="card-text"><?php echo $card10->fechahora?></p>
+                      </div>
+                    </div>
+                    <?php
+                    }
+                    ?><a href="#" class="btn btn-primary">Comentar</a><?php
+                }
+            }
+            ?>
 
             <?php
         }
