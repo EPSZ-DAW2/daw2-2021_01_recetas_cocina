@@ -2,6 +2,7 @@
 
 use app\models\Ingrediente;
 use app\models\RecetaPaso;
+use app\models\RecetaPasoImagen;
 use app\models\Tienda;
 use app\models\Tiendaoferta;
 
@@ -52,6 +53,7 @@ $rutaimg="uploads/";
             <?php
             foreach ($dataProvider->getModels() as $card4)
             {
+                //PASOS DE LA RECETA
                 //echo "Receta ".$card4->id;
                 if ($_GET["id"]==$card4->id)
                 {
@@ -64,11 +66,18 @@ $rutaimg="uploads/";
                     {
                         ?>
                         <h5 class="text-center">Paso <?php echo $card5->orden; ?></h5>
-                        <h5 class="text-center"><?php echo $card5->descripcion;?></h5><?php
-                            //imagenes de cada paso
+                        <p class="text-center"><?php echo $card5->descripcion;?></p>
 
-                        echo "</br></br>";
-
+                        <?php 
+                        //FOTOS DE LA RECETA
+                        $modeloRecetaPasoImagen=RecetaPasoImagen::find()->orderBy(['orden' => SORT_ASC,])->where(['receta_paso_id' =>  $card5->id])->all();
+                        foreach ($modeloRecetaPasoImagen as $card6)
+                        {
+                            ?>
+                            <img style="width: 35%; margin: 2.5%" src='<?php echo $rutaimg.$card6->imagen;?>' class="card-img-top" alt="">
+                            <?php
+                        }
+                         echo "</br></br>";
                     }
                     ?>
 
