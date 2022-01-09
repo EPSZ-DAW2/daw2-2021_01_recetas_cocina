@@ -14,7 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to login:</p>
-
+    <?php if (isset($msg)){
+            echo '<p class="btn btn-danger w-100">';
+            echo "Numero de intentos ".$msg;
+            echo '</p>';
+        }?>
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal',
