@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\RecetaCategoriasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Receta Categorias';
+$this->title = 'Categorias';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="receta-categorias-index">
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Crear Receta Categorias', ['create'], ['class' => 'btn btn-success w-100']) ?>
+        <?= Html::a('Crear una nueva categoria', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php //echo $this->render('_searchGlob', ['model' => $searchModel]); ?>

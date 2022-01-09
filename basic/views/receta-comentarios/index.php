@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\RecetaComentariosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Receta Comentarios';
+$this->title = 'Comentarios';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="receta-comentarios-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Crear Receta Comentarios', ['create'], ['class' => 'btn btn-success w-100']) ?>
+        <?= Html::a('Crear un Comentario', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

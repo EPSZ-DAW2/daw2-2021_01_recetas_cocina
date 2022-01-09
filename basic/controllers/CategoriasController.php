@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+
 /**
  * CategoriasController implements the CRUD actions for Categorias model.
  */
@@ -83,6 +84,56 @@ class CategoriasController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    //para ver las categorias que hay ???
+    public function actionVercategorias()
+    {
+            $searchModel = new CategoriasSearch();
+            if (isset($_GET["CategoriasSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQ($this->request->queryParams);
+            }
+            else {
+                $dataProvider = $searchModel->search($this->request->queryParams);
+            }
+
+            return $this->render('Categorias', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,]);
+    }
+    //para ver una categoria en concreto?
+   /* public function actionVercategoria()
+    {
+        $titulo="Categorias";
+        $searchModel = new CategoriasSearch();
+
+        if (isset($_GET["id"]))
+        {
+            $dataProvider = $searchModel->searchID($this->request->queryParams);
+            $dataProvider2 = $searchModel->searchCategoria($this->request->queryParams);
+            //$dataProvider3 = $searchModel->searchRecetaComentarios($this->request->queryParams);
+            //$modeloOfertas=Tiendaoferta::find()->orderBy([
+             //   'id' => SORT_DESC,
+            //])->limit(9)->all();
+
+            return $this->render('categoriadetalle', [
+                'titulo' => $titulo,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'dataProvider2' => $dataProvider2,
+            ]);
+        }
+        else
+        {
+            $dataProvider = $searchModel->search($this->request->queryParams);
+            return $this->render('categoriadetalle', [
+                'titulo' => $titulo,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,]);
+        }
+    }
+*/
+
+
+
 
     /**
      * Displays a single Categorias model.
