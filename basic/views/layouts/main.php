@@ -27,12 +27,12 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <header>
+
     <?php
-    $rutaAtras=Yii::$app->request->referrer;
     NavBar::begin([
         //'brandLabel' => Html::img('@web/images/atras.png', ['alt' => Yii::$app->name="Aplicación de recetas", 'style' => 'height: 2rem; width: auto; top: 12px; left: 20px; position: absolute; border-radius:25px;']).Html::img('@web/images/atras.png', ['alt' => Yii::$app->name="Aplicación de recetas", 'style' => 'height: 2rem; width: auto; top: 12px; left: 20px; position: absolute; border-radius:25px;']),
-        'brandLabel' => '<img href="'.$rutaAtras.'" style="height: 2rem; width: auto;top: 12px; left: 20px;  position: absolute; border-radius:25px;" src="images/atras.png"/><img style="height: 2rem; width: auto;top: 12px; left: 60px;  position: absolute; border-radius:25px;" src="images/logo.png"/>',
-        //'brandLabel' => 'Aplicación de Recetas',
+        //'brandLabel' => '<img href="'.$rutaAtras.'" style="height: 2rem; width: auto;top: 12px; left: 20px;  position: absolute; border-radius:25px;" src="images/atras.png"/><img style="height: 2rem; width: auto;top: 12px; left: 60px;  position: absolute; border-radius:25px;" src="images/logo.png"/>',
+        'brandLabel' =>  '<a href="'.Yii::$app->request->referrer.'">'.'<img style="height: 2rem; width: auto;top: 12px; left: 20px;  position: absolute; border-radius:25px;" src="images/atras.png"/></a><img style="height: 2rem; width: auto;top: 12px; left: 60px;  position: absolute; border-radius:25px;" src="images/logo.png"/>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'btn-toolbar navbar navbar-expand-md navbar-dark bg-dark fixed-top',
