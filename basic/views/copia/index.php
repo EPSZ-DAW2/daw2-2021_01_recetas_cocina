@@ -51,6 +51,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'title' => 'Restaurar',
                             'data-pjax' => '0',
+                            'data' => [
+                                'confirm' => Yii::t('app', '¿Desea sobreescribir su base de datos con esta copia de seguridad?'),
+                                'method' => 'post',
+                            ],
                         ]
                     );
                 },
@@ -70,6 +74,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'title' => 'Borrar',
                             'data-pjax' => '0',
+                            'data' => [
+                                'confirm' => Yii::t('app', '¿Desea borrar esta copia de seguridad de la BBDD?'),
+                                'method' => 'post',
+                            ],
                         ]
                     );
                 },
