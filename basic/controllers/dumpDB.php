@@ -376,4 +376,63 @@ class dumpDB
         }
     }
 
+    public function listarArchivos2($carpeta){
+        $arrayListado=[];
+        $componente=[];
+
+        if(is_dir($carpeta)){
+            if($dir = opendir($carpeta)){
+                while(($archivo = readdir($dir)) !== false){
+                    if($archivo != '.' && $archivo != '..' && $archivo != '.htaccess'){
+                        $componente=[
+                            "ruta" =>"$carpeta$archivo",
+                            "nombre" =>"$archivo"
+                        ];
+                        array_push($arrayListado, $componente);
+                        //echo '<li><a target="_blank" href="'.$componente['ruta'].'">'.$componente['nombre'].'</a></li>';
+                    }
+                }
+                closedir($dir);
+                return array_reverse($arrayListado);
+            }
+        }
+    }
+
+    //Crear nuevos directorios completos
+    function copiaFicheros( $source, $target ) {
+        if ( is_dir( $source ) ) {
+            @mkdir( $target );
+            $d = dir( $source );
+            while ( FALSE !== ( $entry = $d->read() ) ) {
+                if ( $entry == '.' || $entry == '..' ) {
+                    continue;
+                }
+                $Entry = $source . '/' . $entry;
+                if ( is_dir( $Entry ) ) {
+                    full_copy( $Entry, $target . '/' . $entry );
+                    continue;
+                }
+                copy( $Entry, $target . '/' . $entry );
+            }
+
+            $d->close();
+        }else {
+            copy( $source, $target );
+        }
+    }
+    //borrado de directorio con archivos
+    function borrarDirectorio($dir) {
+        if(!$dh = @opendir($dir)) return;
+        while (false !== ($current = readdir($dh))) {
+            if($current != '.' && $current != '..') {
+                //echo 'Se ha borrado el archivo '.$dir.'/'.$current.'<br/>';
+                if (!@unlink($dir.'/'.$current))
+                    $this->borrarDirectorio($dir.'/'.$current);
+            }
+        }
+        closedir($dh);
+        //echo 'Se ha borrado el directorio '.$dir.'<br/>';
+        @rmdir($dir);
+    }
+
 }

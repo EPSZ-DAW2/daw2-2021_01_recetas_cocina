@@ -24,34 +24,6 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-/*      public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }  */
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-/* PARTE DE PERMISOS QUEDARA COMENTADA HASTA DETEMINAR LAS ACCIONES A LAS QUE PODRÁ ACCEDER
-CADA ROL */////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////
 
     public function behaviors()
     {
