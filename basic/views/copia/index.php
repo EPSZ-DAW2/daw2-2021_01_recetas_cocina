@@ -12,25 +12,94 @@ $this->title = Yii::t('app', 'Copia de seguridad');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-index">
-    <p class="btn btn-success w-100"><?php echo $msg;?></p>
+    <?php if (isset($msg) && !empty($msg)){?>
+    <p class="btn btn-success w-100">
+        <?php echo $msg;?>
+    </p>
+    <?php }?>
+    <?php if (isset($msgError) && !empty($msgError)){?>
+        <p class="btn btn-danger w-100">
+            <?php echo $msgError;?>
+        </p>
+    <?php }?>
 
-<h1 class="text-center w-100 rounded btn-verde"><?= Html::encode($this->title) ?></h1>
+<h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p class="text-center">
         <?= Html::a(Yii::t('app', 'Listado Copias de Seguridad'), ['index'], ['class' => 'btn btn-warning mt-3']) ?>
-        <?= Html::a(Yii::t('app', 'Hacer Copia de Seguridad'), ['copia'], ['class' => 'btn btn-verde mt-3']) ?>
-        <?= Html::a(Yii::t('app', 'Descargar Copia SQL'), ['descargar'], ['class' => 'btn btn-primary mt-3']) ?>
-        <?= Html::a(Yii::t('app', 'Restaurar Copia de Seguridad'), ['restaurarcopia'], ['class' => 'btn btn-danger mt-3']) ?>
+        <?= Html::a(Yii::t('app', 'Hacer Copia de Seguridad'), ['copia'], ['class' => 'btn btn-primary mt-3']) ?>
+        <?= Html::a(Yii::t('app', 'Descargar Copia Actual SQL'), ['descargaractual'], ['class' => 'btn btn-success mt-3']) ?>
     </p>
     <?php
     echo GridView::widget([
+
     'dataProvider' => $dataProvider,
     'columns' => [
-    ['class' => 'yii\grid\SerialColumn'],
-    'nombre',
-    'ruta'
+
+        ['class' => 'yii\grid\SerialColumn','headerOptions' => ['style' => 'text-align: center !important;'],],
+        ['attribute' => 'nombre', 'headerOptions' => ['class' => 'text-center',],],
+        ['attribute' => 'ruta', 'headerOptions' => ['class' => 'text-center',],],
+        ['class' => 'yii\grid\ActionColumn',
+            'header' => 'Restaurar',
+            'headerOptions' => ['style' => 'text-align: center !important;'],
+            'template' => '{play}',
+            'buttons' => [
+                'play' => function ($url, $model) {
+                    return Html::a(
+                        '<div class="text-center m-0 p-0"><span class="bi-cloud-arrow-up-fill m-0 p-0" style="font-size: 32px; "></span></div>',
+                        ['copia/restaurarcopia', 'f' => $model['nombre']],
+                        [
+                            'title' => 'Restaurar',
+                            'data-pjax' => '0',
+                        ]
+                    );
+                },
+            ],
+
+        ],
+
+        ['class' => 'yii\grid\ActionColumn',
+            'header' => 'Borrar',
+            'headerOptions' => ['style' => 'text-align: center !important;'],
+            'template' => '{play}',
+            'buttons' => [
+                'play' => function ($url, $model) {
+                    return Html::a(
+                        '<div class="text-center m-0 p-0"><span class="bi-trash-fill mx-2 text-center" style="font-size: 32px; color: red;"></span></div>',
+                        ['copia/borrarcopia', 'f' => $model['nombre']],
+                        [
+                            'title' => 'Borrar',
+                            'data-pjax' => '0',
+                        ]
+                    );
+                },
+            ],
+
+        ],
+
+        ['class' => 'yii\grid\ActionColumn',
+            'header' => 'Descargar',
+            'headerOptions' => ['style' => 'text-align: center !important;'],
+            'template' => '{download}',
+            'buttons' => [
+                'download' => function ($url, $model) {
+                    return Html::a(
+                        '<div class="text-center m-0 p-0"><i class="bi-cloud-download-fill mx-2 text-center" style="font-size: 32px; color: green;"></i></div>',
+                        ['copia/descargarsql', 'f' => $model['nombre']],
+                        [
+                            'title' => 'Borrar',
+                            'data-pjax' => '0',
+                        ]
+                    );
+                },
+            ],
+
+        ],
+
     ],
     'layout' => "\n{items}\n",
+
+
     ]);
     ?>
 

@@ -66,11 +66,11 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','login'],
+                //'only' => ['logout','login'],
                 'rules' => [
                     [
                         //El administrador tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout','login'],
+                        //'actions' => ['logout','login'],
                         //Esta propiedad establece que tiene permisos
                         'allow' => true,
                         //Usuarios autenticados, el signo ? es para invitados
@@ -84,7 +84,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                     ],
                     [
                        //Los usuarios simples tienen permisos sobre las siguientes acciones
-                       'actions' => ['logout','login'],
+                       //'actions' => ['logout','login'],
                        //Esta propiedad establece que tiene permisos
                        'allow' => true,
                        //Usuarios autenticados, el signo ? es para invitados
@@ -98,7 +98,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                    ],
                    [
                     //Los usuarios simples tienen permisos sobre las siguientes acciones
-                    'actions' => ['logout','login'],
+                    //'actions' => ['logout','login','error'],
                     //Esta propiedad establece que tiene permisos
                     'allow' => true,
                     //Usuarios autenticados, el signo ? es para invitados
@@ -112,7 +112,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                 ],
                     [
                         //El administrador tiene permisos sobre las siguientes acciones
-                        'actions' => ['logout','login'],
+                        //'actions' => ['logout','login'],
                         //Esta propiedad establece que tiene permisos
                         'allow' => true,
                         //Usuarios autenticados, el signo ? es para invitados
@@ -126,7 +126,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
                     ],
                     [
                     //Los usuarios simples tienen permisos sobre las siguientes acciones
-                    'actions' => ['logout','login'],
+                    //'actions' => ['logout','login'],
                     //Esta propiedad establece que tiene permisos
                     'allow' => true,
                     //Usuarios autenticados, el signo ? es para invitados
@@ -151,8 +151,6 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             ],
         ];
     }
-
-
 
 
     /**

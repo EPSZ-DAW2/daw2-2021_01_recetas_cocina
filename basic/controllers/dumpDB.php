@@ -88,6 +88,7 @@ class dumpDB
             $this->dumpTable($val['name']);
         }
         $result = $this->setHeader();
+        $result .= $this->setCreate(); // comentar si no se desea CREATE
         $result.= ob_get_contents();
         $result.= $this->getViews();
         $result.= $this->getConstraints();
@@ -98,7 +99,7 @@ class dumpDB
             header("Cache-Control: no-cache");
             header("Pragma: no-cache");
             header("Content-type:application/sql");
-            header("Content-Disposition:attachment;filename=downloaded.sql");
+            header("Content-Disposition:attachment;filename=bbdd_actual.sql");
         }
         return $result;
     }
@@ -155,6 +156,18 @@ class dumpDB
         return $header;
     }
 
+    /**
+     * Set sql file header
+     * @return string
+     */
+    private function setCreate()
+    {
+        $create = PHP_EOL."--\n-- "."-- Base de datos: `daw2_recetas`"."\n";
+        $create.="CREATE DATABASE IF NOT EXISTS `daw2_recetas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;".PHP_EOL;
+        $create.="USE `daw2_recetas`;".PHP_EOL;
+        return $create;
+    }
+
 
     /**
      * Set sql file footer
@@ -170,6 +183,8 @@ class dumpDB
 
         return $footer;
     }
+
+
 
 
     /**
@@ -360,4 +375,5 @@ class dumpDB
             }
         }
     }
+
 }
