@@ -16,11 +16,11 @@ $rutaimg="uploads/";
     <div class="container-fluid">
         <div class="row">
 
+            <?php // parte primera columna ?>
 
             <div class="col-lg-1 " style="display: inline;background-color: #ffe07d; border-radius: 20px; margin-bottom: 20px">
-                <button class="w-100 btn bg-primary mx-0 mt-3" style="border-radius: 15px;  color: white">CATEGORIAS</button>
+                <button class="w-100 btn bg-primary mx-0 mt-3" style="border-radius: 15px;  color: white; font-size: 0.625rem;">CATEGORIAS</button>
                 <div class="d-flex flex-column h-100 mb-4 mt-4" style="width: auto; margin: auto;">
-
                     <details>
                         <summary class="btn btn-warning w-100 mt-1">Tipo de receta</summary>
                         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
@@ -56,6 +56,9 @@ $rutaimg="uploads/";
 
                 </div>
             </div>
+
+
+            <?php // parte columna central  ?>
 
             <div class="col-lg-10 col-sm-12  mb-4">
                 <div class="w-100 text-center border-1  " style="background-color: #c9e0c1; border-radius:25px ">
@@ -125,11 +128,16 @@ $rutaimg="uploads/";
                 </div>
             </div>
 
-            <div class="col-sm-12 col-lg-1" style="display: inline; background-color: #ffe07d; border-radius: 20px;margin-bottom: 20px" >
-                <a href="?r=site/vertiendaofertas" class="w-100 btn bg-primary mx-0 mt-3" style="border-radius: 15px;  color: white">OFERTAS</a>
-                <div class="d-flex flex-column h-100 mb-sm-4 mt-sm-4" style="width: auto; margin: auto;">
+            <?php // parte tercera columna ?>
 
-                    <ul class="nav nav-pills nav-flush flex-column mb-auto text- mt-3 ">
+            <div class="col-sm-12 col-lg-1" style="display: inline; background-color: #ffe07d; border-radius: 20px;margin-bottom: 20px" >
+                <a href="?r=site/vertiendaofertas" class="w-100 btn bg-primary mx-0 mt-3" style="overflow: hidden; border-radius: 15px;  color: white; font-size: 0.625rem;">OFERTAS</a>
+
+                <?php /*<div class="d-flex flex-column h-100 mb-4 mt-4" style=" width: auto; margin: auto;">
+
+                    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">*/?>
+
+                    <!--<ul class="nav nav-pills nav-flush flex-column mb-auto text- mt-3 "> -->
 
                         <?php foreach ($modeloOfertas as $card2){
                             $modelTienda=Tienda::find()->where(['id'=>$card2->tienda_id])->one();
@@ -137,21 +145,18 @@ $rutaimg="uploads/";
                             $tienda=$modelTienda->nombre;
                             $producto=$modelProducto->nombre;
                             ?>
-
-                        <li class="nav-item btn-verde rounded mb-3">
-
-                            <a href="?r=site/vertiendaoferta&id=<?php echo $card2->id ?>" class="w-100">
-                                <span class="w-100 btn bg-danger rounded"><?php echo "¡";echo $card2->descripcion;echo "!";?></span>
-                                <span class="w-100 btn bg-warning rounded"><?php  echo $producto;echo " ("; echo $tienda; echo ") ";?></span>
-                                <span class="w-100 btn bg-success rounded"><?php echo $card2->notas;?></span>
-
+                            <div class="my-3">
+                            <a class=" w-100 mb-3" href="?r=site/vertiendaoferta&id=<?php echo $card2->id ?>">
+                                <span class="w-100 btn bg-danger rounded" style="overflow-wrap: break-word;"><?php echo "¡";echo $card2->descripcion;echo "!";?></span>
+                                <span class="w-100  btn bg-warning rounded" style="overflow-wrap: break-word;"><?php  echo $producto;echo " ("; echo $tienda; echo ") ";?></span>
+                                <span class="w-100   btn bg-success rounded" style="overflow-wrap: break-word;"><?php echo $card2->notas;?></span>
                             </a>
-                        </li>
+                                </div>
+
                         <?php } ?>
-                        
-                    </ul>
 
                 </div>
+
             </div>
         </div>
     </div>
