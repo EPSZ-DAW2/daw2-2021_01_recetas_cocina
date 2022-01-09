@@ -525,6 +525,8 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
      */
     public function actionLogin()
     {
+         
+
         if (!Yii::$app->user->isGuest) 
         {
             return $this->goHome();
@@ -534,13 +536,34 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             
         if ($model->load(Yii::$app->request->post())){
             if( $model->login()) {
+                Yii::$app->session['veces'] =0;
                 return $this->goBack();
+                
             }
+            else{
+                Yii::$app->session['veces'] = Yii::$app->session['veces'] + 1;
+            }
+
         }
+
         
+
+        
+        //$veces=$veces+1;
+        if(Yii::$app->session['veces'] > 5){
+            return $this->render('error', [
+                'model' => $model,
+                'message' => "Número máximo de intentos alcanzado",
+                'name' => "Bloqueado"
+            ]); 
+            //die('Número máximo de intentos alcanzado');
+        
+        }
         return $this->render('login', [
             'model' => $model,
+            'msg' => Yii::$app->session['veces'],
         ]);
+
         
     }
 
@@ -551,6 +574,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
      */
     public function actionLogout()
     {
+        Yii::$app->session['veces'] =0;
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -639,6 +663,15 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
 {
     $model = new Usuario();
 
+    if(Yii::$app->session['veces'] > 5){
+        return $this->render('error', [
+            'model' => $model,
+            'message' => "Número máximo de intentos alcanzado",
+            'name' => "Bloqueado"
+        ]); 
+        //die('Número máximo de intentos alcanzado');
+    
+    }
     if ($model->load(Yii::$app->request->post())) {
         if ($model->validate()) {
             // form inputs are valid, do something here
@@ -652,6 +685,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             $model->creado= date("Y-m-d H:i:s");
             
             if($model->save()){
+                Yii::$app->session['veces'] =0;
                 return $this->redirect(['login']);
             }
 

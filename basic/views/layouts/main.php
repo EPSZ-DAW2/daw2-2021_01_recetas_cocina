@@ -43,7 +43,7 @@ AppAsset::register($this);
     {
         $navItem=[
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Categorias', 'url' => ['/categorias/vercategorias']],
+            ['label' => 'Categorias', 'url' => ['/site/vercategorias']],
             ['label' => 'Ingredientes', 'url' => ['/site/veringredientes']],
             ['label' => 'Recetas', 'url' => ['/site/verrecetas']],
             ['label' => 'Planificaciones', 'url' => ['/site/verplanificaciones']],
