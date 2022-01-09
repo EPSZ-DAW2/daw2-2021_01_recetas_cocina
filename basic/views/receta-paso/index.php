@@ -40,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'table',
         ],
         'columns' => [
-            //'id',
+            // 'id',
+            // 'receta_id',
             ['label'=>'Receta', 'value' => function ($data) {
                 return Receta::findOne(['id'=>$data->receta_id])->nombre;
            }],

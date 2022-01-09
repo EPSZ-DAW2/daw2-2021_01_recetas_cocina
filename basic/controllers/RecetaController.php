@@ -12,7 +12,13 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
-
+//Para borrar
+use app\models\RecetaPaso;
+use app\models\RecetaPasoImagen;
+use app\models\RecetaComentarios;
+use app\models\RecetaIngrediente;
+use app\models\MenuReceta;
+use app\models\RecetaCategorias;
 
 /**
  * RecetaController implements the CRUD actions for Receta model.
@@ -244,12 +250,66 @@ class RecetaController extends Controller
      */
     public function actionDelete($id)
     {
+        //Localiza los pasos de la receta
+       
+        if (($paso = RecetaPaso::find()->where(['receta_id' => $id])->all()) !== null)
+        //para cada paso
+        foreach($paso as $c)
+        {
+            //Localiza las imagenes de los pasos de la receta
+            if (($img = RecetaPasoImagen::find()->where(['receta_paso_id' => $c->id])->all()) !== null)
+            //para cada foto
+            foreach($img as $d)
+            {
+                //borra la foto del paso de la bbdd
+                $d->delete($d->id);
+                //borra la foto del paso del servidor
+                $rutaimg="uploads/".$d->imagen;
+                if (!empty($d->imagen) && file_exists($rutaimg)) unlink($rutaimg);
+            }
+            $c->delete($c->id);
+        }
+
+        //Borra las imagenes de los pasos de la receta
+        //Borra los pasos de la receta
+
+        // Borra comentarios
+        if (($comentario = RecetaComentarios::find()->where(['receta_id' => $id])->all()) !== null)
+        foreach($comentario as $c)
+        {
+            $c->delete($c->id);
+        }
+
+        // Borra receta-categoria
+        if (($categoria = RecetaCategorias::find()->where(['receta_id' => $id])->all()) !== null)
+        foreach($categoria as $c)
+        {
+            $c->delete($c->id);
+        }
+
+        // Borra menu-platos
+        if (($menu = RecetaComentarios::find()->where(['receta_id' => $id])->all()) !== null)
+        foreach($menu as $c)
+        {
+            $c->delete($c->id);
+        }
+
+        // Borra receta-ingredientes
+        if (($ingredientes = RecetaIngrediente::find()->where(['receta_id' => $id])->all()) !== null)
+        foreach($ingredientes as $c)
+        {
+            $c->delete($c->id);
+        }
+       
+        //borra la imagen de la receta
         $model = $this->findModel($id);
 
         $rutaimg="uploads/".$model->imagen;
         if (!empty($model->imagen) && file_exists($rutaimg)) unlink($rutaimg);
+            $model->delete();
 
-        $model->delete();
+        // Borra la receta
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }

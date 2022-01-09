@@ -188,10 +188,10 @@ class RecetaPasoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
         if (($model = RecetaPasoImagen::find()->where(['receta_paso_id' => $id])->all()) !== null)
         foreach($model as $c)
             $c->delete($c->id);
+        $this->findModel($id)->delete();
         // return parent::beforeDelete();
         return $this->redirect(['index']);
     }
