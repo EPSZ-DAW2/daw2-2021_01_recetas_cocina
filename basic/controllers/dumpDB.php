@@ -371,7 +371,7 @@ class dumpDB
                     }
                 }
                 closedir($dir);
-                return $arrayListado;
+                return array_reverse($arrayListado);
             }
         }
     }
