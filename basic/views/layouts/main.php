@@ -42,7 +42,7 @@ AppAsset::register($this);
     {
         $navItem=[
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Categorias', 'url' => ['/site/index']],
+            ['label' => 'Categorias', 'url' => ['/categorias/vercategorias']],
             ['label' => 'Ingredientes', 'url' => ['/site/veringredientes']],
             ['label' => 'Recetas', 'url' => ['/site/verrecetas']],
             ['label' => 'Planificaciones', 'url' => ['/site/verplanificaciones']],
@@ -64,7 +64,7 @@ AppAsset::register($this);
                     ['label' => 'Menus', 'url' => ['/site/vermenus']],
                     ['label' => 'Planificaciones', 'url' => ['/site/verplanificaciones']],
                     ['label' => 'Tiendas', 'url' => ['/site/vertiendas']],
-                    ['label' => 'Categorias', 'url' => ['/site/categorias']],
+                    ['label' => 'Categorias', 'url' => ['/categorias/vercategorias']],
                 ],],
             [
                 'label' => 'Mantenimiento',
@@ -74,7 +74,7 @@ AppAsset::register($this);
                     ['label' => 'Recetas-Ingredientes', 'url' => ['/recetaingrediente/index']],
                     ['label' => 'Recetas', 'url' => ['/receta/index']],
                     ['label' => 'Recetas - Pasos', 'url' => ['/receta-paso/index']],
-                    ['label' => 'Recetas - Categorias', 'url' => ['/receta-categorias/index']],
+                    ['label' => 'Recetas - Categorias', 'url' => ['/categorias/index']],
                     ['label' => 'Recetas - Comentarios', 'url' => ['/receta-comentarios/index']],
                     ['label' => 'Recetas - Fotos', 'url' => ['/receta-paso-imagen/index']],
                     ['label' => 'Menus-Recetas', 'url' => ['/menureceta/index']],

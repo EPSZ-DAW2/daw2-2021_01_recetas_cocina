@@ -24,15 +24,32 @@ $rutaimg="/daw2-2021_01_recetas_cocina/basic/web/images/";
                         <summary class="btn btn-warning w-100 mt-1">Tipo de receta</summary>
                         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                             <li class="nav-item"> <a href="#" class="nav-link active py-3 border-bottom"> <i class="fa fa-home"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
-                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegetariana</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Vegana</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Carnes y Pescados</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Arroces y Pastas</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Caldos y cremas</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Bebidas</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Postres</small> </a> </li>
+                        </ul>
+                    </details>
+
+                    <details>
+                        <summary class="btn btn-warning w-100 mt-1">Pais de origen</summary>
+                        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Francesa</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Española</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>China</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Japonesa</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Italiana</small> </a> </li>
+                        </ul>
+                    </details>
+
+                    <details>
+                        <summary class="btn btn-warning w-100 mt-1">Tipo de plato</summary>
+                        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                            <li class="nav-item"> <a href="#" class="nav-link active py-3 border-bottom"> <i class="fa fa-home"></i> <small>Entrante</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Segundo plato</small> </a> </li>
+                            <li> <a href="#" class="nav-link bg-warning py-3 border-bottom"> <i class="fa fa-dashboard"></i> <small>Postre</small> </a> </li>
                         </ul>
                     </details>
 
