@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\bootstrap5\LinkPager;
 use app\models\Receta;
 use app\models\RecetaPaso;
 
@@ -9,15 +10,21 @@ use app\models\RecetaPaso;
 /* @var $searchModel app\models\RecetaPasoImagenSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Receta Paso Imagenes';
+$this->title = Yii::t('app', 'Receta Paso Imagenes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="Receta-paso-imagen-index">
 
+<?php if (isset($_GET['msg'])){
+            echo '<p class="btn btn-success w-100">';
+            echo $_GET['msg'];
+            echo '</p>';
+        }?>
+
     <h1 class="tituloCrud"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Receta Paso Imagen', ['create'], ['class' => 'btn btn-success w-100']) ?>
+        <?= Html::a(Yii::t('app', 'Crear imagen para un paso'), ['create'], ['class' => 'btn btn-success w-100']) ?>
     </p>
 
     <?php //echo $this->render('_searchGlob', ['model' => $searchModel]); ?>
@@ -28,13 +35,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'options' => [
+            'class' => 'table',
+        ],
         'columns' => [
-            //['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
+            'id',
             ['label'=>'Receta', 'value' => function ($data) {
-                return Receta::findOne(['id'=>Receta::esPropiedadPasoImagen(['id'=>$data->id])])->nombre;
+                //return Receta::findOne(['id'=>RecetaPaso::findOne(['id'=>$data->receta_id])->id])->nombre;
+                $id_receta = RecetaPaso::findOne(['id'=>$data->receta_paso_id]);
+                return Receta::findOne(['id'=>$id_receta->receta_id])->nombre;
             }],
 
             ['label'=>'Número de paso', 'value' => function ($data) {
@@ -43,9 +53,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'orden',
             'imagen:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+            'header' => 'Acciones'],
         ],
+        'layout' => "\n{items}\n",
+
     ]); ?>
 
+    <div class="text-center w-100">
+        <?= LinkPager::widget([
+            'pagination' => $dataProvider->pagination,
+        ])?>
+    </div>
 
 </div>

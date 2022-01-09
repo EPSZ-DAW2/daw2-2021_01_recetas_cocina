@@ -40,7 +40,7 @@ CREATE TABLE `receta_pasos` (
 
 INSERT INTO `receta_pasos` (`id`, `receta_id`, `orden`, `descripcion`) VALUES
 (71, 11, 1, 'Lavamos y secamos los tomates. Les sacamos alguna parte, si es necesario o está fea, y los troceamos. En una cazuela ponemos un poco de aceite de oliva a fuego medio. Echamos la cebolla y los pimientos cortados en juliana, y las zanahorias en rodajas finas.'),
-(72, 11, 2, '\r\nRehogamos todo hasta que la cebolla coja color marroncito, así la salsa tendrá más sabor. Añadimos el tomate troceado y dejamos a fuego lento, removiendo de vez en cuando, durante una hora.'),
+(72, 11, 2, 'Rehogamos todo hasta que la cebolla coja color marroncito, así la salsa tendrá más sabor. Añadimos el tomate troceado y dejamos a fuego lento, removiendo de vez en cuando, durante una hora.'),
 (73, 11, 3, 'Pasamos la salsa por el pasapurés y volvemos a poner al fuego. La dejaremos durante otra hora más, teniendo cuidado de que no se pegue. Salamos y echamos una pizca de azúcar si nos resulta muy ácida.\r\n\r\nApagamos el fuego, rellenamos los botes con la salsa de tomate y dejamos destapados hasta que se enfríen totalmente. Si queremos congelar los botes dejaremos un espacio de dos centímetros hasta el borde, ya que al congelarse el líquido aumentará su volumen y de este modo evitamos que el frasco reviente.'),
 (74, 12, 1, 'Añadimos las alubias en una cazuela, a ser posible baja y ancha (si es de barro mejor). Cubrimos con agua hasta que quede un par de dedos por encima de las mismas. Removemos otra vez para que se junte todo bien. Calentamos a fuego alto hasta que rompa a hervir.'),
 (75, 12, 2, 'Cuando empiece a hervir introducimos la panceta, los chorizos, el hueso de jamón y las morcillas (previamente pinchadas para evitar que revienten).'),
