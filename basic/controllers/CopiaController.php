@@ -98,7 +98,7 @@ class CopiaController extends Controller
         ]);
     }
 
-    public function actionDescargar()
+    public function actionDescargaractual()
     {
         $dumper = new dumpDB();
         echo $dumper->getDump();
@@ -122,6 +122,25 @@ class CopiaController extends Controller
         ]);
     }
 
+    public function actionDescargarsql()
+    {
+
+        $fichero = $_GET['f']; //procesar
+        $rutaFichero = '../backups/sql/' . $fichero;
+
+        if (file_exists($rutaFichero)) {
+
+            $sql = file_get_contents($rutaFichero);
+            header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+            header("Cache-Control: no-cache");
+            header("Pragma: no-cache");
+            header("Content-type:application/sql");
+            header("Content-Disposition:attachment;filename=".$fichero);
+            return $sql;
+        }
+
+    }
+
 
 
     /**
@@ -135,6 +154,16 @@ class CopiaController extends Controller
         $dumper = new dumpDB();
 
         // comprobar que la ruta existe y sino crearla
+
+        $carpeta1='../backups';
+        $carpeta2='../backups/sql';
+
+        if (!file_exists($carpeta1)){
+            mkdir($carpeta1);
+        }
+        if (!file_exists($carpeta2)){
+            mkdir($carpeta2);
+        }
 
         $bk_file = '../backups/sql/backup'.'_'.date('Y').'-'.date('m').'-'.date('d').'_'.date('G').'-'.date('i').'-'.date('s').'.sql';
         $fh = fopen($bk_file, 'w') or die("can't open file");
@@ -153,14 +182,140 @@ class CopiaController extends Controller
         ]);
 
 
-
         return $this->render('index', [
             'dataProvider' => $gridViewDataProvider,
             "msg"=>"Copia Realizada Correctamente"
         ]);
 
+    }
+
+    /**
+     * Creates a new Categorias model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionRestaurarcopia()
+    {
+        $raiz = '../backups/sql';
+
+        $dumper = new dumpDB();
+
+        $arrayFicheros = $dumper->listarArchivos('../backups/sql/');
+
+        $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $arrayFicheros,
+            'sort' => [
+                'attributes' => ['nombre'],
+
+            ],
+            'pagination' => ['pageSize' => 10]
+        ]);
+
+        //$fichero="backup_2022-01-08_21-57-07.sql";
+        if (isset($_GET['f'])) {
+            $fichero = $_GET['f']; //procesar
+            $rutaFichero = '../backups/sql/' . $fichero;
+
+            if (file_exists($rutaFichero)) {
+                $sql = file_get_contents($rutaFichero);
+                Yii::$app->db->pdo->exec($sql);
+
+                return $this->render('index', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msg" => "Copia de seguridad restaurada --> " . $fichero,
+                ]);
+            } else {
+                return $this->render('index', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msgError" => "El fichero especificado no existe."
+                ]);
+            }
+        } else {
+            return $this->render('index', [
+                'dataProvider' => $gridViewDataProvider,
+                "msgError" => "Fichero no especificado"
+            ]);
+        }
+    }
 
 
+        /**
+         * Creates a new Categorias model.
+         * If creation is successful, the browser will be redirected to the 'view' page.
+         * @return mixed
+         */
+        public function actionBorrarcopia()
+    {
+        $raiz='../backups/sql';
+
+        $dumper = new dumpDB();
+
+
+
+        //$fichero="backup_2022-01-08_21-57-07.sql";
+        if (isset($_GET['f']))
+        {
+            $fichero=$_GET['f']; //procesar
+            $rutaFichero='../backups/sql/'.$fichero;
+
+            if (file_exists($rutaFichero))
+            {
+                $sql = file_get_contents($rutaFichero);
+
+                unlink($rutaFichero);
+
+                $arrayFicheros=$dumper->listarArchivos('../backups/sql/');
+
+                $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+                    'allModels' => $arrayFicheros,
+                    'sort' => [
+                        'attributes' => ['nombre'],
+
+                    ],
+                    'pagination' => ['pageSize' => 10]
+                ]);
+
+
+                return $this->render('index', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msg"=>"Copia de seguridad borrada --> ".$fichero,
+                ]);
+            }
+            else
+            {
+                $arrayFicheros=$dumper->listarArchivos('../backups/sql/');
+
+                $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+                    'allModels' => $arrayFicheros,
+                    'sort' => [
+                        'attributes' => ['nombre'],
+
+                    ],
+                    'pagination' => ['pageSize' => 10]
+                ]);
+
+                return $this->render('index', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msgError"=>"El fichero especificado no existe."
+                ]);
+            }
+        }
+        else{
+            $arrayFicheros=$dumper->listarArchivos('../backups/sql/');
+
+            $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+                'allModels' => $arrayFicheros,
+                'sort' => [
+                    'attributes' => ['nombre'],
+
+                ],
+                'pagination' => ['pageSize' => 10]
+            ]);
+            return $this->render('index', [
+                'dataProvider' => $gridViewDataProvider,
+                "msgError"=>"Fichero no especificado"
+            ]);
+        }
 
     }
 
