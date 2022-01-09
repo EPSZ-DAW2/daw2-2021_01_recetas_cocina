@@ -47,20 +47,7 @@ class CategoriasController extends Controller
         ]);
     }
     //para ver las categorias que hay ???
-    public function actionVercategorias()
-    {
-            $searchModel = new CategoriasSearch();
-            if (isset($_GET["CategoriasSearch"]["q"])) {
-                $dataProvider = $searchModel->searchQ($this->request->queryParams);
-            }
-            else {
-                $dataProvider = $searchModel->search($this->request->queryParams);
-            }
-
-            return $this->render('Categorias', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,]);
-    }
+    
     //para ver una categoria en concreto?
    /* public function actionVercategoria()
     {

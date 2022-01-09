@@ -199,6 +199,24 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             'modeloOfertas'=>$modeloOfertas]);
     }
 
+    public function actionVercategorias()
+    {
+            $searchModel = new CategoriasSearch();
+            if (isset($_GET["CategoriasSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQ($this->request->queryParams);
+            }
+            else {
+                $dataProvider = $searchModel->search($this->request->queryParams);
+            }
+
+            return $this->render('Categorias', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,]);
+    }
+
+
+
+
     /**
      * Muestra las fichas de los ingredientes de forma paginada
      *
