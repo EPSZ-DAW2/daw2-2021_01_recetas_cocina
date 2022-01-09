@@ -16,6 +16,8 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\widgets\dumBD;
 
+use ZipArchiver;
+
 /**
  * CategoriasController implements the CRUD actions for Categorias model.
  */
@@ -94,6 +96,27 @@ class CopiaController extends Controller
 
 
         return $this->render('index', [
+            'dataProvider' => $gridViewDataProvider,
+            "msg"=>""
+        ]);
+    }
+
+    public function actionIndexfiles()
+    {
+        $dumper = new dumpDB();
+        $dataProvider=$dumper->listarArchivos2('../backups/imagenes/');
+
+        $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $dataProvider,
+            'sort' => [
+                'attributes' => ['nombre'],
+            ],
+            'pagination' => ['pageSize' => 10]
+        ]);
+
+
+
+        return $this->render('indexficheros', [
             'dataProvider' => $gridViewDataProvider,
             "msg"=>""
         ]);
@@ -184,6 +207,49 @@ class CopiaController extends Controller
 
     }
 
+    public function actionDescargarfichero()
+    {
+
+        $fichero = $_GET['f']; //procesar
+        $rutaFichero = '../backups/imagenes/'.$fichero;
+
+        if (file_exists($rutaFichero)) {
+
+            require_once 'ZipArchiver.php';
+            $zipper = new ZipArchiver();
+
+            // Path of the directory to be zipped
+            $dirPath = $rutaFichero;
+
+            // Path of output zip file
+            $filename=$fichero.'_'.time().'.zip';
+            $zipPath = '../backups/temp/'.$filename;
+
+            if (!file_exists('../backups/temp/')){
+                mkdir('../backups/temp/');
+            }
+
+            // Create zip archive
+            $zip = $zipper->zipDir($dirPath, $zipPath);
+
+            header('Content-Type: application/octet-stream');
+            header("Content-Transfer-Encoding: Binary");
+            header("Content-disposition: attachment; filename=$filename");
+
+            // Leer el contenido binario del zip y enviarlo
+
+            $contenido=file_get_contents($zipPath);
+
+            // eliminamos el residuo
+            unlink($zipPath);
+
+            return $contenido;
+
+
+        }
+
+    }
+
 
 
     /**
@@ -232,6 +298,79 @@ class CopiaController extends Controller
 
     }
 
+
+    /**
+     * Creates a new Categorias model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCopiaficheros()
+    {
+
+        // comprobar que la ruta existe y sino crearla
+        $dumper = new dumpDB();
+
+        $carpeta1='../backups';
+        $carpeta2='../backups/imagenes';
+
+        if (!file_exists($carpeta1)){
+            mkdir($carpeta1);
+        }
+        if (!file_exists($carpeta2)){
+            mkdir($carpeta2);
+        }
+
+        $imagenes1="images/";
+        $imagenes2="uploads/";
+
+        $bk_folder = '../backups/imagenes/backup'.'_'.date('Y').'-'.date('m').'-'.date('d').'_'.date('G').'-'.date('i').'-'.date('s');
+
+        if (!file_exists($bk_folder))
+        {
+            mkdir($bk_folder);
+        }
+
+        if(!is_dir($bk_folder.'/'.$imagenes1)){
+
+            if (!file_exists($bk_folder.'/'.$imagenes1)){
+                mkdir($bk_folder.'/'.$imagenes1);
+            }
+
+            $source =$imagenes1;
+            $destination = $bk_folder.'/'.$imagenes1;
+            $dumper->copiaFicheros($source, $destination);
+        }
+        if(!is_dir($bk_folder.'/'.$imagenes2)){
+
+            if (!file_exists($bk_folder.'/'.$imagenes2)){
+                mkdir($bk_folder.'/'.$imagenes2);
+            }
+
+            $source =$imagenes2;
+            $destination = $bk_folder.'/'.$imagenes2;
+            $dumper->copiaFicheros($source, $destination);
+        }
+
+
+        $dataProvider=$dumper->listarArchivos2('../backups/imagenes/');
+
+        $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $dataProvider,
+            'sort' => [
+                'attributes' => ['nombre'],
+
+            ],
+            'pagination' => ['pageSize' => 10]
+        ]);
+
+
+        return $this->render('indexficheros', [
+            'dataProvider' => $gridViewDataProvider,
+            "msg"=>"Copia ficheros Realizada Correctamente"
+        ]);
+
+    }
+
     /**
      * Creates a new Categorias model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -259,6 +398,8 @@ class CopiaController extends Controller
             $fichero = $_GET['f']; //procesar
             $rutaFichero = '../backups/sql/' . $fichero;
 
+
+
             if (file_exists($rutaFichero)) {
                 $sql = file_get_contents($rutaFichero);
                 Yii::$app->db->pdo->exec($sql);
@@ -281,6 +422,73 @@ class CopiaController extends Controller
         }
     }
 
+    /**
+     * Creates a new Categorias model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionRestaurarcopiaficheros()
+    {
+        $raiz = '../backups/imagenes/';
+        $destino1="images/";
+        $destino2="uploads/";
+
+        $dumper = new dumpDB();
+
+        $arrayFicheros = $dumper->listarArchivos2($raiz);
+
+        $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $arrayFicheros,
+            'sort' => [
+                'attributes' => ['nombre'],
+
+            ],
+            'pagination' => ['pageSize' => 10]
+        ]);
+
+        //$fichero="backup_2022-01-08_21-57-07.sql";
+        if (isset($_GET['f'])) {
+            $fichero = $_GET['f']; //procesar
+            $rutaCopia = $raiz.$fichero;
+
+            if (file_exists($rutaCopia))
+            {
+               //eliminamos el contenido de los destinos
+                if (file_exists($destino1)) {$dumper->borrarDirectorio($destino1);}
+                if (file_exists($destino2)) {$dumper->borrarDirectorio($destino2);}
+
+                //copiamos el nuevo contenido, creamos las carpetas vacias si no existen
+                if (!file_exists($destino1)){mkdir($destino1);}
+                $source =$rutaCopia.'/'.$destino1;
+                $destination = $destino1;
+                $dumper->copiaFicheros($source, $destination);
+
+                if (!file_exists($destino2)){mkdir($destino2);}
+                $source =$rutaCopia.'/'.$destino2;
+                $destination = $destino2;
+                $dumper->copiaFicheros($source, $destination);
+
+
+                return $this->render('indexficheros', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msg" => "Copia de seguridad restaurada --> " . $fichero,
+                ]);
+            }
+            else
+            {
+                return $this->render('indexficheros', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msgError" => "El fichero especificado no existe."
+                ]);
+            }
+        } else {
+            return $this->render('indexficheros', [
+                'dataProvider' => $gridViewDataProvider,
+                "msgError" => "Fichero no especificado"
+            ]);
+        }
+    }
+
 
         /**
          * Creates a new Categorias model.
@@ -288,7 +496,7 @@ class CopiaController extends Controller
          * @return mixed
          */
         public function actionBorrarcopia()
-    {
+        {
         $raiz='../backups/sql';
 
         $dumper = new dumpDB();
@@ -355,6 +563,84 @@ class CopiaController extends Controller
                 'pagination' => ['pageSize' => 10]
             ]);
             return $this->render('index', [
+                'dataProvider' => $gridViewDataProvider,
+                "msgError"=>"Fichero no especificado"
+            ]);
+        }
+
+    }
+
+    /**
+         * Creates a new Categorias model.
+         * If creation is successful, the browser will be redirected to the 'view' page.
+         * @return mixed
+         */
+        public function actionBorrarcopiaficheros()
+        {
+        $raiz='../backups/imagenes';
+
+        $dumper = new dumpDB();
+
+        //$fichero="backup_2022-01-08_21-57-07.sql";
+        if (isset($_GET['f']))
+        {
+            $fichero=$_GET['f']; //procesar
+            $rutaFichero='../backups/imagenes/'.$fichero;
+
+            if (file_exists($rutaFichero))
+            {
+                //$sql = file_get_contents($rutaFichero);
+
+               $dumper->borrarDirectorio($rutaFichero);
+
+                $arrayFicheros=$dumper->listarArchivos2('../backups/imagenes/');
+
+                $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+                    'allModels' => $arrayFicheros,
+                    'sort' => [
+                        'attributes' => ['nombre'],
+
+                    ],
+                    'pagination' => ['pageSize' => 10]
+                ]);
+
+
+                return $this->render('indexficheros', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msg"=>"Copia de seguridad borrada --> ".$fichero,
+                ]);
+            }
+            else
+            {
+                $arrayFicheros=$dumper->listarArchivos2('../backups/sql/');
+
+                $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+                    'allModels' => $arrayFicheros,
+                    'sort' => [
+                        'attributes' => ['nombre'],
+
+                    ],
+                    'pagination' => ['pageSize' => 10]
+                ]);
+
+                return $this->render('indexficheros', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msgError"=>"El fichero especificado no existe."
+                ]);
+            }
+        }
+        else{
+            $arrayFicheros=$dumper->listarArchivos2('../backups/imagenes/');
+
+            $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+                'allModels' => $arrayFicheros,
+                'sort' => [
+                    'attributes' => ['nombre'],
+
+                ],
+                'pagination' => ['pageSize' => 10]
+            ]);
+            return $this->render('indexficheros', [
                 'dataProvider' => $gridViewDataProvider,
                 "msgError"=>"Fichero no especificado"
             ]);

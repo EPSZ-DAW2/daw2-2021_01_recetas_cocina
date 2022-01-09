@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="text-center">
         <?= Html::a(Yii::t('app', 'Listado copias de BBDD'), ['index'], ['class' => 'btn btn-warning mt-3']) ?>
         <?= Html::a(Yii::t('app', 'Listado copias de ficheros'), ['indexfiles'], ['class' => 'btn btn-warning mt-3']) ?>
-        <?= Html::a(Yii::t('app', 'Hacer Copia de Seguridad'), ['copia'], ['class' => 'btn btn-primary mt-3']) ?>
-        <?= Html::a(Yii::t('app', 'Descargar Copia Actual SQL'), ['descargaractual'], ['class' => 'btn btn-success mt-3']) ?>
-        <?= Html::a(Yii::t('app', 'Subir Copia BBDD'), ['upload'], ['class' => 'btn btn-secondary mt-3']) ?>
+        <?= Html::a(Yii::t('app', 'Hacer Copia de Seguridad ficheros'), ['copiaficheros'], ['class' => 'btn btn-primary mt-3']) ?>
+        <?php // Html::a(Yii::t('app', 'Descargar Copia Actual SQL'), ['descargaractualficheros'], ['class' => 'btn btn-success mt-3']) ?>
+        <?php // Html::a(Yii::t('app', 'Subir Copia BBDD'), ['upload'], ['class' => 'btn btn-secondary mt-3']) ?>
     </p>
     <?php
     echo GridView::widget([
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'play' => function ($url, $model) {
                     return Html::a(
                         '<div class="text-center m-0 p-0"><span class="bi-cloud-arrow-up-fill m-0 p-0" style="font-size: 32px; "></span></div>',
-                        ['copia/restaurarcopia', 'f' => $model['nombre']],
+                        ['copia/restaurarcopiaficheros', 'f' => $model['nombre']],
                         [
                             'title' => 'Restaurar',
                             'data-pjax' => '0',
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'play' => function ($url, $model) {
                     return Html::a(
                         '<div class="text-center m-0 p-0"><span class="bi-trash-fill mx-2 text-center" style="font-size: 32px; color: red;"></span></div>',
-                        ['copia/borrarcopia', 'f' => $model['nombre']],
+                        ['copia/borrarcopiaficheros', 'f' => $model['nombre']],
                         [
                             'title' => 'Borrar',
                             'data-pjax' => '0',
@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'download' => function ($url, $model) {
                     return Html::a(
                         '<div class="text-center m-0 p-0"><i class="bi-cloud-download-fill mx-2 text-center" style="font-size: 32px; color: green;"></i></div>',
-                        ['copia/descargarsql', 'f' => $model['nombre']],
+                        ['copia/descargarfichero', 'f' => $model['nombre']],
                         [
                             'title' => 'Borrar',
                             'data-pjax' => '0',
