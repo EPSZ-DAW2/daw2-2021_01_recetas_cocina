@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use app\models\Usuario;
 use app\models\Receta;
 use app\models\RecetaPaso;
+use app\models\RecetaPasoImagen;
 use app\models\RecetaPasoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -188,7 +189,10 @@ class RecetaPasoController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        if (($model = RecetaPasoImagen::find()->where(['receta_paso_id' => $id])->all()) !== null)
+        foreach($model as $c)
+            $c->delete($c->id);
+        // return parent::beforeDelete();
         return $this->redirect(['index']);
     }
 
