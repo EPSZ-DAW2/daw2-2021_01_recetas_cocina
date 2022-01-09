@@ -6,28 +6,19 @@ use app\models\Tiendaoferta;
 use app\models\TiendaofertaSearch;
 use app\models\TiendaSearch;
 use Yii;
-use yii\data\ActiveDataProvider;
-use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\Ingrediente;
 use app\models\IngredienteSearch;
-use app\models\Receta;
 use app\models\RecetaSearch;
-use app\helpers\Html;
 use app\models\Usuario;
-use app\models\Menu;
 use app\models\MenuSearch;
-use app\models\Planificacion;
 use app\models\PlanificacionSearch;
-use app\models\Copiadeseguridad;
-use app\models\Tienda;
-use app\models\Categorias;
 use app\models\CategoriasSearch;
+
 class SiteController extends Controller
 {
     /**
@@ -557,7 +548,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             if( $model->login()) {
                 Yii::$app->session['veces'] =0;
                 return $this->goBack();
-                
+
             }
             else{
                 Yii::$app->session['veces'] = Yii::$app->session['veces'] + 1;
@@ -720,9 +711,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
 
     public function mapa($direccion){
 
-
-        return render('mapa', [
-            'url' => $url,
+        return $this->render('mapa', [
             'direccion'=>$direccion,
         ]);
 

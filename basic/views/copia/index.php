@@ -1,8 +1,11 @@
 <?php
 
+use app\models\Subidasql;
+use app\models\UploadForm;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\bootstrap5\LinkPager;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuarioSearch */
@@ -29,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app', 'Listado Copias de Seguridad'), ['index'], ['class' => 'btn btn-warning mt-3']) ?>
         <?= Html::a(Yii::t('app', 'Hacer Copia de Seguridad'), ['copia'], ['class' => 'btn btn-primary mt-3']) ?>
         <?= Html::a(Yii::t('app', 'Descargar Copia Actual SQL'), ['descargaractual'], ['class' => 'btn btn-success mt-3']) ?>
+        <?= Html::a(Yii::t('app', 'Subir Copia BBDD'), ['upload'], ['class' => 'btn btn-secondary mt-3']) ?>
     </p>
     <?php
     echo GridView::widget([
