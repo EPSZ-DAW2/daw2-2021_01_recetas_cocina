@@ -26,7 +26,8 @@ use app\models\Planificacion;
 use app\models\PlanificacionSearch;
 use app\models\Copiadeseguridad;
 use app\models\Tienda;
-
+use app\models\Categorias;
+use app\models\CategoriasSearch;
 class SiteController extends Controller
 {
     /**
