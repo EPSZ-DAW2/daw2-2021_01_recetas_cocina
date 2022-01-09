@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\UploadForm;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
@@ -12,6 +13,7 @@ use app\models\CategoriasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 use yii\widgets\dumBD;
 
 /**
@@ -85,7 +87,6 @@ class CopiaController extends Controller
             'allModels' => $dataProvider,
             'sort' => [
                 'attributes' => ['nombre'],
-
             ],
             'pagination' => ['pageSize' => 10]
         ]);
@@ -97,6 +98,48 @@ class CopiaController extends Controller
             "msg"=>""
         ]);
     }
+
+
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+
+            if ($model->file && $model->validate()) {
+                $model->file->saveAs('../backups/sql/' . $model->file->baseName . '.' . $model->file->extension);
+                $msg="Archivo sql subido correctamente --> ".$model->file->baseName.".".$model->file->extension;
+
+                $dumper = new dumpDB();
+
+                $dataProvider=$dumper->listarArchivos('../backups/sql/');
+
+                $gridViewDataProvider = new \yii\data\ArrayDataProvider([
+                    'allModels' => $dataProvider,
+                    'sort' => [
+                        'attributes' => ['nombre'],
+
+                    ],
+                    'pagination' => ['pageSize' => 10]
+                ]);
+
+                return $this->render('index', [
+                    'dataProvider' => $gridViewDataProvider,
+                    "msg"=>$msg,
+                    'model' => $model
+                ]);
+            }
+        }
+        else{
+            return $this->render('upload', ['model' => $model]);
+        }
+
+
+    }
+/*
+
+    }*/
 
     public function actionDescargaractual()
     {
