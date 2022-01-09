@@ -28,15 +28,18 @@ AppAsset::register($this);
 
 <header>
     <?php
+    $rutaAtras=Yii::$app->request->referrer;
     NavBar::begin([
-        'brandLabel' => Html::img('@web/images/logo.png', ['alt' => Yii::$app->name="Aplicación de recetas", 'style' => 'height: 2rem; width: auto; top: 12px; left: 20px; position: absolute; border-radius:25px;']),
+        //'brandLabel' => Html::img('@web/images/atras.png', ['alt' => Yii::$app->name="Aplicación de recetas", 'style' => 'height: 2rem; width: auto; top: 12px; left: 20px; position: absolute; border-radius:25px;']).Html::img('@web/images/atras.png', ['alt' => Yii::$app->name="Aplicación de recetas", 'style' => 'height: 2rem; width: auto; top: 12px; left: 20px; position: absolute; border-radius:25px;']),
+        'brandLabel' => '<img href="'.$rutaAtras.'" style="height: 2rem; width: auto;top: 12px; left: 20px;  position: absolute; border-radius:25px;" src="images/atras.png"/><img style="height: 2rem; width: auto;top: 12px; left: 60px;  position: absolute; border-radius:25px;" src="images/logo.png"/>',
         //'brandLabel' => 'Aplicación de Recetas',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'btn-toolbar navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
-    ?><div class="text-left sin-deco text-light"><?php echo \yii\helpers\Html::a( 'Volver', Yii::$app->request->referrer); ?> </div><?php
+    ?>
+      <?php
     $navItem=[];
 
     if (Yii::$app->user->isGuest)
