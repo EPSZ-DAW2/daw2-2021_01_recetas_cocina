@@ -3,6 +3,8 @@
 namespace app\models;
 
 use app\models\Receta;
+
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -14,8 +16,6 @@ use yii\widgets\LinkPager;
 class RecetaSearch extends Receta
 {
     public $q;
-
-
 
     /**
      * {@inheritdoc}
@@ -78,6 +78,44 @@ class RecetaSearch extends Receta
             ->andFilterWhere(['like', 'tiempo_elaboracion', $this->tiempo_elaboracion])
             ->andFilterWhere(['like', 'valoracion', $this->valoracion])
             ->andFilterWhere(['like', 'usuario_id', $this->usuario_id]);
+
+        return $dataProvider;
+    }
+
+    public function searchMias($params)
+    {
+        $query = Receta::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination'=> [
+                'pageSize'=>6
+            ]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+        ]);
+
+        $query->andFilterWhere(['like', 'nombre', $this->nombre])
+            ->andFilterWhere(['like', 'descripcion', $this->descripcion])
+            ->andFilterWhere(['like', 'tipo_plato', $this->tipo_plato])
+            ->andFilterWhere(['like', 'dificultad', $this->dificultad])
+            ->andFilterWhere(['like', 'comensales', $this->comensales])
+            ->andFilterWhere(['like', 'tiempo_elaboracion', $this->tiempo_elaboracion])
+            ->andFilterWhere(['like', 'valoracion', $this->valoracion])
+            ->andFilterWhere(['like', 'usuario_id', Yii::$app->user->identity->id]);
 
         return $dataProvider;
     }
@@ -207,6 +245,40 @@ class RecetaSearch extends Receta
         ->orFilterWhere(['like', 'tiempo_elaboracion', $this->q])
         ->orFilterWhere(['like', 'valoracion', $this->q])
         ->orFilterWhere(['like', 'usuario_id', $this->q]);
+
+        return $dataProvider;
+    }
+
+    public function searchQMia($params)
+    {
+        $query = Receta::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination'=> [
+                'pageSize'=>6
+            ]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->orFilterWhere(['like', 'nombre', $this->q])
+        ->orFilterWhere(['like', 'descripcion', $this->q])
+        ->orFilterWhere(['like', 'id', $this->q])
+        ->orFilterWhere(['like', 'tipo_plato', $this->q])
+        ->orFilterWhere(['like', 'dificultad', $this->q])
+        ->orFilterWhere(['like', 'comensales', $this->q])
+        ->orFilterWhere(['like', 'tiempo_elaboracion', $this->q])
+        ->orFilterWhere(['like', 'valoracion', $this->q])
+        ->andFilterWhere(['like', 'usuario_id', Yii::$app->user->identity->id]);
 
         return $dataProvider;
     }

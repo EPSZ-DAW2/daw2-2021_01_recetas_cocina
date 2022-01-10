@@ -680,7 +680,7 @@ class SiteController extends Controller
             $model->email= $_POST['Usuario']['email'];
             $model->password= hash("sha1", $_POST['Usuario']['password']);
             $model->nombre= $_POST['Usuario']['nombre'];
-            $model->rol= "C";
+            //$model->rol= "C";
             $model->aceptado= 0;
             $model->creado= date("Y-m-d H:i:s");
             

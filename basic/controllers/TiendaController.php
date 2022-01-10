@@ -119,11 +119,20 @@ class TiendaController extends Controller
     public function actionIndex()
     {
         $searchModel = new TiendaSearch();
-        if (isset($_GET["TiendaSearch"]["q"])) {
-            $dataProvider = $searchModel->searchQ($this->request->queryParams);
+        if ( Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+            Usuario::esUsuarioSistema(Yii::$app->user->identity->id)) {
+            if (isset($_GET["TiendaSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQ($this->request->queryParams);
+            } else {
+                $dataProvider = $searchModel->search($this->request->queryParams);
+            }
         }
-        else {
-            $dataProvider = $searchModel->search($this->request->queryParams);
+        else{
+            if (isset($_GET["TiendaSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQMia($this->request->queryParams);
+            } else {
+                $dataProvider = $searchModel->searchMia($this->request->queryParams);
+            }
         }
 
         return $this->render('index', [

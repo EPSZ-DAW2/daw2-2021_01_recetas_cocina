@@ -61,9 +61,6 @@ AppAsset::register($this);
                 'label' => 'Mantenimiento Colaborador',
                 'items' => [
                     ['label' => 'Recetas', 'url' => ['/receta/index']],
-                    ['label' => 'Recetas-Ingredientes', 'url' => ['/recetaingrediente/index']],
-                    ['label' => 'Recetas - Pasos', 'url' => ['/receta-paso/index']],
-                    ['label' => 'Recetas - Fotos', 'url' => ['/receta-paso-imagen/index']],
                     ['label' => 'Recetas - Categorias', 'url' => ['/categorias/index']],
                     ['label' => 'Recetas - Comentarios', 'url' => ['/receta-comentarios/index']],
                     ['label' => 'Menus', 'url' => ['/menu/index']],
@@ -87,14 +84,9 @@ AppAsset::register($this);
                     ['label' => 'Planificaciones', 'url' => ['/site/verplanificaciones']],
                     ['label' => 'Tiendas', 'url' => ['/site/vertiendas']],
                     ['label' => 'Categorias', 'url' => ['/site/vercategorias']],
-                ],],
-            [
-                'label' => 'Mantenimiento Tienda',
-                'items' => [
-                    ['label' => 'Tiendas', 'url' => ['/tienda/index']],
-                    ['label' => 'Tiendas-Ofertas', 'url' => ['/tiendaoferta/index']],
-                ],]
 
+                ],],
+            ['label' => 'Mantenimiento Tienda y ofertas', 'url' => ['/tienda/index']],
         ];
     }
     elseif (Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id))
