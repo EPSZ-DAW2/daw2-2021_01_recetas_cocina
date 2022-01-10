@@ -6,64 +6,45 @@ use app\models\Tiendaoferta;
 use app\models\TiendaofertaSearch;
 use app\models\TiendaSearch;
 use Yii;
-use yii\data\ActiveDataProvider;
-use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\Ingrediente;
 use app\models\IngredienteSearch;
-use app\models\Receta;
 use app\models\RecetaSearch;
-use app\helpers\Html;
 use app\models\Usuario;
-use app\models\Menu;
 use app\models\MenuSearch;
-use app\models\Planificacion;
 use app\models\PlanificacionSearch;
-use app\models\Copiadeseguridad;
-use app\models\Tienda;
-use app\models\Categorias;
 use app\models\CategoriasSearch;
+use app\models\RecetaComentarios;
+use app\models\Receta;
 use app\models\RecetaCategorias;
 use yii\helpers\ArrayHelper;
-use app\models\RecetaComentarios;
 class SiteController extends Controller
 {
     /**
      * {@inheritdoc}
      */
-/*      public function behaviors()
+
+    public function beforeAction($action)
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }  */
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-/* PARTE DE PERMISOS QUEDARA COMENTADA HASTA DETEMINAR LAS ACCIONES A LAS QUE PODRÁ ACCEDER
-CADA ROL */////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////
+        if (isset(Yii::$app->user->identity->id))
+        {
+            if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioSistema(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioTienda(Yii::$app->user->identity->id) )
+                $this->layout = 'private';
+            else if (Yii::$app->user->isGuest){
+                $this->layout = 'public';
+            }
+        }
+        else {$this->layout = 'public';}
+
+        return parent::beforeAction($action);
+    }
 
     public function behaviors()
     {
@@ -632,7 +613,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             if( $model->login()) {
                 Yii::$app->session['veces'] =0;
                 return $this->goBack();
-                
+
             }
             else{
                 Yii::$app->session['veces'] = Yii::$app->session['veces'] + 1;
@@ -774,7 +755,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             $model->email= $_POST['Usuario']['email'];
             $model->password= hash("sha1", $_POST['Usuario']['password']);
             $model->nombre= $_POST['Usuario']['nombre'];
-            $model->rol= "C";
+            //$model->rol= "C";
             $model->aceptado= 0;
             $model->creado= date("Y-m-d H:i:s");
             
@@ -795,9 +776,7 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
 
     public function mapa($direccion){
 
-
-        return render('mapa', [
-            'url' => $url,
+        return $this->render('mapa', [
             'direccion'=>$direccion,
         ]);
 

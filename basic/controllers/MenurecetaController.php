@@ -17,6 +17,23 @@ use yii\filters\VerbFilter;
  */
 class MenurecetaController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if (isset(Yii::$app->user->identity->id))
+        {
+            if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioSistema(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioTienda(Yii::$app->user->identity->id) )
+                $this->layout = 'private';
+            else if (Yii::$app->user->isGuest)
+                $this->layout = 'public';
+        }
+        else {$this->layout = 'public';}
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * @inheritDoc
      */

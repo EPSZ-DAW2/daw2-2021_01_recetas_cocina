@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Tiendaoferta;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
@@ -17,6 +18,23 @@ use yii\filters\VerbFilter;
  */
 class TiendaController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if (isset(Yii::$app->user->identity->id))
+        {
+            if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioSistema(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioTienda(Yii::$app->user->identity->id) )
+                $this->layout = 'private';
+            else if (Yii::$app->user->isGuest)
+                $this->layout = 'public';
+        }
+        else {$this->layout = 'public';}
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * @inheritDoc
      */
@@ -101,11 +119,20 @@ class TiendaController extends Controller
     public function actionIndex()
     {
         $searchModel = new TiendaSearch();
-        if (isset($_GET["TiendaSearch"]["q"])) {
-            $dataProvider = $searchModel->searchQ($this->request->queryParams);
+        if ( Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+            Usuario::esUsuarioSistema(Yii::$app->user->identity->id)) {
+            if (isset($_GET["TiendaSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQ($this->request->queryParams);
+            } else {
+                $dataProvider = $searchModel->search($this->request->queryParams);
+            }
         }
-        else {
-            $dataProvider = $searchModel->search($this->request->queryParams);
+        else{
+            if (isset($_GET["TiendaSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQMia($this->request->queryParams);
+            } else {
+                $dataProvider = $searchModel->searchMia($this->request->queryParams);
+            }
         }
 
         return $this->render('index', [
@@ -188,6 +215,14 @@ class TiendaController extends Controller
      */
     public function actionDelete($id)
     {
+        $oferta = Tiendaoferta::find()->where(['tienda_id' => $id])->all();
+
+        //para cada oferta
+        foreach($oferta as $of)
+        {
+            $of->delete();
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index', 'msg'=>'Tienda eliminada correctamente.']);

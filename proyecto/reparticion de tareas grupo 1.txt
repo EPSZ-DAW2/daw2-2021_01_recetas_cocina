@@ -16,7 +16,7 @@ Manu y Pablo    -> 2
 ----------------------------------------------------------------------------------------------------------------------------
 Pack 1 - Victor y Fernando
 ----------------------------------------------------------------------------------------------------------------------------
-F1 → Mantenimiento de Usuarios, Perfiles y Relaciones entre ellos, Mantenimiento de la Configuración, y Copias de Seguridad.
+F1 → Mantenimiento de Usuarios, Perfiles y Relaciones entre ellos, Mantenimiento de la Configuración.
 T5 → Parte pública de visualización de Planificaciones de Menús, Menús y Platos.
 ---
 FTI7- Planificacion de menus de recetas
@@ -93,24 +93,35 @@ FTI9 - Ingredientes:
     -Ficha detallada cuando pulsas un ingrediente. -- hecho
 
 FTI1 - Portada:
-    -Logotipo, menu clasificacion recetas izquierda. -- -- hecho dinamico
-    -Fichas resumen de N recetas recomendadas centro y paginadas. -- hecho dinamico, falta subida fotos.
+    -Logotipo, menu clasificacion recetas izquierda. -- hecha plantilla ->  para grupo 3
+    -Fichas resumen de N recetas recomendadas centro y paginadas. -- hecho dinamico.
     -Anuncios ofertas tiendas en la derecha. -- hecho dinamico
 
-FXX - Diseño aplicación y estilos parte publica y privada
-    -Diseño de colores.
-    -Diseño página error.
-    -Diseño menus navegación.
-    -Página de acerca de.
+FXX - Diseño aplicación y estilos parte publica y privada  -- hecho
+    -Diseño de colores.  -- hecho
+    -Diseño página error.  -- hecho
+    -Diseño menus navegación.  -- hecho
+    -Página de acerca de.  -- hecho
 
 FXX - Implementacion de la subida de archivos al directorio upload -- hecho
-    -Subida de imagenes de recetas con comprobacion de errores.
-    -Subida de imagenes de pasos de receatas con comprobacion de errores.
+    -Subida de imagenes de recetas con comprobacion de errores.  -- hecho
+    -Subida de imagenes de pasos de receatas con comprobacion de errores.  -- hecho
 
-FXX - Implementacion de aceptacion de recetas con menus derivados.
+FXX - Implementacion de aceptacion de recetas con menus derivados. - hecho
+
+FXX - Sistema de generacion copias de seguridad y recuperacion de las mismas de la bbdd - hecho
+    - Ampliacion a ficheros de imagenes. - hecho
 
 ----------------------------------------------------------------------------------------------------------------------------
 
+
+----------------------------------------------------------------------------------------------------------------------------
+Tareas comunes al sistema -> Grupos 1 y 4
+----------------------------------------------------------------------------------------------------------------------------
+
+FXX - Sistema de permisos de la aplicacion en los diferentes controladores y acciones
+
+----------------------------------------------------------------------------------------------------------------------------
 
 
 

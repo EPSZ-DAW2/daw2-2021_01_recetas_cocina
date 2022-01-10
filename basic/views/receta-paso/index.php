@@ -40,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'table',
         ],
         'columns' => [
-            //'id',
+            // 'id',
+            // 'receta_id',
             ['label'=>'Receta', 'value' => function ($data) {
                 return Receta::findOne(['id'=>$data->receta_id])->nombre;
            }],
@@ -57,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 {
                     if ($action === 'view')
                     {
-                        $url ='index.php?r=receta-paso-imagen%2Findex&RecetaPasoSearch%5Breceta_id%5D='.$model->id;
+                        $url ='index.php?r=receta-paso-imagen%2Findex&RecetaPasoImagenSearch%5Breceta_paso_id%5D='.$model->id;
                         return $url;
                     }
                 },

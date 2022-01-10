@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+$rutaimg="uploads/";
+
 /* @var $this yii\web\View */
 /* @var $model app\models\RecetaPasoImagen */
 
@@ -37,5 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'imagen:ntext',
         ],
     ]) ?>
+    <img style="width: 35%; margin: 2.5%" src='<?php echo $rutaimg.$model->imagen;?>' class="card-img-top" alt="">
 
 </div>

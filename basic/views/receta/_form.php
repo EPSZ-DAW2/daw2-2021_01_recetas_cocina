@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Usuario;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -47,7 +48,16 @@ use yii\widgets\ActiveForm;
         5 => 'Muy Bueno',
     ])->label("Valoracion de plato:") ?>
 
-    <?= $form->field($model, 'usuario_id')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
+    <?php
+        if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id))
+        {
+            echo $form->field($model, 'usuario_id')->hiddenInput(['class'=> 'w-100 btn btn-verde  my-3'])->label("");
+        }
+        else
+        {
+            echo $form->field($model, 'usuario_id')->textInput(['class'=> 'w-100 btn btn-verde  my-3']);
+        }
+    ?>
 
     <?php // $form->field($model, 'aceptada')->textInput(['class'=> 'w-100 btn btn-verde  my-3']) ?>
 

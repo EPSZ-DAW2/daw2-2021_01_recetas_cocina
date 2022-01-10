@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use app\models\Usuario;
 use app\models\Receta;
 use app\models\RecetaPaso;
+use app\models\RecetaPasoImagen;
 use app\models\RecetaPasoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -17,6 +18,23 @@ use yii\filters\VerbFilter;
  */
 class RecetaPasoController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if (isset(Yii::$app->user->identity->id))
+        {
+            if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioSistema(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioTienda(Yii::$app->user->identity->id) )
+                $this->layout = 'private';
+            else if (Yii::$app->user->isGuest)
+                $this->layout = 'public';
+        }
+        else {$this->layout = 'public';}
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * @inheritDoc
      */
@@ -187,9 +205,12 @@ class RecetaPasoController extends Controller
      */
     public function actionDelete($id)
     {
+        if (($model = RecetaPasoImagen::find()->where(['receta_paso_id' => $id])->all()) !== null)
+        foreach($model as $c)
+            $c->delete($c->id);
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        // return parent::beforeDelete();
+        return $this->redirect(['index', 'msg'=>'Paso eliminado correctamente.']);
     }
 
     /**

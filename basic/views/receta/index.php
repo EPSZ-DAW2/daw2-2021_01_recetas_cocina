@@ -69,6 +69,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
             ],
+            ['class' => 'yii\grid\ActionColumn',
+                'header' => 'Ingredientes',
+                'template' => '{view}',
+
+                'urlCreator' => function ($action, $model, $key, $index)
+                {
+                    if ($action === 'view')
+                    {
+                        $url ='index.php?r=recetaingrediente%2Findex&RecetaingredienteSearch%5Breceta_id%5D='.$model->id;
+                        return $url;
+                    }
+                },
+            ],
         ],
             'layout' => "\n{items}\n",
     ]); ?>
