@@ -60,8 +60,8 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function getAuthKey()
     {
-        return null;
-        //throw new \yii\base\NotSupportedException("no hay");
+        //return null;
+        throw new \yii\base\NotSupportedException("No existe");
     }
 
     public function getId()
@@ -75,7 +75,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function validateAuthKey($authKey)
     {
-        throw new \yii\base\NotSupportedException("nadaaaaaaaaaaaa");
+        throw new \yii\base\NotSupportedException("No existe");
     }
 
     public static function findIdentity($id)
@@ -87,7 +87,7 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findIdentityByAccessToken($token, $type=null)
     {
-       throw new \yii\base\NotSupportedException();
+       throw new \yii\base\NotSupportedException("No existe");
     }
 
     public static function findByUsername($nombre)
