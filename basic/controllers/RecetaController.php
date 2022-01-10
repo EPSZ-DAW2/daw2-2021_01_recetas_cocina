@@ -178,11 +178,19 @@ class RecetaController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) )
             {
+                if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id)){
+                    $model->usuario_id = Yii::$app->user->identity->id;
+                }
+
                 if ($model->usuario_id==Yii::$app->user->identity->id || 
                 Yii::$app->user->identity->rol == 'A' || 
                 Yii::$app->user->identity->rol == 'S' ) 
                 {
+
+
                     $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+
 
                     if ($model->imageFile && $model->validate())
                     {
@@ -196,6 +204,7 @@ class RecetaController extends Controller
                     }
                     else
                     {
+
                         $model->save();
                         $msg = "<strong class='label label-info'>Enhorabuena, creacion realizada con éxito</strong>";
                     }
