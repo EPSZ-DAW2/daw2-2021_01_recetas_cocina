@@ -109,9 +109,7 @@ class Tienda extends \yii\db\ActiveRecord
         }
         else
         {
-
             return true;
-           
         }
 
     }
