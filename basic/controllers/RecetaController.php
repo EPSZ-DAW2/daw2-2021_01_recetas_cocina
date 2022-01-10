@@ -323,12 +323,10 @@ class RecetaController extends Controller
 
         $rutaimg="uploads/".$model->imagen;
         if (!empty($model->imagen) && file_exists($rutaimg)) unlink($rutaimg);
-            $model->delete();
 
         // Borra la receta
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'msg'=>'Receta eliminada correctamente!.']);
     }
 
     public function actionRecetasaceptar()

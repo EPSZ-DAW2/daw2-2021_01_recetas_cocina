@@ -210,7 +210,7 @@ class RecetaPasoController extends Controller
             $c->delete($c->id);
         $this->findModel($id)->delete();
         // return parent::beforeDelete();
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'msg'=>'Paso eliminado correctamente.']);
     }
 
     /**
