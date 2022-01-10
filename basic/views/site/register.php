@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="row g-0">
                         <div class="col-md-6 col-lg-5 d-none d-md-block">
                             <img
-                                    src="images/login.jpg"
+                                    src="images/food.jpg"
                                     alt="login form"
                                     class="img-fluid h-100" style="border-radius: 1rem 0 0 1rem;"
                             />
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <span class="h1 fw-bold mb-0">Registro de Usuario</span>
                                     </div>
 
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Introduzca sus datos</h5>
+
 
                                     <div class="form-outline mb-4">
                                         <!-- <input type="email" id="form2Example17" class="form-control form-control-lg" /> -->
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                     <div class="form-group">
                                         <div class="">
-                                        <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary my-4 w-100']) ?>
+                                        <?= Html::submitButton(Yii::t('app', 'Registrarse'), ['class' => 'btn btn-primary my-4 w-100']) ?>
                                         </div>
                                     </div>
 <!--                                     <div class="pt-1 mb-4">

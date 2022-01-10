@@ -12,6 +12,23 @@ use app\models\ContactForm;
 
 class TestController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if (isset(Yii::$app->user->identity->id))
+        {
+            if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioSistema(Yii::$app->user->identity->id) ||
+                Usuario::esUsuarioTienda(Yii::$app->user->identity->id) )
+                $this->layout = 'private';
+            else if (Yii::$app->user->isGuest)
+                $this->layout = 'public';
+        }
+        else {$this->layout = 'public';}
+
+        return true;
+    }
+
     /**
      * Pagina de los Test para ver si funciona el JUI y Bootstrap5.
      *
