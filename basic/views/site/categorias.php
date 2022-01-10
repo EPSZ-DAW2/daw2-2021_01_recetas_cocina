@@ -48,7 +48,7 @@ $this->title = 'Aplicación Web de recetas';
 
                 <p><?php echo $card->descripcion;?></p>
 
-                <p><a class="btn btn-outline-secondary" href="?r=categorias/vercategoria&id=<?php echo $card->id?>">Ver recetas &raquo;</a></p>
+                <p><a class="btn btn-outline-secondary" href="?r=site/verrecetascategoria&id=<?php echo $card->id?>">Ver recetas &raquo;</a></p>
             </div>
             <?php }?>
 

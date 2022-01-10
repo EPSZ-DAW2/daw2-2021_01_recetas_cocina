@@ -28,6 +28,9 @@ use app\models\Copiadeseguridad;
 use app\models\Tienda;
 use app\models\Categorias;
 use app\models\CategoriasSearch;
+use app\models\RecetaCategorias;
+use yii\helpers\ArrayHelper;
+use app\models\RecetaComentarios;
 class SiteController extends Controller
 {
     /**
@@ -204,6 +207,78 @@ CADA ROL *//////////////////////////////////////////////////////////////////////
             return $this->render('Categorias', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,]);
+    }
+/*
+    public function actionVerrecetascategoria()
+    {
+            $searchModel = new RecetaSearch(); //RecetasCategoriasSearch??
+            if (isset($_GET["RecetaSearch"]["q"])) 
+            {
+                //$dataProvider = $searchModel->searchQ($this->request->queryParams);
+                $filterall=RecetaCategorias::findAll(['id'=>$receta_id]); 
+                $dataProvider = $searchModel->$filterall;
+            
+            
+            }
+            else {
+                $dataProvider = $searchModel->search($this->request->queryParams);
+            }
+            //usar recetascategorias.php como vista
+            return $this->render('Recetas', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider]);
+    }
+*/
+ public function actionVerrecetascategoria($id)
+    {
+                //Buscamos todas las recetas
+                $allrecetas=Receta::find()->all();
+                //Buscamos las relaciones que tiene categoria con receta
+                $filterall=RecetaCategorias::findAll(['categoria_id'=>$id]); 
+                $idfilterall=ArrayHelper::map($filterall,'receta_id','receta_id');
+                $categoriaReceta=array();
+                //$arrayCategorias=array();
+                foreach($allrecetas as $receta){
+                    if(isset($idfilterall[$receta->id])){
+                        $categoriaReceta[]=$receta;
+                    }/*else{
+                        $arrayCategorias[]=$categoria; 
+                    }*/
+                }
+            
+            //var_dump($categoriaReceta);
+            //return;
+            //usar recetascategorias.php como vista
+            return $this->render('recetascategorias', [
+               
+                'categoriaReceta' => $categoriaReceta]);
+    }
+
+
+    public function actionCreatecomentario()
+    {
+        $model = new RecetaComentarios();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+
+                if ($model->usuario_id==Yii::$app->user->identity->id || 
+                Yii::$app->user->identity->rol == 'A' || 
+                Yii::$app->user->identity->rol == 'S' ) 
+                {
+                    $model->fechahora= date("Y-m-d H:i:s");
+                    $model->save();
+                    return $this->redirect(['verreceta', 'id' => $model->receta_id]);
+                }
+                
+        
+            }
+        } else {//No vengo del post sino con valores por defecto
+            $model->loadDefaultValues();
+            $model->fechahora= date("Y-m-d H:i:s");
+        }
+
+        
     }
 
 

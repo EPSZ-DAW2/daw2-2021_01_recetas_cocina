@@ -1,5 +1,4 @@
 <?php
-
 use app\models\Ingrediente;
 use app\models\RecetaPaso;
 use app\models\RecetaPasoImagen;
@@ -7,7 +6,8 @@ use app\models\Tienda;
 use app\models\Usuario;
 use app\models\Tiendaoferta;
 use app\models\RecetaComentarios;
-
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 $rutaimg="uploads/";
 
 ?>
@@ -156,8 +156,31 @@ $rutaimg="uploads/";
                       </div>
                     </div>
                     <?php
-                    }
-                    ?><a href="#" class="btn btn-primary">Comentar</a><?php
+                    }?>
+                    <div class="receta-comentarios-form">
+                    
+                <?php $form = ActiveForm::begin(['action'=>'?r=site/createcomentario']); ?>
+                <?php $modeloc = new RecetaComentarios(); ?>
+                <?= $form->field($modeloc, 'receta_id')->hiddenInput(['value'=>$_GET["id"]])->label(false) ?>
+
+                <?= $form->field($modeloc, 'usuario_id')->hiddenInput(['value'=>Yii::$app->user->identity->id ])->label(false) ?>
+
+                <?= $form->field($modeloc, 'fechahora')->hiddenInput(['value'=> date("Y-m-d H:i:s")])->label(false) ?>
+
+                <?= $form->field($modeloc, 'texto')->textarea(['rows' => 6]) ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Comentar', ['class' => 'btn btn-primary']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>
+
+                    
+                    
+                    
+                    <?php
                 }
             }
             ?>
