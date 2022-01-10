@@ -14,7 +14,7 @@ $this->title = 'Aplicación Web de recetas';
 
     <div class="jumbotron text-center bg-transparent">
         <div class="w-100">
-            <img class="" style="width: 15%" src="/daw2-2021_01_recetas_cocina/basic/web/images/recipes.png">
+            <img class="" style="width: 15%" src="/daw2-2021_01_recetas_cocina/basic/web/images/nutricion.png">
         </div>
         <h1 class="display-4">Categorias</h1>
 
