@@ -114,7 +114,7 @@ class TiendaofertaSearch extends Tiendaoferta
             'tienda_id' => $this->idq,
         ]);
 
-        $query->andFilterWhere(['like', 'descripcion', $this->tipo]);
+        $query->orFilterWhere(['like', 'descripcion', $this->tipo])->orFilterWhere(['like', 'envase', $this->tipo]);
 
         return $dataProvider;
     }
