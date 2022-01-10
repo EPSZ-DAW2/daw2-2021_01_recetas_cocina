@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <span class="h1 fw-bold mb-0">Inicio de Sesión</span>
                                     </div>
 
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Introduzca su cuenta</h5>
+
 
                                     <div class="form-outline mb-4">
                                         <!-- <input type="email" id="form2Example17" class="form-control form-control-lg" /> -->

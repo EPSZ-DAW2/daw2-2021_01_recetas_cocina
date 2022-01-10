@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use app\assets\AppAsset;
+use app\models\Usuario;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
@@ -42,21 +43,7 @@ AppAsset::register($this);
       <?php
     $navItem=[];
 
-    if (Yii::$app->user->isGuest)
-    {
-        $navItem=[
-            ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Categorias', 'url' => ['/site/vercategorias']],
-            ['label' => 'Ingredientes', 'url' => ['/site/veringredientes']],
-            ['label' => 'Recetas', 'url' => ['/site/verrecetas']],
-            ['label' => 'Planificaciones', 'url' => ['/site/verplanificaciones']],
-            ['label' => 'Menus', 'url' => ['/site/vermenus']],
-            ['label' => 'Tiendas', 'url' => ['/site/vertiendas']],
-            ['label' => 'Acerca de', 'url' => ['/site/about']],
-
-        ];
-    }
-    else
+    if (Usuario::esUsuarioColaborador(Yii::$app->user->identity->id))
     {
         $navItem=[
             ['label' => 'Inicio', 'url' => ['/site/index']],
@@ -71,7 +58,61 @@ AppAsset::register($this);
                     ['label' => 'Categorias', 'url' => ['/site/vercategorias']],
                 ],],
             [
-                'label' => 'Mantenimiento',
+                'label' => 'Mantenimiento Colaborador',
+                'items' => [
+                    ['label' => 'Recetas', 'url' => ['/receta/index']],
+                    ['label' => 'Recetas-Ingredientes', 'url' => ['/recetaingrediente/index']],
+                    ['label' => 'Recetas - Pasos', 'url' => ['/receta-paso/index']],
+                    ['label' => 'Recetas - Fotos', 'url' => ['/receta-paso-imagen/index']],
+                    ['label' => 'Recetas - Categorias', 'url' => ['/categorias/index']],
+                    ['label' => 'Recetas - Comentarios', 'url' => ['/receta-comentarios/index']],
+                    ['label' => 'Menus', 'url' => ['/menu/index']],
+                    ['label' => 'Menus-Recetas', 'url' => ['/menureceta/index']],
+                    ['label' => 'Planificaciones Menus', 'url' => ['/planificacionmenu/index']],
+                    ['label' => 'Planificaciones', 'url' => ['/planificacion/index']],
+                ],]
+
+        ];
+    }
+    elseif (Usuario::esUsuarioTienda(Yii::$app->user->identity->id))
+    {
+        $navItem=[
+            ['label' => 'Inicio', 'url' => ['/site/index']],
+            [
+                'label' => 'Catalogo',
+                'items' => [
+                    ['label' => 'Ingredientes', 'url' => ['/site/veringredientes']],
+                    ['label' => 'Recetas', 'url' => ['/site/verrecetas']],
+                    ['label' => 'Menus', 'url' => ['/site/vermenus']],
+                    ['label' => 'Planificaciones', 'url' => ['/site/verplanificaciones']],
+                    ['label' => 'Tiendas', 'url' => ['/site/vertiendas']],
+                    ['label' => 'Categorias', 'url' => ['/site/vercategorias']],
+                ],],
+            [
+                'label' => 'Mantenimiento Tienda',
+                'items' => [
+                    ['label' => 'Tiendas', 'url' => ['/tienda/index']],
+                    ['label' => 'Tiendas-Ofertas', 'url' => ['/tiendaoferta/index']],
+                ],]
+
+        ];
+    }
+    elseif (Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id))
+    {
+        $navItem=[
+            ['label' => 'Inicio', 'url' => ['/site/index']],
+            [
+                'label' => 'Catalogo',
+                'items' => [
+                    ['label' => 'Ingredientes', 'url' => ['/site/veringredientes']],
+                    ['label' => 'Recetas', 'url' => ['/site/verrecetas']],
+                    ['label' => 'Menus', 'url' => ['/site/vermenus']],
+                    ['label' => 'Planificaciones', 'url' => ['/site/verplanificaciones']],
+                    ['label' => 'Tiendas', 'url' => ['/site/vertiendas']],
+                    ['label' => 'Categorias', 'url' => ['/site/vercategorias']],
+                ],],
+            [
+                'label' => 'Mantenimiento Administrador',
                 'items' => [
                     ['label' => 'Categorias', 'url' => ['/categorias/index']],
                     ['label' => 'Ingredientes', 'url' => ['/ingrediente/index']],
