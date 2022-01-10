@@ -127,14 +127,13 @@ a.desc:after {
 
 /*******************************************************************/
 
-.center{text-align:center}
+canvas#gameCanvas {
+    background-color: #000000;
+    margin: auto;
 
-#space-invaders {
-    margin: 0 0;
-    display: block;
-    background: white
+    font-family: 'VT323', sans;
+    margin-top: 50px;
 }
-
 /* SENTENCIA PARA AJUSTAR FORMULARIOS A MOVILES Y ORDENADORES */
 
 @media(min-width:1025px) {
