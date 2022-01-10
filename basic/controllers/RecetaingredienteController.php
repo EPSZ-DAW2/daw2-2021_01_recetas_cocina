@@ -30,7 +30,7 @@ class RecetaingredienteController extends Controller
         }
         else {$this->layout = 'public';}
 
-        return true;
+        return parent::beforeAction($action);
     }
     /**
      * @inheritDoc

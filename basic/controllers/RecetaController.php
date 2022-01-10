@@ -39,7 +39,7 @@ class RecetaController extends Controller
         }
         else {$this->layout = 'public';}
 
-        return true;
+        return parent::beforeAction($action);
     }
 
     /**

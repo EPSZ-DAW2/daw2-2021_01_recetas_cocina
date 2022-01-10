@@ -15,7 +15,7 @@ use yii\filters\VerbFilter;
  */
 class UsuarioController extends Controller
 {
-    public function beforeAction($action)
+     public function beforeAction($action)
     {
         if (isset(Yii::$app->user->identity->id))
         {
@@ -29,8 +29,8 @@ class UsuarioController extends Controller
         }
         else {$this->layout = 'public';}
 
-        return true;
-    }
+        return parent::beforeAction($action);
+    } 
 
     /**
      * @inheritDoc
