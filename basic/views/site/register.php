@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                     <div class="form-outline mb-4">
                                         <!-- <input type="email" id="form2Example17" class="form-control form-control-lg" /> -->
-                                        <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label("Nombre de Usuario") ?>
+                                        <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label("Email") ?>
                                         <!-- <label class="form-label" for="form2Example17">Nombre de Usuario</label> -->
                                     </div>
 

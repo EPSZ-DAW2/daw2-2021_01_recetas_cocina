@@ -124,13 +124,27 @@ class RecetaController extends Controller
     public function actionIndex()
     {
         $searchModel = new RecetaSearch();
-        if (isset($_GET["RecetaSearch"]["q"])) {
-            $dataProvider = $searchModel->searchQ($this->request->queryParams);
+        if ( Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+            Usuario::esUsuarioSistema(Yii::$app->user->identity->id)){
+            if (isset($_GET["RecetaSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQ($this->request->queryParams);
+            }
+            else
+            {
+                $dataProvider = $searchModel->search($this->request->queryParams);
+            }
         }
-        else
-        {
-            $dataProvider = $searchModel->search($this->request->queryParams);
+        else{
+            if (isset($_GET["RecetaSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQMia($this->request->queryParams);
+            }
+            else
+            {
+                $dataProvider = $searchModel->searchMias($this->request->queryParams);
+            }
+
         }
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,

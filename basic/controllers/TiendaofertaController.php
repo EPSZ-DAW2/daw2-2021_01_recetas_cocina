@@ -121,19 +121,28 @@ class TiendaofertaController extends Controller
      */
     public function actionIndex()
     {
+        $searchModel = new TiendaofertaSearch();
 
-
-            $searchModel = new TiendaofertaSearch();
+        if ( Usuario::esUsuarioAdministrador(Yii::$app->user->identity->id) ||
+            Usuario::esUsuarioSistema(Yii::$app->user->identity->id)) {
             if (isset($_GET["TiendaofertaSearch"]["q"])) {
                 $dataProvider = $searchModel->searchQ($this->request->queryParams);
-            }
-            elseif (isset($_GET["TiendaofertaSearch"]["idq"])) {
+            } elseif (isset($_GET["TiendaofertaSearch"]["idq"])) {
                 $dataProvider = $searchModel->search($this->request->queryParams);
+            } else {
+                $dataProvider = $searchModel->searchA($this->request->queryParams);
             }
-            else {
+        }
+        else{
+            if (isset($_GET["TiendaofertaSearch"]["q"])) {
+                $dataProvider = $searchModel->searchQ($this->request->queryParams);
+            } elseif (isset($_GET["TiendaofertaSearch"]["idq"])) {
+                $dataProvider = $searchModel->search($this->request->queryParams);
+            } else {
                 $dataProvider = $searchModel->searchA($this->request->queryParams);
             }
 
+        }
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
