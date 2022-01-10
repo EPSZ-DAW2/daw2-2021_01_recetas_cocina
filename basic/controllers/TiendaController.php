@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Tiendaoferta;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Usuario;
@@ -188,6 +189,14 @@ class TiendaController extends Controller
      */
     public function actionDelete($id)
     {
+        $oferta = Tiendaoferta::find()->where(['tienda_id' => $id])->all();
+
+        //para cada oferta
+        foreach($oferta as $of)
+        {
+            $of->delete();
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index', 'msg'=>'Tienda eliminada correctamente.']);
