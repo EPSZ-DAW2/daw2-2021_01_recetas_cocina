@@ -60,8 +60,8 @@ class Usuario extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function getAuthKey()
     {
-        //return null;
-        throw new \yii\base\NotSupportedException("No existe");
+        return null;
+        //throw new \yii\base\NotSupportedException("No existe");
     }
 
     public function getId()
