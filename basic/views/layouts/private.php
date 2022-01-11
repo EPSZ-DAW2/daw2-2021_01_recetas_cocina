@@ -111,7 +111,7 @@ AppAsset::register($this);
                     ['label' => 'Recetas-Ingredientes', 'url' => ['/recetaingrediente/index']],
                     ['label' => 'Recetas', 'url' => ['/receta/index']],
                     ['label' => 'Recetas - Pasos', 'url' => ['/receta-paso/index']],
-                    ['label' => 'Recetas - Categorias', 'url' => ['/categorias/index']],
+                    ['label' => 'Recetas - Categorias', 'url' => ['/receta-categorias/index']],
                     ['label' => 'Recetas - Comentarios', 'url' => ['/receta-comentarios/index']],
                     ['label' => 'Recetas - Fotos', 'url' => ['/receta-paso-imagen/index']],
                     ['label' => 'Menus-Recetas', 'url' => ['/menureceta/index']],
