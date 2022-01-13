@@ -62,10 +62,10 @@ Pack 3 --Sara y Elsa
 ----------------------------------------------------------------------------------------------------------------------------
 F3 → Mantenimiento de Categorias, Mantenimiento de Categorías en Recetas, Mantenimiento de Comentarios en Recetas.
 T3 → Parte pública de visualización de Arbol de Categorias (Clasificaciones) y Filtrado de Recetas por categorías.
+
+FTI6 - Menu de categorias de recetas que permita avanzar por clics: --->HECHO EN LA RAMA SARAELSA
 --------------------- SIN HACER --------------------------------------------------------------------------------------------
-FTI6 - Menu de categorias de recetas que permita avanzar por clics:
     - Menu a la izquierda con submenus con un esquema de arbol.
-    - Recetas vegetarianas -> postres -> listaria los postres vegetarianos
 ----------------------------------------------------------------------------------------------------------------------------
 
 
